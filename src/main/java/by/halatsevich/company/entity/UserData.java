@@ -1,0 +1,66 @@
+package by.halatsevich.company.entity;
+
+public class UserData extends Entity{
+    private String firstName;
+    private String lastName;
+    private int telephoneNumber;
+
+    public UserData() {
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public int getTelephoneNumber() {
+        return telephoneNumber;
+    }
+
+    public void setTelephoneNumber(int telephoneNumber) {
+        this.telephoneNumber = telephoneNumber;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        if (!super.equals(o)) return false;
+
+        UserData userData = (UserData) o;
+
+        if (telephoneNumber != userData.telephoneNumber) return false;
+        if (!firstName.equals(userData.firstName)) return false;
+        return lastName.equals(userData.lastName);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = super.hashCode();
+        result = 31 * result + firstName.hashCode();
+        result = 31 * result + lastName.hashCode();
+        result = 31 * result + telephoneNumber;
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("UserData{");
+        sb.append("firstName='").append(firstName).append('\'');
+        sb.append(", lastName='").append(lastName).append('\'');
+        sb.append(", telephoneNumber=").append(telephoneNumber);
+        sb.append('}');
+        return sb.toString();
+    }
+}
