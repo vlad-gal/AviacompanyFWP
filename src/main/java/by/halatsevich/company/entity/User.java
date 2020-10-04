@@ -10,30 +10,17 @@ public class User extends Entity {
     private UserData userData;
 
     public enum Role {
-        ADMIN, FLIGHT_ADMIN, DISPATCHER, PILOT, RADIOMAN, NAVIGATOR, STEWARDESS;
-
-        public static Role getRole(int roleIndex) {
-            return Arrays.stream(Role.values())
-                    .filter(role -> role.ordinal() == roleIndex)
-                    .findFirst().get();
-        }
+        ADMIN, OPERATOR, DISPATCHER, PILOT, RADIOMAN, NAVIGATOR, STEWARDESS, DEFAULT
     }
 
     public enum Status {
-        ACTIVE, INACTIVE;
-
-        public static Status getStatus(int statusIndex) {
-            return Arrays.stream(Status.values())
-                    .filter(status -> status.ordinal() == statusIndex)
-                    .findFirst().get();
-        }
+        ACTIVE, INACTIVE
     }
 
     public User() {
     }
 
-    public User(long userId, String email, String login, Role role, Status status, UserData userData) {
-        super(userId);
+    public User(String email, String login, Role role, Status status, UserData userData) {
         this.email = email;
         this.login = login;
         this.role = role;

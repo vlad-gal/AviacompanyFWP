@@ -1,5 +1,8 @@
 package by.halatsevich.company.controller;
 
+import by.halatsevich.company.controller.command.Command;
+import by.halatsevich.company.dao.pool.ConnectionPool;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -12,20 +15,28 @@ import java.io.IOException;
 
 @WebServlet(urlPatterns = "/controller")
 public class Controller extends HttpServlet {
-    private static Logger logger = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger();
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doGet(req, resp);
+        processRequest(req, resp);
     }
 
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        super.doPost(req, resp);
+        processRequest(req, resp);
     }
 
-    private void executeRequest(HttpServletRequest req, HttpServletResponse resp){
-        CommandProvider provider = new CommandProvider();
-//        provider.defineCommand();
+    private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        String commandName = req.getParameter(ParameterName.COMMAND);
+        logger.log(Level.INFO, "Command name - {}", commandName);
+        CommandProvider provider = CommandProvider.getInstance();
+        Command command = provider.defineCommand(commandName);
+        command.execute(req, resp);
+    }
+
+    @Override
+    public void destroy() {
+        ConnectionPool.getInstance().destroyPool();
     }
 }

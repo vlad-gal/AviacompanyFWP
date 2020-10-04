@@ -35,15 +35,15 @@ public class ConnectionPool {
             throw new RuntimeException("Cannot register driver", e);
         }
 
-        ResourceBundle bundle = ResourceBundle.getBundle(PoolParameters.PROPERTIES_PATH);
-        String url = bundle.getString(PoolParameters.URL);
-        String user = bundle.getString(PoolParameters.USER);
-        String password = bundle.getString(PoolParameters.PASSWORD);
-        String serverTimezone = bundle.getString(PoolParameters.TIMEZONE);
-        String autoReconnect = bundle.getString(PoolParameters.AUTO_RECONNECT);
-        String encoding = bundle.getString(PoolParameters.ENCODING);
-        String useUnicode = bundle.getString(PoolParameters.UNICODE);
-        String sizePoll = bundle.getString(PoolParameters.POLL_SIZE);
+        ResourceBundle bundle = ResourceBundle.getBundle(PoolParameter.PROPERTIES_PATH);
+        String url = bundle.getString(PoolParameter.URL);
+        String user = bundle.getString(PoolParameter.USER);
+        String password = bundle.getString(PoolParameter.PASSWORD);
+        String serverTimezone = bundle.getString(PoolParameter.TIMEZONE);
+        String autoReconnect = bundle.getString(PoolParameter.AUTO_RECONNECT);
+        String encoding = bundle.getString(PoolParameter.ENCODING);
+        String useUnicode = bundle.getString(PoolParameter.UNICODE);
+        String sizePoll = bundle.getString(PoolParameter.POLL_SIZE);
         try {
             poolSize = Integer.parseInt(sizePoll);
         } catch (NumberFormatException e) {
@@ -54,12 +54,12 @@ public class ConnectionPool {
         freeConnections = new LinkedBlockingDeque<>(poolSize);
         givenConnections = new ArrayDeque<>();
         Properties properties = new Properties();
-        properties.put(PoolParameters.USER, user);
-        properties.put(PoolParameters.PASSWORD, password);
-        properties.put(PoolParameters.TIMEZONE, serverTimezone);
-        properties.put(PoolParameters.AUTO_RECONNECT, autoReconnect);
-        properties.put(PoolParameters.ENCODING, encoding);
-        properties.put(PoolParameters.UNICODE, useUnicode);
+        properties.put(PoolParameter.USER, user);
+        properties.put(PoolParameter.PASSWORD, password);
+        properties.put(PoolParameter.TIMEZONE, serverTimezone);
+        properties.put(PoolParameter.AUTO_RECONNECT, autoReconnect);
+        properties.put(PoolParameter.ENCODING, encoding);
+        properties.put(PoolParameter.UNICODE, useUnicode);
 
         fillingConnections(url, properties, poolSize);
 

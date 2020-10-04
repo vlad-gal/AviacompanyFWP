@@ -3,9 +3,15 @@ package by.halatsevich.company.entity;
 public class UserData extends Entity{
     private String firstName;
     private String lastName;
-    private int telephoneNumber;
+    private long telephoneNumber;
 
     public UserData() {
+    }
+
+    public UserData(String firstName, String lastName, long telephoneNumber) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.telephoneNumber = telephoneNumber;
     }
 
     public String getFirstName() {
@@ -24,11 +30,11 @@ public class UserData extends Entity{
         this.lastName = lastName;
     }
 
-    public int getTelephoneNumber() {
+    public long getTelephoneNumber() {
         return telephoneNumber;
     }
 
-    public void setTelephoneNumber(int telephoneNumber) {
+    public void setTelephoneNumber(long telephoneNumber) {
         this.telephoneNumber = telephoneNumber;
     }
 
@@ -50,7 +56,7 @@ public class UserData extends Entity{
         int result = super.hashCode();
         result = 31 * result + firstName.hashCode();
         result = 31 * result + lastName.hashCode();
-        result = 31 * result + telephoneNumber;
+        result = 31 * result + Long.hashCode(telephoneNumber);
         return result;
     }
 

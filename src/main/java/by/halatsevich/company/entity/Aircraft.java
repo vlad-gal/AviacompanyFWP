@@ -8,20 +8,13 @@ public class Aircraft extends Entity{
     private AircraftType aircraftType;
 
     public enum AircraftType{
-        CARGO, PASSENGER;
-
-        public static AircraftType getType(int typeIndex){
-            return Arrays.stream(AircraftType.values())
-                    .filter(type -> type.ordinal() == typeIndex)
-                    .findFirst().get();
-        }
+        CARGO, PASSENGER
     }
 
     public Aircraft() {
     }
 
-    public Aircraft(long id, String tailNumber, String aircraftName, AircraftType aircraftType) {
-        super(id);
+    public Aircraft(String tailNumber, String aircraftName, AircraftType aircraftType) {
         this.tailNumber = tailNumber;
         this.aircraftName = aircraftName;
         this.aircraftType = aircraftType;
@@ -75,12 +68,9 @@ public class Aircraft extends Entity{
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Aircraft{");
-        sb.append("tailNumber='").append(tailNumber).append('\'');
-        sb.append(", aircraftName='").append(aircraftName).append('\'');
-        sb.append(", aircraftType=").append(aircraftType);
-        sb.append('}');
-        return sb.toString();
+        String aircraft = String.format("Aircraft: tail number - %s, name - %s, type - %s",
+                tailNumber,aircraftName,aircraftType.toString().toLowerCase());
+        return aircraft;
     }
 }
 
