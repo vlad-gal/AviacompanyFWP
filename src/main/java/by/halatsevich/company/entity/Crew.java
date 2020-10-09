@@ -13,7 +13,7 @@ public class Crew extends Entity {
     public Crew() {
     }
 
-    public Crew(long id, User dispatcher, int numberOfPilots, int numberOfNavigators, int numberOfRadioman, int numberOfStewardesses, List<User> crew) {
+    public Crew(int id, User dispatcher, int numberOfPilots, int numberOfNavigators, int numberOfRadioman, int numberOfStewardesses, List<User> crew) {
         super(id);
         this.dispatcher = dispatcher;
         this.numberOfPilots = numberOfPilots;

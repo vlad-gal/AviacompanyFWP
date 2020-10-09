@@ -7,4 +7,32 @@ import java.util.List;
 
 public interface FlightService {
      List<Aircraft> selectAllAircraft() throws ServiceException;
+
+
+     //хз
+     boolean createFlight();
+     boolean updateFlight();
+     boolean removeFlight();
+     boolean selectFlight();
+
+     boolean createAirport();
+     boolean updateAirport();
+     boolean removeAirport();
+     boolean selectAirport();
+
+     boolean createAircraft();
+     boolean updateAircraft();
+     boolean removeAircraft();
+     boolean selectAircraft();
+
+     boolean createAircraftTypes();
+     boolean updateAircraftTypes();
+     boolean removeAircraftTypes();
+     boolean selectAircraftTypes();
+
+
+
+
+
+
 }

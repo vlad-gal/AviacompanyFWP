@@ -7,12 +7,12 @@ public class Flight extends Entity {
     private long arriveTime;
     private Aircraft aircraft;
     private Crew crew;
-    private User admin;
+    private User operator;
 
     public Flight() {
     }
 
-    public Flight(long id, Airport departure, Airport destination, long departTime, long arriveTime, Aircraft aircraft, Crew crew, User admin) {
+    public Flight(int id, Airport departure, Airport destination, long departTime, long arriveTime, Aircraft aircraft, Crew crew, User operator) {
         super(id);
         this.departure = departure;
         this.destination = destination;
@@ -20,7 +20,7 @@ public class Flight extends Entity {
         this.arriveTime = arriveTime;
         this.aircraft = aircraft;
         this.crew = crew;
-        this.admin = admin;
+        this.operator = operator;
     }
 
     public Airport getDeparture() {
@@ -72,12 +72,12 @@ public class Flight extends Entity {
         this.crew = crew;
     }
 
-    public User getAdmin() {
-        return admin;
+    public User getOperator() {
+        return operator;
     }
 
-    public void setAdmin(User admin) {
-        this.admin = admin;
+    public void setOperator(User operator) {
+        this.operator = operator;
     }
 
     @Override
@@ -94,7 +94,7 @@ public class Flight extends Entity {
         if (!destination.equals(flight.destination)) return false;
         if (!aircraft.equals(flight.aircraft)) return false;
         if (!crew.equals(flight.crew)) return false;
-        return admin.equals(flight.admin);
+        return operator.equals(flight.operator);
     }
 
     @Override
@@ -106,7 +106,7 @@ public class Flight extends Entity {
         result = 31 * result + (int) (arriveTime ^ (arriveTime >>> 32));
         result = 31 * result + aircraft.hashCode();
         result = 31 * result + crew.hashCode();
-        result = 31 * result + admin.hashCode();
+        result = 31 * result + operator.hashCode();
         return result;
     }
 
@@ -119,7 +119,7 @@ public class Flight extends Entity {
         sb.append(", arriveTime=").append(arriveTime);
         sb.append(", aircraft=").append(aircraft);
         sb.append(", crew=").append(crew);
-        sb.append(", admin=").append(admin);
+        sb.append(", operator=").append(operator);
         sb.append('}');
         return sb.toString();
     }

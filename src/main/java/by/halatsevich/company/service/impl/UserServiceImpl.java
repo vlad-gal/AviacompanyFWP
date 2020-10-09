@@ -10,31 +10,33 @@ import by.halatsevich.company.entity.User;
 import by.halatsevich.company.service.UserService;
 import by.halatsevich.company.service.exception.ServiceException;
 import by.halatsevich.company.service.validator.UserValidator;
+import by.halatsevich.company.service.util.PasswordEncryption;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public class UserServiceImpl implements UserService {
     @Override
     public User authorization(AuthorizationData authorizationData) throws ServiceException {
         UserDao userDao = DaoFactory.getInstance().getUserDao();
         String login = authorizationData.getLogin();
-        String password = authorizationData.getPassword();
+        String password = PasswordEncryption.encryptPassword(authorizationData.getPassword());
         User user;
         try {
-            Map<String, String> userData = userDao.findPasswordByLogin(authorizationData.getLogin());
-            String foundLogin = userData.get(ParameterName.LOGIN);
-            String foundPassword = userData.get(ParameterName.PASSWORD);
+            Optional<User> userData = userDao.selectUserByLogin(authorizationData.getLogin());
+            String foundLogin = userData.get().getLogin();
+            String foundPassword = userData.get().getPassword();
             if (UserValidator.isValidUserLoginPass(login, password, foundLogin, foundPassword)) {
-                user = userDao.authorization(authorizationData);
+                user = userData.get();
             } else {
                 throw new ServiceException("Incorrect login or password");
             }
         } catch (DaoException e) {
-            String exceptionMessage = String.format("User with login: % - not found", login);
+            String exceptionMessage = String.format("User with login: %s - not found", login);
             throw new ServiceException(exceptionMessage, e);
         }
+
         return user;
     }
 
@@ -47,4 +49,6 @@ public class UserServiceImpl implements UserService {
     public List<User> selectAllUsers() throws ServiceException {
         return null;
     }
+
+
 }

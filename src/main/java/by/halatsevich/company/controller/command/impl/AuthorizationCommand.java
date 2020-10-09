@@ -30,13 +30,10 @@ public class AuthorizationCommand implements Command {
             request.getSession().setAttribute(ParameterName.ERROR_LOGIN_PASS, ParameterMessage.ERROR_LOGIN_PASS_MESSAGE);
             response.sendRedirect(PagePath.AUTHORIZATION_PAGE);
         } else {
-            AuthorizationData data = new AuthorizationData();
-            data.setLogin(login);
-            data.setPassword(password);
             ServiceFactory factory = ServiceFactory.getInstance();
             UserService service = factory.getUserService();
             try {
-                User user = service.authorization(data);
+                User user = service.authorization(new AuthorizationData(login,password));
                 defineMainPage(request, response, user);
             } catch (ServiceException e) {
                 logger.log(Level.INFO, "Incorrect login or password", e);
@@ -47,48 +44,48 @@ public class AuthorizationCommand implements Command {
     }
 
     private void defineMainPage(HttpServletRequest request, HttpServletResponse response, User user) throws IOException {
-        switch (user.getRole()){
-            case ADMIN: {
-                request.getSession().setAttribute(ParameterName.ROLE, user.getRole().toString().toLowerCase());
-                request.getSession().setAttribute(ParameterName.STATUS, user.getStatus().toString().toLowerCase());
-                response.sendRedirect(PagePath.ADMIN_MAIN_PAGE);
-                break;
-            }
-            case PILOT:
-            case NAVIGATOR:
-            case RADIOMAN:
-            case STEWARDESS:{
-                request.getSession().setAttribute(ParameterName.FIRST_NAME, user.getUserData().getFirstName());
-                request.getSession().setAttribute(ParameterName.LAST_NAME, user.getUserData().getLastName());
-                request.getSession().setAttribute(ParameterName.ROLE, user.getRole().toString().toLowerCase());
-                response.sendRedirect(PagePath.PERSONAL_MAIN_PAGE);
-                break;
-            }
-            case DISPATCHER:{
-                request.getSession().setAttribute(ParameterName.FIRST_NAME, user.getUserData().getFirstName());
-                request.getSession().setAttribute(ParameterName.LAST_NAME, user.getUserData().getLastName());
-                request.getSession().setAttribute(ParameterName.TELEPHONE, user.getUserData().getTelephoneNumber());
-                request.getSession().setAttribute(ParameterName.ROLE, user.getRole().toString().toLowerCase());
-                response.sendRedirect(PagePath.DISPATCHER_MAIN_PAGE);
-                break;
-            }
-            case OPERATOR:{
-                request.getSession().setAttribute(ParameterName.FIRST_NAME, user.getUserData().getFirstName());
-                request.getSession().setAttribute(ParameterName.LAST_NAME, user.getUserData().getLastName());
-                request.getSession().setAttribute(ParameterName.TELEPHONE, user.getUserData().getTelephoneNumber());
-                request.getSession().setAttribute(ParameterName.ROLE, user.getRole().toString().toLowerCase());
-                response.sendRedirect(PagePath.OPERATOR_MAIN_PAGE);
-                break;
-            }
-            case DEFAULT:{
-                request.getSession().setAttribute(ParameterName.FIRST_NAME, user.getUserData().getFirstName());
-                request.getSession().setAttribute(ParameterName.LAST_NAME, user.getUserData().getLastName());
-                request.getSession().setAttribute(ParameterName.TELEPHONE, user.getUserData().getTelephoneNumber());
-                request.getSession().setAttribute(ParameterName.ROLE, user.getRole().toString().toLowerCase());
-                request.getSession().setAttribute(ParameterName.STATUS, user.getStatus().toString().toLowerCase());
-                response.sendRedirect(PagePath.DEFAULT_MAIN_PAGE);
-                break;
-            }
-        }
+//        switch (user.getRole()){
+//            case ADMIN: {
+//                request.getSession().setAttribute(ParameterName.ROLE, user.getRole().toString().toLowerCase());
+//                request.getSession().setAttribute(ParameterName.STATUS, user.getStatus().toString().toLowerCase());
+//                response.sendRedirect(PagePath.ADMIN_MAIN_PAGE);
+//                break;
+//            }
+//            case PILOT:
+//            case NAVIGATOR:
+//            case RADIOMAN:
+//            case STEWARDESS:{
+//                request.getSession().setAttribute(ParameterName.FIRST_NAME, user.getUserData().getFirstName());
+//                request.getSession().setAttribute(ParameterName.LAST_NAME, user.getUserData().getLastName());
+//                request.getSession().setAttribute(ParameterName.ROLE, user.getRole().toString().toLowerCase());
+//                response.sendRedirect(PagePath.PERSONAL_MAIN_PAGE);
+//                break;
+//            }
+//            case DISPATCHER:{
+//                request.getSession().setAttribute(ParameterName.FIRST_NAME, user.getUserData().getFirstName());
+//                request.getSession().setAttribute(ParameterName.LAST_NAME, user.getUserData().getLastName());
+//                request.getSession().setAttribute(ParameterName.TELEPHONE, user.getUserData().getTelephoneNumber());
+//                request.getSession().setAttribute(ParameterName.ROLE, user.getRole().toString().toLowerCase());
+//                response.sendRedirect(PagePath.DISPATCHER_MAIN_PAGE);
+//                break;
+//            }
+//            case OPERATOR:{
+//                request.getSession().setAttribute(ParameterName.FIRST_NAME, user.getUserData().getFirstName());
+//                request.getSession().setAttribute(ParameterName.LAST_NAME, user.getUserData().getLastName());
+//                request.getSession().setAttribute(ParameterName.TELEPHONE, user.getUserData().getTelephoneNumber());
+//                request.getSession().setAttribute(ParameterName.ROLE, user.getRole().toString().toLowerCase());
+//                response.sendRedirect(PagePath.OPERATOR_MAIN_PAGE);
+//                break;
+//            }
+//            case DEFAULT:{
+//                request.getSession().setAttribute(ParameterName.FIRST_NAME, user.getUserData().getFirstName());
+//                request.getSession().setAttribute(ParameterName.LAST_NAME, user.getUserData().getLastName());
+//                request.getSession().setAttribute(ParameterName.TELEPHONE, user.getUserData().getTelephoneNumber());
+//                request.getSession().setAttribute(ParameterName.ROLE, user.getRole().toString().toLowerCase());
+//                request.getSession().setAttribute(ParameterName.STATUS, user.getStatus().toString().toLowerCase());
+//                response.sendRedirect(PagePath.DEFAULT_MAIN_PAGE);
+//                break;
+//            }
+//        }
     }
 }

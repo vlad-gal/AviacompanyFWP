@@ -6,13 +6,19 @@ import by.halatsevich.company.entity.RegistrationData;
 import by.halatsevich.company.entity.User;
 
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 
 public interface UserDao {
-    User authorization(AuthorizationData authorizationData) throws DaoException;
+
+    List<User> selectAllUsers() throws DaoException;
+
+    Optional<User> authorization(AuthorizationData authorizationData) throws DaoException;
+
+    Optional<User> selectUserByLogin(String login) throws DaoException;
 
     boolean registration(RegistrationData registrationData) throws DaoException;
-    List<User> selectAll() throws DaoException;
 
-    Map<String,String> findPasswordByLogin(String login) throws DaoException;
+    boolean removeUser(int userId) throws DaoException;
+
+    Optional<User> updateUser(User user) throws DaoException;
 }

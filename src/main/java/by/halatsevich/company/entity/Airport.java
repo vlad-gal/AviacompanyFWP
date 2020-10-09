@@ -8,7 +8,7 @@ public class Airport extends Entity {
     public Airport() {
     }
 
-    public Airport(long id, String country, String city, String airportName) {
+    public Airport(int id, String country, String city, String airportName) {
         super(id);
         this.country = country;
         this.city = city;

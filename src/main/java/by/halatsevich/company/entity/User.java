@@ -1,10 +1,9 @@
 package by.halatsevich.company.entity;
 
-import java.util.Arrays;
-
 public class User extends Entity {
     private String email;
     private String login;
+    private String password;
     private Role role;
     private Status status;
     private UserData userData;
@@ -56,6 +55,15 @@ public class User extends Entity {
         return status;
     }
 
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getPassword() {
+
+        return password;
+    }
+
     public void setStatus(Status status) {
         this.status = status;
     }
@@ -78,9 +86,10 @@ public class User extends Entity {
 
         if (!email.equals(user.email)) return false;
         if (!login.equals(user.login)) return false;
+        if (!password.equals(user.password)) return false;
         if (role != user.role) return false;
         if (status != user.status) return false;
-        return userData != null ? userData.equals(user.userData) : user.userData == null;
+        return userData.equals(user.userData);
     }
 
     @Override
@@ -88,9 +97,10 @@ public class User extends Entity {
         int result = super.hashCode();
         result = 31 * result + email.hashCode();
         result = 31 * result + login.hashCode();
+        result = 31 * result + password.hashCode();
         result = 31 * result + role.hashCode();
         result = 31 * result + status.hashCode();
-        result = 31 * result + (userData != null ? userData.hashCode() : 0);
+        result = 31 * result + userData.hashCode();
         return result;
     }
 
@@ -99,6 +109,7 @@ public class User extends Entity {
         final StringBuilder sb = new StringBuilder("User{");
         sb.append("email='").append(email).append('\'');
         sb.append(", login='").append(login).append('\'');
+        sb.append(", password='").append(password).append('\'');
         sb.append(", role=").append(role);
         sb.append(", status=").append(status);
         sb.append(", userData=").append(userData);
