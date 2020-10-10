@@ -34,6 +34,6 @@ public class SqlColumnName {
     public static final String TAIL_NUMBER = "tailNumber";
     public static final String AIRCRAFT_NAME = "aircraftName";
 
-
-    public static final String ENTITY_NAME = "name";
+    private SqlColumnName(){
+    }
 }

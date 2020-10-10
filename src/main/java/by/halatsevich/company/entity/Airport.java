@@ -15,6 +15,12 @@ public class Airport extends Entity {
         this.airportName = airportName;
     }
 
+    public Airport(String country, String city, String airportName) {
+        this.country = country;
+        this.city = city;
+        this.airportName = airportName;
+    }
+
     public String getCountry() {
         return country;
     }

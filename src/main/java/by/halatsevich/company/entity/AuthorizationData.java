@@ -1,6 +1,6 @@
 package by.halatsevich.company.entity;
 
-public class AuthorizationData{
+public class AuthorizationData {
     private String login;
     private String password;
 

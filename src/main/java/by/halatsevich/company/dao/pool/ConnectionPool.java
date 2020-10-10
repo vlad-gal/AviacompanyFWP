@@ -1,5 +1,6 @@
 package by.halatsevich.company.dao.pool;
 
+import by.halatsevich.company.dao.exception.PoolRuntimeException;
 import com.mysql.cj.jdbc.Driver;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -8,12 +9,15 @@ import org.apache.logging.log4j.Logger;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.ArrayDeque;
+import java.util.Properties;
+import java.util.Queue;
+import java.util.ResourceBundle;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 
 public class ConnectionPool {
-    private static Logger logger = LogManager.getLogger();
+    private static Logger logger = LogManager.getLogger(ConnectionPool.class);
     private int poolSize;
     private static ConnectionPool instance = new ConnectionPool();
     private BlockingQueue<ProxyConnection> freeConnections;
@@ -32,7 +36,7 @@ public class ConnectionPool {
             DriverManager.registerDriver(new Driver());
         } catch (SQLException e) {
             logger.log(Level.FATAL, "Cannot register driver");
-            throw new RuntimeException("Cannot register driver", e);
+            throw new PoolRuntimeException("Cannot register driver", e);
         }
 
         ResourceBundle bundle = ResourceBundle.getBundle(PoolParameter.PROPERTIES_PATH);
@@ -70,7 +74,7 @@ public class ConnectionPool {
 
         if (freeConnections.isEmpty()) {
             logger.log(Level.FATAL, "Cannot create connections");
-            throw new RuntimeException("Cannot create connections");
+            throw new PoolRuntimeException("Cannot create connections");
         }
     }
 

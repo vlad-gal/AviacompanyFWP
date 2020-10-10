@@ -1,4 +1,4 @@
-package by.halatsevich.company.dao.impl;
+package by.halatsevich.company.dao;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -8,10 +8,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public abstract class MySqlDao {
-    Logger logger = LogManager.getLogger();
+public interface BaseDao {
+    Logger logger = LogManager.getLogger(BaseDao.class);
 
-    void closeStatement(Statement statement) {
+    default void closeStatement(Statement statement) {
         try {
             if (statement != null) {
                 statement.close();
@@ -21,7 +21,7 @@ public abstract class MySqlDao {
         }
     }
 
-    void closeResultSet(ResultSet resultSet) {
+    default void closeResultSet(ResultSet resultSet) {
         try {
             if (resultSet != null) {
                 resultSet.close();

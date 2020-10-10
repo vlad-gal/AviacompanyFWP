@@ -1,11 +1,18 @@
 package by.halatsevich.company.entity;
 
-public class UserData extends Entity{
+public class UserData extends Entity {
     private String firstName;
     private String lastName;
     private long telephoneNumber;
 
     public UserData() {
+    }
+
+    public UserData(int id, String firstName, String lastName, long telephoneNumber) {
+        super(id);
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.telephoneNumber = telephoneNumber;
     }
 
     public UserData(String firstName, String lastName, long telephoneNumber) {
@@ -56,7 +63,7 @@ public class UserData extends Entity{
         int result = super.hashCode();
         result = 31 * result + firstName.hashCode();
         result = 31 * result + lastName.hashCode();
-        result = 31 * result + Long.hashCode(telephoneNumber);
+        result = 31 * result + (int) (telephoneNumber ^ (telephoneNumber >>> 32));
         return result;
     }
 

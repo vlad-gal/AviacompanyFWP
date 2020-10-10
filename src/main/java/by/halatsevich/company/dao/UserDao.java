@@ -8,17 +8,19 @@ import by.halatsevich.company.entity.User;
 import java.util.List;
 import java.util.Optional;
 
-public interface UserDao {
+public interface UserDao extends BaseDao {
 
-    List<User> selectAllUsers() throws DaoException;
+    List<User> findAllUsers() throws DaoException;
 
     Optional<User> authorization(AuthorizationData authorizationData) throws DaoException;
 
     Optional<User> selectUserByLogin(String login) throws DaoException;
 
+    Optional<User> selectUserById(int userId) throws DaoException;
+
     boolean registration(RegistrationData registrationData) throws DaoException;
 
     boolean removeUser(int userId) throws DaoException;
 
-    Optional<User> updateUser(User user) throws DaoException;
+    boolean updateUser(User user) throws DaoException;
 }

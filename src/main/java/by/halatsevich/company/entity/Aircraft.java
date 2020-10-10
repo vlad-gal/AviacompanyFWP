@@ -1,13 +1,11 @@
 package by.halatsevich.company.entity;
 
-import java.util.Arrays;
-
-public class Aircraft extends Entity{
+public class Aircraft extends Entity {
     private String tailNumber;
     private String aircraftName;
     private AircraftType aircraftType;
 
-    public enum AircraftType{
+    public enum AircraftType {
         CARGO, PASSENGER
     }
 
@@ -15,6 +13,13 @@ public class Aircraft extends Entity{
     }
 
     public Aircraft(String tailNumber, String aircraftName, AircraftType aircraftType) {
+        this.tailNumber = tailNumber;
+        this.aircraftName = aircraftName;
+        this.aircraftType = aircraftType;
+    }
+
+    public Aircraft(int id, String tailNumber, String aircraftName, AircraftType aircraftType) {
+        super(id);
         this.tailNumber = tailNumber;
         this.aircraftName = aircraftName;
         this.aircraftType = aircraftType;
@@ -68,9 +73,12 @@ public class Aircraft extends Entity{
 
     @Override
     public String toString() {
-        String aircraft = String.format("Aircraft: tail number - %s, name - %s, type - %s",
-                tailNumber,aircraftName,aircraftType.toString().toLowerCase());
-        return aircraft;
+        final StringBuilder sb = new StringBuilder("Aircraft{");
+        sb.append("tailNumber='").append(tailNumber).append('\'');
+        sb.append(", aircraftName='").append(aircraftName).append('\'');
+        sb.append(", aircraftType=").append(aircraftType);
+        sb.append('}');
+        return sb.toString();
     }
 }
 

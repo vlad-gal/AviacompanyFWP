@@ -1,34 +1,41 @@
 package by.halatsevich.company.entity;
 
-import java.util.List;
-
 public class Crew extends Entity {
-    private User dispatcher;
+    private int dispatcherId;
     private int numberOfPilots;
     private int numberOfNavigators;
     private int numberOfRadioman;
     private int numberOfStewardesses;
-    private List<User> crew;
+    private Status status;
 
     public Crew() {
     }
 
-    public Crew(int id, User dispatcher, int numberOfPilots, int numberOfNavigators, int numberOfRadioman, int numberOfStewardesses, List<User> crew) {
+    public Crew(int id, int dispatcherId, int numberOfPilots, int numberOfNavigators, int numberOfRadioman, int numberOfStewardesses, Status status) {
         super(id);
-        this.dispatcher = dispatcher;
+        this.dispatcherId = dispatcherId;
         this.numberOfPilots = numberOfPilots;
         this.numberOfNavigators = numberOfNavigators;
         this.numberOfRadioman = numberOfRadioman;
         this.numberOfStewardesses = numberOfStewardesses;
-        this.crew = crew;
+        this.status = status;
     }
 
-    public User getDispatcher() {
-        return dispatcher;
+    public Crew(int dispatcherId, int numberOfPilots, int numberOfNavigators, int numberOfRadioman, int numberOfStewardesses, Status status) {
+        this.dispatcherId = dispatcherId;
+        this.numberOfPilots = numberOfPilots;
+        this.numberOfNavigators = numberOfNavigators;
+        this.numberOfRadioman = numberOfRadioman;
+        this.numberOfStewardesses = numberOfStewardesses;
+        this.status = status;
     }
 
-    public void setDispatcher(User dispatcher) {
-        this.dispatcher = dispatcher;
+    public int getDispatcherId() {
+        return dispatcherId;
+    }
+
+    public void setDispatcherId(int dispatcherId) {
+        this.dispatcherId = dispatcherId;
     }
 
     public int getNumberOfPilots() {
@@ -63,12 +70,12 @@ public class Crew extends Entity {
         this.numberOfStewardesses = numberOfStewardesses;
     }
 
-    public List<User> getCrew() {
-        return crew;
+    public Status getStatus() {
+        return status;
     }
 
-    public void setCrew(List<User> crew) {
-        this.crew = crew;
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     @Override
@@ -77,38 +84,37 @@ public class Crew extends Entity {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
 
-        Crew crew1 = (Crew) o;
+        Crew crew = (Crew) o;
 
-        if (numberOfPilots != crew1.numberOfPilots) return false;
-        if (numberOfNavigators != crew1.numberOfNavigators) return false;
-        if (numberOfRadioman != crew1.numberOfRadioman) return false;
-        if (numberOfStewardesses != crew1.numberOfStewardesses) return false;
-        if (!dispatcher.equals(crew1.dispatcher)) return false;
-        return crew.equals(crew1.crew);
+        if (dispatcherId != crew.dispatcherId) return false;
+        if (numberOfPilots != crew.numberOfPilots) return false;
+        if (numberOfNavigators != crew.numberOfNavigators) return false;
+        if (numberOfRadioman != crew.numberOfRadioman) return false;
+        if (numberOfStewardesses != crew.numberOfStewardesses) return false;
+        return status == crew.status;
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + dispatcher.hashCode();
+        result = 31 * result + dispatcherId;
         result = 31 * result + numberOfPilots;
         result = 31 * result + numberOfNavigators;
         result = 31 * result + numberOfRadioman;
         result = 31 * result + numberOfStewardesses;
-        result = 31 * result + crew.hashCode();
+        result = 31 * result + status.hashCode();
         return result;
     }
-
 
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Crew{");
-        sb.append("dispatcher=").append(dispatcher);
+        sb.append("dispatcherId=").append(dispatcherId);
         sb.append(", numberOfPilots=").append(numberOfPilots);
         sb.append(", numberOfNavigators=").append(numberOfNavigators);
         sb.append(", numberOfRadioman=").append(numberOfRadioman);
         sb.append(", numberOfStewardesses=").append(numberOfStewardesses);
-        sb.append(", crew=").append(crew);
+        sb.append(", status=").append(status);
         sb.append('}');
         return sb.toString();
     }

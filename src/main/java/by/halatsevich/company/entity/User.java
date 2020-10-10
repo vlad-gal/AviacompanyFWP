@@ -12,11 +12,17 @@ public class User extends Entity {
         ADMIN, OPERATOR, DISPATCHER, PILOT, RADIOMAN, NAVIGATOR, STEWARDESS, DEFAULT
     }
 
-    public enum Status {
-        ACTIVE, INACTIVE
+    public User() {
     }
 
-    public User() {
+    public User(int id, String email, String login, String password, Role role, Status status, UserData userData) {
+        super(id);
+        this.email = email;
+        this.login = login;
+        this.password = password;
+        this.role = role;
+        this.status = status;
+        this.userData = userData;
     }
 
     public User(String email, String login, Role role, Status status, UserData userData) {
@@ -43,6 +49,14 @@ public class User extends Entity {
         this.login = login;
     }
 
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
     public Role getRole() {
         return role;
     }
@@ -53,15 +67,6 @@ public class User extends Entity {
 
     public Status getStatus() {
         return status;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPassword() {
-
-        return password;
     }
 
     public void setStatus(Status status) {

@@ -1,43 +1,55 @@
 package by.halatsevich.company.entity;
 
 public class Flight extends Entity {
-    private Airport departure;
-    private Airport destination;
+    private int departureAirportId;
+    private int destinationAirportId;
     private long departTime;
     private long arriveTime;
-    private Aircraft aircraft;
-    private Crew crew;
-    private User operator;
+    private int aircraftId;
+    private int crewId;
+    private int operatorId;
+    private Status status;
 
     public Flight() {
     }
 
-    public Flight(int id, Airport departure, Airport destination, long departTime, long arriveTime, Aircraft aircraft, Crew crew, User operator) {
+    public Flight(int id, int departureAirportId, int destinationAirportId, long departTime, long arriveTime, int aircraftId, int crewId, int operatorId, Status status) {
         super(id);
-        this.departure = departure;
-        this.destination = destination;
+        this.departureAirportId = departureAirportId;
+        this.destinationAirportId = destinationAirportId;
         this.departTime = departTime;
         this.arriveTime = arriveTime;
-        this.aircraft = aircraft;
-        this.crew = crew;
-        this.operator = operator;
+        this.aircraftId = aircraftId;
+        this.crewId = crewId;
+        this.operatorId = operatorId;
+        this.status = status;
     }
 
-    public Airport getDeparture() {
-
-        return departure;
+    public Flight(int departureAirportId, int destinationAirportId, long departTime, long arriveTime, int aircraftId, int crewId, int operatorId, Status status) {
+        this.departureAirportId = departureAirportId;
+        this.destinationAirportId = destinationAirportId;
+        this.departTime = departTime;
+        this.arriveTime = arriveTime;
+        this.aircraftId = aircraftId;
+        this.crewId = crewId;
+        this.operatorId = operatorId;
+        this.status = status;
     }
 
-    public void setDeparture(Airport departure) {
-        this.departure = departure;
+    public int getDepartureAirportId() {
+        return departureAirportId;
     }
 
-    public Airport getDestination() {
-        return destination;
+    public void setDepartureAirportId(int departureAirportId) {
+        this.departureAirportId = departureAirportId;
     }
 
-    public void setDestination(Airport destination) {
-        this.destination = destination;
+    public int getDestinationAirportId() {
+        return destinationAirportId;
+    }
+
+    public void setDestinationAirportId(int destinationAirportId) {
+        this.destinationAirportId = destinationAirportId;
     }
 
     public long getDepartTime() {
@@ -56,28 +68,36 @@ public class Flight extends Entity {
         this.arriveTime = arriveTime;
     }
 
-    public Aircraft getAircraft() {
-        return aircraft;
+    public int getAircraftId() {
+        return aircraftId;
     }
 
-    public void setAircraft(Aircraft aircraft) {
-        this.aircraft = aircraft;
+    public void setAircraftId(int aircraftId) {
+        this.aircraftId = aircraftId;
     }
 
-    public Crew getCrew() {
-        return crew;
+    public int getCrewId() {
+        return crewId;
     }
 
-    public void setCrew(Crew crew) {
-        this.crew = crew;
+    public void setCrewId(int crewId) {
+        this.crewId = crewId;
     }
 
-    public User getOperator() {
-        return operator;
+    public int getOperatorId() {
+        return operatorId;
     }
 
-    public void setOperator(User operator) {
-        this.operator = operator;
+    public void setOperatorId(int operatorId) {
+        this.operatorId = operatorId;
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public void setStatus(Status status) {
+        this.status = status;
     }
 
     @Override
@@ -88,38 +108,41 @@ public class Flight extends Entity {
 
         Flight flight = (Flight) o;
 
+        if (departureAirportId != flight.departureAirportId) return false;
+        if (destinationAirportId != flight.destinationAirportId) return false;
         if (departTime != flight.departTime) return false;
         if (arriveTime != flight.arriveTime) return false;
-        if (!departure.equals(flight.departure)) return false;
-        if (!destination.equals(flight.destination)) return false;
-        if (!aircraft.equals(flight.aircraft)) return false;
-        if (!crew.equals(flight.crew)) return false;
-        return operator.equals(flight.operator);
+        if (aircraftId != flight.aircraftId) return false;
+        if (crewId != flight.crewId) return false;
+        if (operatorId != flight.operatorId) return false;
+        return status == flight.status;
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + departure.hashCode();
-        result = 31 * result + destination.hashCode();
+        result = 31 * result + departureAirportId;
+        result = 31 * result + destinationAirportId;
         result = 31 * result + (int) (departTime ^ (departTime >>> 32));
         result = 31 * result + (int) (arriveTime ^ (arriveTime >>> 32));
-        result = 31 * result + aircraft.hashCode();
-        result = 31 * result + crew.hashCode();
-        result = 31 * result + operator.hashCode();
+        result = 31 * result + aircraftId;
+        result = 31 * result + crewId;
+        result = 31 * result + operatorId;
+        result = 31 * result + status.hashCode();
         return result;
     }
 
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("Flight{");
-        sb.append("departure=").append(departure);
-        sb.append(", destination=").append(destination);
+        sb.append("departureAirportId=").append(departureAirportId);
+        sb.append(", destinationAirportId=").append(destinationAirportId);
         sb.append(", departTime=").append(departTime);
         sb.append(", arriveTime=").append(arriveTime);
-        sb.append(", aircraft=").append(aircraft);
-        sb.append(", crew=").append(crew);
-        sb.append(", operator=").append(operator);
+        sb.append(", aircraftId=").append(aircraftId);
+        sb.append(", crewId=").append(crewId);
+        sb.append(", operatorId=").append(operatorId);
+        sb.append(", status=").append(status);
         sb.append('}');
         return sb.toString();
     }
