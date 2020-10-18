@@ -1,13 +1,12 @@
 package by.halatsevich.company.controller;
 
 import by.halatsevich.company.controller.command.Command;
-import by.halatsevich.company.dao.pool.ConnectionPool;
+import by.halatsevich.company.model.dao.pool.ConnectionPool;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
