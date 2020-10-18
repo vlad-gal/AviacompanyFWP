@@ -3,16 +3,15 @@ package by.halatsevich.company.model.service.validator;
 import by.halatsevich.company.model.entity.AuthorizationData;
 import by.halatsevich.company.model.entity.RegistrationData;
 
-import java.util.regex.Pattern;
-
 public class UserValidator {
     private static final String REGEX_LOGIN = "[\\w-]{3,40}";
     private static final String REGEX_PASSWORD = "[^\\s]{8,25}";
-    private static final String REGEX_EMAIL = "[]{}";
-    private static final String REGEX_TELEPHONE_NUMBER = "//d{12}";
-    private static final String REGEX_NAME = "//w+";
+    private static final String REGEX_EMAIL = "[\\w-.]+@[a-zA-Z]+\\.[a-z]{2,6}";
+    private static final String REGEX_TELEPHONE_NUMBER = "\\d{12}";
+    private static final String REGEX_NAME = "[A-ZА-Я][a-zа-я]+";
 
-
+    private UserValidator(){
+    }
 
     public static boolean isValidAuthorizationData(AuthorizationData authorizationData) {
         String login = authorizationData.getLogin();
@@ -21,46 +20,19 @@ public class UserValidator {
     }
 
     public static boolean isValidRegistrationData(RegistrationData registrationData) {
-        // TODO: 17.10.2020
         String login = registrationData.getLogin();
         String password = registrationData.getPassword();
         String email = registrationData.getEmail();
         String firstName = registrationData.getFirstName();
         String lastName = registrationData.getLastName();
         String telephoneNumber = registrationData.getTelephoneNumber();
-        return (login != null && password != null && login.matches(REGEX_LOGIN) && password.matches(REGEX_PASSWORD));
-    }
-
-    public static boolean isValidLogin(String login) {
-        Pattern p = Pattern.compile(REGEX_LOGIN);
-        login.matches(REGEX_LOGIN);
-        return true;
-    }
-
-    public static boolean isValidPassword(String password) {
-
-        return true;
-    }
-
-    public static boolean isValidEmail(String email) {
-
-        return true;
-    }
-
-    public static boolean isValidTelephoneNumber(String telephoneNumber) {
-
-        return true;
-    }
-
-    public static boolean isValidFirstName(String firstName) {
-        return false;
-    }
-
-    public static boolean isValidLastName(String lastName) {
-        return false;
-    }
-
-    public static boolean isValidUserLoginPass(String login, String password, String foundLogin, String foundPassword) {
-        return login.equals(foundLogin) && password.equals(foundPassword);
+        boolean flag = false;
+        if (login != null && password != null && email != null && firstName != null
+                && lastName != null && telephoneNumber != null && login.matches(REGEX_LOGIN)
+                && password.matches(REGEX_PASSWORD) && email.matches(REGEX_EMAIL) && firstName.matches(REGEX_NAME)
+                && lastName.matches(REGEX_NAME) && telephoneNumber.matches(REGEX_TELEPHONE_NUMBER)) {
+            flag = true;
+        }
+        return flag;
     }
 }
