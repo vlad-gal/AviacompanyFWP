@@ -2,7 +2,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setLocale value="${sessionScope.lang}" scope="session"/>
 <fmt:setBundle basename="local"/>
 
 <!doctype html>
@@ -13,17 +13,14 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 
-    <title><fmt:message key="local.common.successfulRegistrationTitle"/></title>
+    <title><fmt:message key="local.common.successfulActivationTitle"/></title>
 </head>
 <body>
 <div class="container text-center">
     <div class="container h-50">
         <div style="margin-top: 20%">
-        <h2><fmt:message key="local.common.successfulRegistrationTitle"/></h2>
-            <h6>
-                <fmt:message key="local.common.successfulRegistrationText"/>
-            </h6>
-            <a href="${pageContext.request.contextPath}/controller?command=welcome_page"><fmt:message key="local.common.welcome"/></a>
+            <h2><fmt:message key="local.common.successfulActivationTitle"/></h2>
+            <a href="${pageContext.request.contextPath}/controller?command=authorization_page"><fmt:message key="local.common.authorizationTitle"/></a>
         </div>
     </div>
 </div>
