@@ -2,15 +2,8 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<fmt:setLocale value="${lang}" scope="session"/>
-<fmt:setBundle basename="local" var="local"/>
-<fmt:message bundle="${local}" key="local.flight.title" var="flightsTitle"/>
-<fmt:message bundle="${local}" key="local.flight.emptyFlightList" var="emptyFlightList"/>
-<fmt:message bundle="${local}" key="local.flight.departureAirport" var="depatureAirport"/>
-<fmt:message bundle="${local}" key="local.flight.destinationAirport" var="destinationAirport"/>
-<fmt:message bundle="${local}" key="local.flight.departTime" var="departTime"/>
-<fmt:message bundle="${local}" key="local.flight.arriveTime" var="arriveTime"/>
-<fmt:message bundle="${local}" key="local.flight.description" var="flightsDescription"/>
+<fmt:setLocale value="${sessionScope.lang}"/>
+<fmt:setBundle basename="local"/>
 
 <!doctype html>
 <html>
@@ -20,69 +13,63 @@
 
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
+    <link rel="stylesheet" href="${pageContext.request.contextPath}/css/tablesort.css">
 
-    <title>${flightsTitle}</title>
+    <title><fmt:message key="local.common.flights"/></title>
 </head>
-<jsp:include page="common/header.jsp"/>
 <body>
-    <div class="container h-100">
-
-        <div class="row h-100">
-            <div class="align-self-center mr-auto col-4">
-                <h5>${flightsTitle}</h5>
-                <p class="card-text">${flightsDescription}</p>
-            </div>
-            <div class="col-8 ml-auto">
-                <div class="card">
-                    <div class="card-header text-center">
-                        <h5>${flightsTitle}</h5>
-                    </div>
-                    <div class="card-body">
-                        <c:choose>
-                            <c:when test="${empty flightList}">
-                                <div class="text-center">
-                                    <h5 class="card-title">${emptyFlightList}</h5>
-                                </div>
-                            </c:when>
-                            <c:otherwise>
-                                <table class="table" id="sort-flight">
-                                    <thead class="thead-light">
-                                    <tr class="row-a">
-                                        <th scope="col">${depatureAirport}</th>
-                                        <th scope="col">${destinationAirport}</th>
-                                        <th scope="col">${departTime}</th>
-                                        <th scope="col">${arriveTime}</th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    <c:forEach var="flight" items="${flightList}" end="9">
-                                        <tr class="row-a"
-                                            onclick="document.location ='controller?command=detail_page&flightId=${flight.id}'">
-                                            <td>${flight.departureAirport.airportName}, ${flight.departureAirport.city}, ${flight.departureAirport.country}</td>
-                                            <td>${flight.destinationAirport.airportName}, ${flight.destinationAirport.city}, ${flight.destinationAirport.country}</td>
-                                            <td><fmt:formatDate value="${flight.departTime}"
-                                                                pattern="d-MMMM-yyyy h:m"/></td>
-                                            <td><fmt:formatDate value="${flight.arriveTime}"
-                                                                pattern="d-MMMM-yyyy h:m"/></td>
-                                        </tr>
-                                    </c:forEach>
-                                    </tbody>
-                                </table>
-                            </c:otherwise>
-                        </c:choose>
-                        <c:if test="${errorGetFlightDataFromDB ne null}">
+<jsp:include page="common/header.jsp"/>
+<div class="container h-100">
+    <div class="row h-100">
+        <div class="align-self-center mr-auto col-4">
+            <h5><fmt:message key="local.flight.title"/></h5>
+            <p class="card-text"><fmt:message key="local.flight.description"/></p>
+        </div>
+        <div class="col-8 ml-auto">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h5><fmt:message key="local.common.flights"/></h5>
+                </div>
+                <div class="card-body">
+                    <c:choose>
+                        <c:when test="${empty flightList}">
                             <div class="text-center">
-                                <h5 class="card-title">${errorGetFlightDataFromDB}</h5>
+                                <h5 class="card-title"><fmt:message key="local.flight.emptyFlightList"/></h5>
                             </div>
-                        </c:if>
-                    </div>
+                        </c:when>
+                        <c:otherwise>
+                            <table class="table table-hover" id="sort-flight">
+                                <thead class="thead-light">
+                                <tr class="row-a">
+                                    <th scope="col"><fmt:message key="local.flight.departureAirport"/></th>
+                                    <th scope="col"><fmt:message key="local.flight.destinationAirport"/></th>
+                                    <th scope="col"><fmt:message key="local.flight.departTime"/></th>
+                                    <th scope="col"><fmt:message key="local.flight.arriveTime"/></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <c:forEach var="flight" items="${flightList}" end="9">
+                                    <tr class="row-a"
+                                        onclick="document.location ='controller?command=flight_detail_page&flightId=${flight.id}'">
+                                        <td>${flight.departureAirport.airportName}, ${flight.departureAirport.city}, ${flight.departureAirport.country}</td>
+                                        <td>${flight.destinationAirport.airportName}, ${flight.destinationAirport.city}, ${flight.destinationAirport.country}</td>
+                                        <td><fmt:formatDate value="${flight.departTime}"
+                                                            pattern="d-MMMM-yyyy h:m"/></td>
+                                        <td><fmt:formatDate value="${flight.arriveTime}"
+                                                            pattern="d-MMMM-yyyy h:m"/></td>
+                                    </tr>
+                                </c:forEach>
+                                </tbody>
+                            </table>
+                        </c:otherwise>
+                    </c:choose>
                 </div>
             </div>
         </div>
     </div>
-
-</body>
+</div>
 <jsp:include page="common/footer.jsp"/>
+</body>
 </html>
 <script src="${pageContext.request.contextPath}/js/jquery-3.5.1.slim.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/popper.min.js"></script>
