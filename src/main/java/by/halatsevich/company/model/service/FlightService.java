@@ -1,8 +1,7 @@
 package by.halatsevich.company.model.service;
 
 import by.halatsevich.company.model.entity.Flight;
-import by.halatsevich.company.model.entity.FlightDto;
-import by.halatsevich.company.model.service.exception.ServiceException;
+import by.halatsevich.company.model.exception.ServiceException;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,6 +11,7 @@ public interface FlightService {
      List<Flight> findAllFlights() throws ServiceException;
      List<Flight> findAllActualFlights() throws ServiceException;
 
+     Flight findFlightById(String flightId) throws ServiceException;
      Optional<Flight> findFlightByDepartureAirportId(int departureAirportId) throws ServiceException;
 
      Optional<Flight> findFlightByDestinationAirportId(int destinationAirportId) throws ServiceException;

@@ -15,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Optional;
 
 public class AircraftDetailPageCommand implements Command {
     private static final Logger logger = LogManager.getLogger(AircraftDetailPageCommand.class);
@@ -27,8 +28,8 @@ public class AircraftDetailPageCommand implements Command {
             ServiceFactory factory = ServiceFactory.getInstance();
             AircraftService aircraftService = factory.getAircraftService();
             try {
-                Aircraft aircraft = aircraftService.findAircraftById(aircraftId);
-                if (aircraft != null) {
+                Optional<Aircraft> aircraft = aircraftService.findAircraftById(aircraftId);
+                if (aircraft.isPresent()) {
                     request.setAttribute(ParameterName.AIRCRAFT, aircraft);
                     page = PagePath.DETAIL_PAGE;
                 } else {

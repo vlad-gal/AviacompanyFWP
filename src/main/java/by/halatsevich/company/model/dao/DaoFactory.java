@@ -4,7 +4,6 @@ import by.halatsevich.company.model.dao.impl.*;
 
 public class DaoFactory {
     private static final DaoFactory instance = new DaoFactory();
-
     private final UserDao userDao = new UserDaoImpl();
     private final FlightDao flightDao = new FlightDaoImpl();
     private final CrewDao crewDao = new CrewDaoImpl();

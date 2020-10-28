@@ -46,7 +46,7 @@
                     </div>
                     <c:if test="${errorGetDataFromDBFlag eq true}">
                         <div class="text-center">
-                            <h5 class="card-title"><fmt:message key="local.error.errorGetFlightDataFromDB"</h5>
+                            <h5 class="card-title"><fmt:message key="local.error.errorGetFlightDataFromDB"/></h5>
                         </div>
                     </c:if>
                 </c:when>

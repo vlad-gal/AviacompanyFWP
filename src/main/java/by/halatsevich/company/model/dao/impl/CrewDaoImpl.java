@@ -1,11 +1,11 @@
 package by.halatsevich.company.model.dao.impl;
 
+import by.halatsevich.company.model.dao.ColumnName;
 import by.halatsevich.company.model.dao.CrewDao;
-import by.halatsevich.company.model.dao.SqlColumnName;
 import by.halatsevich.company.model.dao.SqlQuery;
-import by.halatsevich.company.model.dao.exception.DaoException;
+import by.halatsevich.company.model.exception.DaoException;
 import by.halatsevich.company.model.factory.EntityFactory;
-import by.halatsevich.company.model.dao.pool.ConnectionPool;
+import by.halatsevich.company.model.pool.ConnectionPool;
 import by.halatsevich.company.model.entity.CrewDto;
 import by.halatsevich.company.model.entity.Status;
 import org.apache.logging.log4j.Level;
@@ -19,11 +19,11 @@ import java.util.*;
 public class CrewDaoImpl implements CrewDao {
 
     @Override
-    public List<CrewDto> findAllCrews() throws DaoException {
+    public List<CrewDto> findAll() throws DaoException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         PreparedStatement statement = null;
-        ResultSet resultSet = null;
+        ResultSet resultSet;
         List<CrewDto> crewDtos = new ArrayList<>();
         EntityFactory factory = EntityFactory.getInstance();
         try {
@@ -38,31 +38,30 @@ public class CrewDaoImpl implements CrewDao {
         } catch (SQLException e) {
             throw new DaoException("Error while finding all crewDtos", e);
         } finally {
-            closeResultSet(resultSet);
             closeStatement(statement);
-            pool.releaseConnection(connection);
+            closeConnection(connection);
         }
         return crewDtos;
     }
 
     private Map<String, Object> createCrewData(ResultSet resultSet) throws SQLException {
         Map<String, Object> crewData = new HashMap<>();
-        crewData.put(SqlColumnName.CREW_ID, resultSet.getInt(1));
-        crewData.put(SqlColumnName.DISPATCHER_ID, resultSet.getInt(2));
-        crewData.put(SqlColumnName.NUMBER_OF_PILOTS, resultSet.getInt(3));
-        crewData.put(SqlColumnName.NUMBER_OF_NAVIGATORS, resultSet.getInt(4));
-        crewData.put(SqlColumnName.NUMBER_OF_RADIOMAN, resultSet.getInt(5));
-        crewData.put(SqlColumnName.NUMBER_OF_STEWARDESSES, resultSet.getInt(6));
-        crewData.put(SqlColumnName.STATUS_NAME, resultSet.getString(7).toUpperCase());
+        crewData.put(ColumnName.CREW_ID, resultSet.getInt(1));
+        crewData.put(ColumnName.DISPATCHER_ID, resultSet.getInt(2));
+        crewData.put(ColumnName.NUMBER_OF_PILOTS, resultSet.getInt(3));
+        crewData.put(ColumnName.NUMBER_OF_NAVIGATORS, resultSet.getInt(4));
+        crewData.put(ColumnName.NUMBER_OF_RADIOMAN, resultSet.getInt(5));
+        crewData.put(ColumnName.NUMBER_OF_STEWARDESSES, resultSet.getInt(6));
+        crewData.put(ColumnName.STATUS_NAME, resultSet.getString(7).toUpperCase());
         return crewData;
     }
 
     @Override
-    public Optional<CrewDto> findCrewById(int crewId) throws DaoException {
+    public Optional<CrewDto> findById(int crewId) throws DaoException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         PreparedStatement statement = null;
-        ResultSet resultSet = null;
+        ResultSet resultSet;
         CrewDto crewDto = null;
         EntityFactory factory = EntityFactory.getInstance();
         try {
@@ -77,9 +76,8 @@ public class CrewDaoImpl implements CrewDao {
         } catch (SQLException e) {
             throw new DaoException("Error while finding crewDto by id", e);
         } finally {
-            closeResultSet(resultSet);
             closeStatement(statement);
-            pool.releaseConnection(connection);
+            closeConnection(connection);
         }
         return Optional.ofNullable(crewDto);
     }
@@ -89,7 +87,7 @@ public class CrewDaoImpl implements CrewDao {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         PreparedStatement statement = null;
-        ResultSet resultSet = null;
+        ResultSet resultSet;
         CrewDto crewDto = null;
         EntityFactory factory = EntityFactory.getInstance();
         try {
@@ -104,9 +102,8 @@ public class CrewDaoImpl implements CrewDao {
         } catch (SQLException e) {
             throw new DaoException("Error while finding crewDto by dispatcher id", e);
         } finally {
-            closeResultSet(resultSet);
             closeStatement(statement);
-            pool.releaseConnection(connection);
+            closeConnection(connection);
         }
         return Optional.ofNullable(crewDto);
     }
@@ -116,7 +113,7 @@ public class CrewDaoImpl implements CrewDao {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         PreparedStatement statement = null;
-        ResultSet resultSet = null;
+        ResultSet resultSet;
         List<Integer> usersId = new ArrayList<>();
         try {
             statement = connection.prepareStatement(SqlQuery.SELECT_USERS_ID_BY_CREW_ID);
@@ -130,9 +127,8 @@ public class CrewDaoImpl implements CrewDao {
         } catch (SQLException e) {
             throw new DaoException("Error while finding users id in crew", e);
         } finally {
-            closeResultSet(resultSet);
             closeStatement(statement);
-            pool.releaseConnection(connection);
+            closeConnection(connection);
         }
         return usersId;
     }
@@ -161,7 +157,7 @@ public class CrewDaoImpl implements CrewDao {
             throw new DaoException("Error while adding crewDto", e);
         } finally {
             closeStatement(statement);
-            pool.releaseConnection(connection);
+            closeConnection(connection);
         }
         return isAdded;
     }
@@ -185,7 +181,7 @@ public class CrewDaoImpl implements CrewDao {
             throw new DaoException("Error while adding user into crew", e);
         } finally {
             closeStatement(statement);
-            pool.releaseConnection(connection);
+            closeConnection(connection);
         }
         return isAdded;
     }
@@ -210,7 +206,7 @@ public class CrewDaoImpl implements CrewDao {
             throw new DaoException("Error while updating user into crew", e);
         } finally {
             closeStatement(statement);
-            pool.releaseConnection(connection);
+            closeConnection(connection);
         }
         return isUpdated;
     }
@@ -235,13 +231,13 @@ public class CrewDaoImpl implements CrewDao {
             throw new DaoException("Error while updating dispatcher into crew", e);
         } finally {
             closeStatement(statement);
-            pool.releaseConnection(connection);
+            closeConnection(connection);
         }
         return isUpdated;
     }
 
     @Override
-    public boolean updateCrew(CrewDto crewDto) throws DaoException {
+    public boolean update(CrewDto crewDto) throws DaoException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         PreparedStatement statement = null;
@@ -265,13 +261,13 @@ public class CrewDaoImpl implements CrewDao {
             throw new DaoException("Error while updating crewDto", e);
         } finally {
             closeStatement(statement);
-            pool.releaseConnection(connection);
+            closeConnection(connection);
         }
         return isUpdated;
     }
 
     @Override
-    public boolean removeCrew(int crewId) throws DaoException {
+    public boolean remove(int crewId) throws DaoException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         PreparedStatement statement = null;
@@ -290,7 +286,7 @@ public class CrewDaoImpl implements CrewDao {
             throw new DaoException("Error while removing crew", e);
         } finally {
             closeStatement(statement);
-            pool.releaseConnection(connection);
+            closeConnection(connection);
         }
         return isRemoved;
     }
@@ -314,7 +310,7 @@ public class CrewDaoImpl implements CrewDao {
             throw new DaoException("Error while removing user from crew", e);
         } finally {
             closeStatement(statement);
-            pool.releaseConnection(connection);
+            closeConnection(connection);
         }
         return isRemoved;
     }

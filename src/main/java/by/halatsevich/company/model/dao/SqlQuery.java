@@ -3,7 +3,7 @@ package by.halatsevich.company.model.dao;
 public class SqlQuery {
     //users
     public static final String SELECT_ALL_USERS =
-            "SELECT users.userId, users.email, users.password, users.login, " +
+            "SELECT users.userId, users.email, users.login, " +
                     "statuses.statusName, " +
                     "roles.roleName, " +
                     "personalData.firstName, personalData.lastName, personalData.telephoneNumber " +
@@ -12,7 +12,7 @@ public class SqlQuery {
                     "JOIN statuses ON statuses.statusId = users.statusId " +
                     "JOIN personalData ON personalData.userId = users.userId";
     public static final String SELECT_USER_BY_LOGIN =
-            "SELECT users.userId, users.email, users.password, users.login, " +
+            "SELECT users.userId, users.email, users.login, " +
                     "statuses.statusName, " +
                     "roles.roleName, " +
                     "personalData.firstName, personalData.lastName, personalData.telephoneNumber " +
@@ -22,7 +22,7 @@ public class SqlQuery {
                     "JOIN personalData ON personalData.userId = users.userId " +
                     "WHERE users.login = ?";
     public static final String SELECT_USER_BY_ID =
-            "SELECT users.userId, users.email, users.password, users.login, " +
+            "SELECT users.userId, users.email, users.login, " +
                     "statuses.statusName, " +
                     "roles.roleName, " +
                     "personalData.firstName, personalData.lastName, personalData.telephoneNumber " +
@@ -31,6 +31,23 @@ public class SqlQuery {
                     "JOIN statuses ON statuses.statusId = users.statusId " +
                     "JOIN personalData ON personalData.userId = users.userId " +
                     "WHERE users.userId = ?";
+    public static final String SELECT_USER_BY_EMAIL =
+            "SELECT users.userId, users.email, users.login, " +
+                    "statuses.statusName, " +
+                    "roles.roleName, " +
+                    "personalData.firstName, personalData.lastName, personalData.telephoneNumber " +
+                    "FROM users " +
+                    "JOIN roles ON roles.roleId = users.roleId " +
+                    "JOIN statuses ON statuses.statusId = users.statusId " +
+                    "JOIN personalData ON personalData.userId = users.userId " +
+                    "WHERE users.email = ?";
+    public static final String SELECT_USER_LOGIN =
+            "SELECT login FROM users WHERE login = ?";
+    public static final String SELECT_USER_EMAIL =
+            "SELECT email FROM users WHERE email = ?";
+
+    public static final String SELECT_USER_PASSWORD_BY_LOGIN =
+            "SELECT password FROM users WHERE login = ?"; // TODO: 20.10.2020 test
     public static final String INSERT_USER =
             "INSERT INTO users (email, login, password, roleId, statusId) " +
                     "VALUES (?,?,?,?,?)";
@@ -40,7 +57,9 @@ public class SqlQuery {
     public static final String REMOVE_USER_BY_ID =
             "UPDATE users SET statusId = '2' WHERE userId = ?";
     public static final String UPDATE_USER =
-            "UPDATE users SET email = ?, login = ?, password = ?, roleId = ?, statusId = ? WHERE login = ?";
+            "UPDATE users SET email = ?, login = ?, roleId = ?, statusId = ? WHERE login = ?";
+    public static final String UPDATE_PASSWORD = // TODO: 20.10.2020 check
+            "UPDATE users SET password = ? WHERE login = ?";
     public static final String UPDATE_PERSONAL_DATA =
             "UPDATE personalData SET firstName = ?, lastName = ?, telephoneNumber = ? WHERE userId = ?";
     //flights
@@ -56,6 +75,12 @@ public class SqlQuery {
                     "FROM flights " +
                     "JOIN statuses ON statuses.statusId = flights.flightId " +
                     "WHERE flights.departureAirportId = ?";
+    public static final String SELECT_FLIGHT_BY_ID =
+            "SELECT flights.flightId, flights.departureAirportId, flights.destinationAirportId, flights.departTime, " +
+                    "flights.arriveTime, flights.aircraftId, flights.operatorId, flights.crewId, statuses.statusName " +
+                    "FROM flights " +
+                    "JOIN statuses ON statuses.statusId = flights.flightId " +
+                    "WHERE flights.flightId = ?"; // TODO: 20.10.2020 check
     public static final String SELECT_FLIGHT_BY_DESTINATION_AIRPORT_ID =
             "SELECT flights.flightId, flights.departureAirportId, flights.destinationAirportId, flights.departTime, " +
                     "flights.arriveTime, flights.aircraftId, flights.operatorId, flights.crewId, statuses.statusName " +
@@ -148,6 +173,8 @@ public class SqlQuery {
             "INSERT INTO airports (airportName, country, city) VALUES (?,?,?)";
     public static final String UPDATE_AIRPORT =
             "UPDATE airports SET airportName = ?, country = ?, city = ? WHERE airportId = ?";
+    public static final String REMOVE_AIRPORT_BY_ID =
+            "DELETE FROM airports WHERE airportId = ?"; // TODO: 20.10.2020 check
     //aircraft
 
     public static final String SELECT_ALL_AIRCRAFT =
@@ -178,6 +205,8 @@ public class SqlQuery {
             "INSERT INTO aircrafts (tailNumber, aircraftName, aircraftTypeId) VALUES (?,?,?)";
     public static final String UPDATE_AIRCRAFT =
             "UPDATE aircrafts SET tailNumber = ?, aircraftName = ?, aircraftTypeId = ? WHERE aircraftId = ?";
+    public static final String REMOVE_AIRCRAFT_BY_ID =
+            "DELETE FROM aircrafts WHERE aircraftId = ?"; // TODO: 20.10.2020 check
 
     private SqlQuery() {
     }

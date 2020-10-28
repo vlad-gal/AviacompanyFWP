@@ -3,10 +3,11 @@ package by.halatsevich.company.model.entity;
 public class User extends Entity {
     private String email;
     private String login;
-    private String password;
+    private String firstName;
+    private String lastName;
+    private long telephoneNumber;
     private Role role;
     private Status status;
-    private UserData userData;
 
     public enum Role {
         ADMIN, OPERATOR, DISPATCHER, PILOT, RADIOMAN, NAVIGATOR, STEWARDESS, DEFAULT
@@ -15,22 +16,25 @@ public class User extends Entity {
     public User() {
     }
 
-    public User(int id, String email, String login, String password, Role role, Status status, UserData userData) {
+    public User(String email, String login, String firstName, String lastName, long telephoneNumber, Role role, Status status) {
+        this.email = email;
+        this.login = login;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.telephoneNumber = telephoneNumber;
+        this.role = role;
+        this.status = status;
+    }
+
+    public User(int id, String email, String login, String firstName, String lastName, long telephoneNumber, Role role, Status status) {
         super(id);
         this.email = email;
         this.login = login;
-        this.password = password;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.telephoneNumber = telephoneNumber;
         this.role = role;
         this.status = status;
-        this.userData = userData;
-    }
-
-    public User(String email, String login, Role role, Status status, UserData userData) {
-        this.email = email;
-        this.login = login;
-        this.role = role;
-        this.status = status;
-        this.userData = userData;
     }
 
     public String getEmail() {
@@ -49,12 +53,28 @@ public class User extends Entity {
         this.login = login;
     }
 
-    public String getPassword() {
-        return password;
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public long getTelephoneNumber() {
+        return telephoneNumber;
+    }
+
+    public void setTelephoneNumber(long telephoneNumber) {
+        this.telephoneNumber = telephoneNumber;
     }
 
     public Role getRole() {
@@ -73,14 +93,6 @@ public class User extends Entity {
         this.status = status;
     }
 
-    public UserData getUserData() {
-        return userData;
-    }
-
-    public void setUserData(UserData userData) {
-        this.userData = userData;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -89,23 +101,25 @@ public class User extends Entity {
 
         User user = (User) o;
 
-        if (!email.equals(user.email)) return false;
-        if (!login.equals(user.login)) return false;
-        if (!password.equals(user.password)) return false;
+        if (telephoneNumber != user.telephoneNumber) return false;
+        if (email != null ? !email.equals(user.email) : user.email != null) return false;
+        if (login != null ? !login.equals(user.login) : user.login != null) return false;
+        if (firstName != null ? !firstName.equals(user.firstName) : user.firstName != null) return false;
+        if (lastName != null ? !lastName.equals(user.lastName) : user.lastName != null) return false;
         if (role != user.role) return false;
-        if (status != user.status) return false;
-        return userData.equals(user.userData);
+        return status == user.status;
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
-        result = 31 * result + email.hashCode();
-        result = 31 * result + login.hashCode();
-        result = 31 * result + password.hashCode();
-        result = 31 * result + role.hashCode();
-        result = 31 * result + status.hashCode();
-        result = 31 * result + userData.hashCode();
+        result = 31 * result + (email != null ? email.hashCode() : 0);
+        result = 31 * result + (login != null ? login.hashCode() : 0);
+        result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
+        result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
+        result = 31 * result + (int) (telephoneNumber ^ (telephoneNumber >>> 32));
+        result = 31 * result + (role != null ? role.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
         return result;
     }
 
@@ -114,10 +128,11 @@ public class User extends Entity {
         final StringBuilder sb = new StringBuilder("User{");
         sb.append("email='").append(email).append('\'');
         sb.append(", login='").append(login).append('\'');
-        sb.append(", password='").append(password).append('\'');
+        sb.append(", firstName='").append(firstName).append('\'');
+        sb.append(", lastName='").append(lastName).append('\'');
+        sb.append(", telephoneNumber=").append(telephoneNumber);
         sb.append(", role=").append(role);
         sb.append(", status=").append(status);
-        sb.append(", userData=").append(userData);
         sb.append('}');
         return sb.toString();
     }

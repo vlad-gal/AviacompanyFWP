@@ -1,12 +1,12 @@
 package by.halatsevich.company.model.dao.impl;
 
 import by.halatsevich.company.model.dao.AirportDao;
-import by.halatsevich.company.model.dao.SqlColumnName;
+import by.halatsevich.company.model.dao.ColumnName;
 import by.halatsevich.company.model.dao.SqlQuery;
-import by.halatsevich.company.model.dao.exception.DaoException;
-import by.halatsevich.company.model.factory.EntityFactory;
-import by.halatsevich.company.model.dao.pool.ConnectionPool;
 import by.halatsevich.company.model.entity.Airport;
+import by.halatsevich.company.model.exception.DaoException;
+import by.halatsevich.company.model.factory.EntityFactory;
+import by.halatsevich.company.model.pool.ConnectionPool;
 import org.apache.logging.log4j.Level;
 
 import java.sql.Connection;
@@ -18,11 +18,11 @@ import java.util.*;
 public class AirportDaoImpl implements AirportDao {
 
     @Override
-    public List<Airport> findAllAirports() throws DaoException {
+    public List<Airport> findAll() throws DaoException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         PreparedStatement statement = null;
-        ResultSet resultSet = null;
+        ResultSet resultSet;
         List<Airport> airports = new ArrayList<>();
         EntityFactory factory = EntityFactory.getInstance();
         try {
@@ -32,28 +32,27 @@ public class AirportDaoImpl implements AirportDao {
         } catch (SQLException e) {
             throw new DaoException("Error while finding all airports", e);
         } finally {
-            closeResultSet(resultSet);
             closeStatement(statement);
-            pool.releaseConnection(connection);
+            closeConnection(connection);
         }
         return airports;
     }
 
     private Map<String, Object> createAirportData(ResultSet resultSet) throws SQLException {
         Map<String, Object> airportData = new HashMap<>();
-        airportData.put(SqlColumnName.AIRPORT_ID, resultSet.getInt(1));
-        airportData.put(SqlColumnName.AIRPORT_NAME, resultSet.getString(2));
-        airportData.put(SqlColumnName.COUNTRY, resultSet.getString(3));
-        airportData.put(SqlColumnName.CITY, resultSet.getString(4));
+        airportData.put(ColumnName.AIRPORT_ID, resultSet.getInt(1));
+        airportData.put(ColumnName.AIRPORT_NAME, resultSet.getString(2));
+        airportData.put(ColumnName.COUNTRY, resultSet.getString(3));
+        airportData.put(ColumnName.CITY, resultSet.getString(4));
         return airportData;
     }
 
     @Override
-    public Optional<Airport> findAirportById(int airportId) throws DaoException {
+    public Optional<Airport> findById(int airportId) throws DaoException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         PreparedStatement statement = null;
-        ResultSet resultSet = null;
+        ResultSet resultSet;
         Airport airport = null;
         EntityFactory factory = EntityFactory.getInstance();
         try {
@@ -68,9 +67,8 @@ public class AirportDaoImpl implements AirportDao {
         } catch (SQLException e) {
             throw new DaoException("Error while finding airport by id", e);
         } finally {
-            closeResultSet(resultSet);
             closeStatement(statement);
-            pool.releaseConnection(connection);
+            closeConnection(connection);
         }
         return Optional.ofNullable(airport);
     }
@@ -80,7 +78,7 @@ public class AirportDaoImpl implements AirportDao {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         PreparedStatement statement = null;
-        ResultSet resultSet = null;
+        ResultSet resultSet;
         Airport airport = null;
         EntityFactory factory = EntityFactory.getInstance();
         try {
@@ -95,9 +93,8 @@ public class AirportDaoImpl implements AirportDao {
         } catch (SQLException e) {
             throw new DaoException("Error while finding airport by name", e);
         } finally {
-            closeResultSet(resultSet);
             closeStatement(statement);
-            pool.releaseConnection(connection);
+            closeConnection(connection);
         }
         return Optional.ofNullable(airport);
     }
@@ -107,7 +104,7 @@ public class AirportDaoImpl implements AirportDao {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         PreparedStatement statement = null;
-        ResultSet resultSet = null;
+        ResultSet resultSet;
         List<Airport> airports = new ArrayList<>();
         EntityFactory factory = EntityFactory.getInstance();
         try {
@@ -118,9 +115,8 @@ public class AirportDaoImpl implements AirportDao {
         } catch (SQLException e) {
             throw new DaoException("Error while finding airports by city", e);
         } finally {
-            closeResultSet(resultSet);
             closeStatement(statement);
-            pool.releaseConnection(connection);
+            closeConnection(connection);
         }
         return airports;
     }
@@ -130,7 +126,7 @@ public class AirportDaoImpl implements AirportDao {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         PreparedStatement statement = null;
-        ResultSet resultSet = null;
+        ResultSet resultSet;
         List<Airport> airports = new ArrayList<>();
         EntityFactory factory = EntityFactory.getInstance();
         try {
@@ -141,9 +137,8 @@ public class AirportDaoImpl implements AirportDao {
         } catch (SQLException e) {
             throw new DaoException("Error while finding airports by country", e);
         } finally {
-            closeResultSet(resultSet);
             closeStatement(statement);
-            pool.releaseConnection(connection);
+            closeConnection(connection);
         }
         return airports;
     }
@@ -177,13 +172,13 @@ public class AirportDaoImpl implements AirportDao {
             throw new DaoException("Error while adding airport", e);
         } finally {
             closeStatement(statement);
-            pool.releaseConnection(connection);
+            closeConnection(connection);
         }
         return isAdded;
     }
 
     @Override
-    public boolean updateAirport(Airport airport) throws DaoException {
+    public boolean update(Airport airport) throws DaoException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         PreparedStatement statement = null;
@@ -203,8 +198,31 @@ public class AirportDaoImpl implements AirportDao {
             throw new DaoException("Error while updating airport", e);
         } finally {
             closeStatement(statement);
-            pool.releaseConnection(connection);
+            closeConnection(connection);
         }
         return isUpdated;
+    }
+
+    @Override
+    public boolean remove(int airportId) throws DaoException { // TODO: 20.10.2020 test method
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection connection = pool.getConnection();
+        PreparedStatement statement = null;
+        boolean isRemoved = false;
+        try {
+            statement = connection.prepareStatement(SqlQuery.REMOVE_AIRPORT_BY_ID);
+            statement.setInt(1, airportId);
+            int remove = statement.executeUpdate();
+            if (remove == 1) {
+                isRemoved = true;
+            }
+            logger.log(Level.DEBUG, "Did airport remove? {}", isRemoved);
+        } catch (SQLException e) {
+            throw new DaoException("Error while removing airport", e);
+        } finally {
+            closeStatement(statement);
+            closeConnection(connection);
+        }
+        return isRemoved;
     }
 }

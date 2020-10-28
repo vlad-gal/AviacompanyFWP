@@ -3,72 +3,66 @@ package by.halatsevich.company.controller.command.impl;
 import by.halatsevich.company.controller.PagePath;
 import by.halatsevich.company.controller.ParameterName;
 import by.halatsevich.company.controller.command.Command;
-import by.halatsevich.company.controller.util.MessageManager;
+import by.halatsevich.company.model.entity.RegistrationData;
+import by.halatsevich.company.model.service.ServiceFactory;
+import by.halatsevich.company.model.service.UserService;
+import by.halatsevich.company.model.exception.ServiceException;
+import by.halatsevich.company.util.mail.MailUtil;
+import by.halatsevich.company.validator.UserValidator;
+import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class RegistrationCommand implements Command {
     private static final Logger logger = LogManager.getLogger(RegistrationCommand.class);
 
     @Override
-    public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    public String execute(HttpServletRequest request) throws ServletException, IOException {
         String login = request.getParameter(ParameterName.LOGIN);
         String password = request.getParameter(ParameterName.PASSWORD);
-        String firstName;
-        String lastName;
-        String email;
-        String telephoneNumber;
+        String confirmPassword = request.getParameter(ParameterName.CONFIRM_PASSWORD);
+        String email = request.getParameter(ParameterName.EMAIL);
+        String firstName = request.getParameter(ParameterName.FIRST_NAME);
+        String lastName = request.getParameter(ParameterName.LAST_NAME);
+        String telephoneNumber = request.getParameter(ParameterName.TELEPHONE_NUMBER);
+        HttpSession session = request.getSession();
+        String page;
+        RegistrationData registrationData = new RegistrationData(login, email, password, firstName, lastName, telephoneNumber);
+        if (UserValidator.isValidRegistrationData(registrationData) && password.equals(confirmPassword)) {
+            ServiceFactory factory = ServiceFactory.getInstance();
+            UserService service = factory.getUserService();
+            try {
+                if (!service.isUserExist(login, email)) {
+                    boolean isUserRegistered = service.registration(registrationData);
+                    if (isUserRegistered) {
+                        MailUtil.getInstance().sendActivationLink((String) session.getAttribute(ParameterName.LANG), email, request.getRequestURL().toString());
+                        page = PagePath.SUCCESSFUL_REGISTRATION;
+                    } else {
+                        logger.log(Level.WARN, "Cannot register user");
+                        request.setAttribute(ParameterName.ERROR_REGISTER_USER_FLAG, true);
+                        page = PagePath.REGISTRATION;
+                    }
+                } else {
+                    logger.log(Level.WARN, "User already exist");
+                    request.setAttribute(ParameterName.USER_EXIST_FLAG, true);
+                    page = PagePath.REGISTRATION;
+                }
 
-
-        String lang = (String) request.getSession().getAttribute(ParameterName.SESSION_LANG_ATTRIBUTE);
-        MessageManager messageManager = new MessageManager(lang);
-
-
-        response.sendRedirect(PagePath.SUCCESSFUL_REGISTRATION_PAGE);
+            } catch (ServiceException e) {
+                logger.log(Level.ERROR, "Cannot register user", e);
+                request.setAttribute(ParameterName.ERROR_MESSAGE, e);
+                page = PagePath.ERROR;
+            }
+        } else {
+            request.setAttribute(ParameterName.ERROR_VALIDATION_FLAG, true);
+            request.setAttribute(ParameterName.REGISTRATION_DATA, registrationData);
+            page = PagePath.REGISTRATION;
+        }
+        return page;
     }
 }
-/*
-* String login = request.getParameter(ParameterName.LOGIN);
-        String password = request.getParameter(ParameterName.PASSWORD);
-        String lang = (String) request.getSession().getAttribute(ParameterName.SESSION_LANG_ATTRIBUTE);
-        MessageManager messageManager = new MessageManager(lang);
-
-        if (login.isEmpty() || password.isEmpty()) {
-            request.setAttribute(ParameterName.ERROR_LOGIN_PASSWORD, messageManager.getMessage(ERROR_LOGIN_PASSWORD_MESSAGE));
-            request.getSession().setAttribute(ParameterName.CURRENT_PAGE, PagePath.AUTHORIZATION_PAGE);
-            request.getRequestDispatcher(PagePath.AUTHORIZATION_PAGE).forward(request, response);
-        }
-        ServiceFactory factory = ServiceFactory.getInstance();
-        UserService service = factory.getUserService();
-        try {
-            User user = service.authorization(new AuthorizationData(login, password));
-            // TODO: 17.10.2020 работа с куками
-//            String rememberMe = request.getParameter("rememberUser");
-//            logger.log(Level.INFO, rememberMe);
-//            if (rememberMe.equals("on")){
-//                Cookie cookie = new Cookie();
-//                response.addCookie(new Cookie());
-//            }
-            request.getSession().setAttribute(ParameterName.USER_ID, user.getId());
-            request.getSession().setAttribute(ParameterName.USER_FIRST_NAME, user.getUserData().getFirstName());
-            request.getSession().setAttribute(ParameterName.USER_LAST_NAME, user.getUserData().getLastName());
-            request.getSession().setAttribute(ParameterName.USER_EMAIL, user.getEmail());
-            request.getSession().setAttribute(ParameterName.USER_TELEPHONE_NUMBER, user.getUserData().getTelephoneNumber());
-            request.getSession().setAttribute(ParameterName.USER_LOGIN, user.getLogin());
-            request.getSession().setAttribute(ParameterName.USER_ROLE, user.getRole().name().toLowerCase());
-            request.getSession().setAttribute(ParameterName.USER_STATUS, user.getStatus());
-            request.getSession().setAttribute(ParameterName.CURRENT_PAGE, PagePath.USER_PAGE);
-            response.sendRedirect(PagePath.USER_PAGE);
-        } catch (ServiceException e) {
-            logger.log(Level.ERROR, "Incorrect login or password");
-            request.setAttribute(ParameterName.ERROR_LOGIN_PASSWORD, messageManager.getMessage(ERROR_LOGIN_PASSWORD_MESSAGE));
-            request.getSession().setAttribute(ParameterName.CURRENT_PAGE, PagePath.AUTHORIZATION_PAGE);
-            request.getRequestDispatcher(PagePath.AUTHORIZATION_PAGE).forward(request, response);
-        }
-*
-* */

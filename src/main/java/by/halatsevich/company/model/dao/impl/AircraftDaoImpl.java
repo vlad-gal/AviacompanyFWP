@@ -1,12 +1,12 @@
 package by.halatsevich.company.model.dao.impl;
 
 import by.halatsevich.company.model.dao.AircraftDao;
-import by.halatsevich.company.model.dao.SqlColumnName;
+import by.halatsevich.company.model.dao.ColumnName;
 import by.halatsevich.company.model.dao.SqlQuery;
-import by.halatsevich.company.model.dao.exception.DaoException;
-import by.halatsevich.company.model.factory.EntityFactory;
-import by.halatsevich.company.model.dao.pool.ConnectionPool;
 import by.halatsevich.company.model.entity.Aircraft;
+import by.halatsevich.company.model.exception.DaoException;
+import by.halatsevich.company.model.factory.EntityFactory;
+import by.halatsevich.company.model.pool.ConnectionPool;
 import org.apache.logging.log4j.Level;
 
 import java.sql.Connection;
@@ -18,11 +18,11 @@ import java.util.*;
 public class AircraftDaoImpl implements AircraftDao {
 
     @Override
-    public List<Aircraft> findAllAircrafts() throws DaoException {
+    public List<Aircraft> findAll() throws DaoException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         PreparedStatement statement = null;
-        ResultSet resultSet = null;
+        ResultSet resultSet;
         List<Aircraft> aircrafts = new ArrayList<>();
         EntityFactory factory = EntityFactory.getInstance();
         try {
@@ -32,28 +32,27 @@ public class AircraftDaoImpl implements AircraftDao {
         } catch (SQLException e) {
             throw new DaoException("Error while finding all aircrafts", e);
         } finally {
-            closeResultSet(resultSet);
             closeStatement(statement);
-            pool.releaseConnection(connection);
+            closeConnection(connection);
         }
         return aircrafts;
     }
 
     private Map<String, Object> createAircraftData(ResultSet resultSet) throws SQLException {
         Map<String, Object> aircraftData = new HashMap<>();
-        aircraftData.put(SqlColumnName.AIRCRAFT_ID, resultSet.getInt(1));
-        aircraftData.put(SqlColumnName.TAIL_NUMBER, resultSet.getString(2));
-        aircraftData.put(SqlColumnName.AIRCRAFT_NAME, resultSet.getString(3));
-        aircraftData.put(SqlColumnName.AIRCRAFT_TYPE, resultSet.getString(4).toUpperCase());
+        aircraftData.put(ColumnName.AIRCRAFT_ID, resultSet.getInt(1));
+        aircraftData.put(ColumnName.TAIL_NUMBER, resultSet.getString(2));
+        aircraftData.put(ColumnName.AIRCRAFT_NAME, resultSet.getString(3));
+        aircraftData.put(ColumnName.AIRCRAFT_TYPE, resultSet.getString(4).toUpperCase());
         return aircraftData;
     }
 
     @Override
-    public Optional<Aircraft> findAircraftById(int aircraftId) throws DaoException {
+    public Optional<Aircraft> findById(int aircraftId) throws DaoException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         PreparedStatement statement = null;
-        ResultSet resultSet = null;
+        ResultSet resultSet;
         Aircraft aircraft = null;
         EntityFactory factory = EntityFactory.getInstance();
         try {
@@ -68,9 +67,8 @@ public class AircraftDaoImpl implements AircraftDao {
         } catch (SQLException e) {
             throw new DaoException("Error while finding aircraft by id", e);
         } finally {
-            closeResultSet(resultSet);
             closeStatement(statement);
-            pool.releaseConnection(connection);
+            closeConnection(connection);
         }
         return Optional.ofNullable(aircraft);
     }
@@ -80,7 +78,7 @@ public class AircraftDaoImpl implements AircraftDao {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         PreparedStatement statement = null;
-        ResultSet resultSet = null;
+        ResultSet resultSet;
         Aircraft aircraft = null;
         EntityFactory factory = EntityFactory.getInstance();
         try {
@@ -95,9 +93,8 @@ public class AircraftDaoImpl implements AircraftDao {
         } catch (SQLException e) {
             throw new DaoException("Error while finding aircraft by tail number", e);
         } finally {
-            closeResultSet(resultSet);
             closeStatement(statement);
-            pool.releaseConnection(connection);
+            closeConnection(connection);
         }
         return Optional.ofNullable(aircraft);
     }
@@ -107,7 +104,7 @@ public class AircraftDaoImpl implements AircraftDao {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         PreparedStatement statement = null;
-        ResultSet resultSet = null;
+        ResultSet resultSet;
         List<Aircraft> aircrafts = new ArrayList<>();
         EntityFactory factory = EntityFactory.getInstance();
         try {
@@ -118,8 +115,8 @@ public class AircraftDaoImpl implements AircraftDao {
         } catch (SQLException e) {
             throw new DaoException("Error while finding aircrafts by name", e);
         } finally {
-            closeResultSet(resultSet);
             closeStatement(statement);
+            closeConnection(connection);
         }
         return aircrafts;
     }
@@ -129,7 +126,7 @@ public class AircraftDaoImpl implements AircraftDao {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         PreparedStatement statement = null;
-        ResultSet resultSet = null;
+        ResultSet resultSet;
         List<Aircraft> aircrafts = new ArrayList<>();
         EntityFactory factory = EntityFactory.getInstance();
         try {
@@ -141,9 +138,8 @@ public class AircraftDaoImpl implements AircraftDao {
         } catch (SQLException e) {
             throw new DaoException("Error while finding aircrafts by type", e);
         } finally {
-            closeResultSet(resultSet);
             closeStatement(statement);
-            pool.releaseConnection(connection);
+            closeConnection(connection);
         }
         return aircrafts;
     }
@@ -178,13 +174,13 @@ public class AircraftDaoImpl implements AircraftDao {
             throw new DaoException("Error while adding aircraft", e);
         } finally {
             closeStatement(statement);
-            pool.releaseConnection(connection);
+            closeConnection(connection);
         }
         return isAdded;
     }
 
     @Override
-    public boolean updateAircraft(Aircraft aircraft) throws DaoException {
+    public boolean update(Aircraft aircraft) throws DaoException {
         ConnectionPool pool = ConnectionPool.getInstance();
         Connection connection = pool.getConnection();
         PreparedStatement statement = null;
@@ -205,8 +201,31 @@ public class AircraftDaoImpl implements AircraftDao {
             throw new DaoException("Error while updating aircraft", e);
         } finally {
             closeStatement(statement);
-            pool.releaseConnection(connection);
+            closeConnection(connection);
         }
         return isUpdated;
+    }
+
+    @Override
+    public boolean remove(int aircraftId) throws DaoException { // TODO: 20.10.2020 test
+        ConnectionPool pool = ConnectionPool.getInstance();
+        Connection connection = pool.getConnection();
+        PreparedStatement statement = null;
+        boolean isRemoved = false;
+        try {
+            statement = connection.prepareStatement(SqlQuery.REMOVE_AIRCRAFT_BY_ID);
+            statement.setInt(1, aircraftId);
+            int remove = statement.executeUpdate();
+            if (remove == 1) {
+                isRemoved = true;
+            }
+            logger.log(Level.DEBUG, "Did aircraft remove? {}", isRemoved);
+        } catch (SQLException e) {
+            throw new DaoException("Error while removing aircraft", e);
+        } finally {
+            closeStatement(statement);
+            closeConnection(connection);
+        }
+        return isRemoved;
     }
 }

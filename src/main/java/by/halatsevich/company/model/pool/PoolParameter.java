@@ -1,6 +1,6 @@
-package by.halatsevich.company.model.dao.pool;
+package by.halatsevich.company.model.pool;
 
-public class PoolParameter {
+class PoolParameter {
     static final String PROPERTIES_PATH = "db";
     static final String USER = "user";
     static final String PASSWORD = "password";
@@ -10,6 +10,7 @@ public class PoolParameter {
     static final String AUTO_RECONNECT = "autoReconnect";
     static final String ENCODING = "encoding";
     static final String TIMEZONE = "serverTimezone";
+    static final String DRIVER_NAME = "driverName";
 
     private PoolParameter() {
     }

@@ -1,7 +1,5 @@
-package by.halatsevich.company.model.dao.pool;
+package by.halatsevich.company.model.pool;
 
-import by.halatsevich.company.model.dao.exception.PoolRuntimeException;
-import com.mysql.cj.jdbc.Driver;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -32,14 +30,14 @@ public class ConnectionPool {
     }
 
     private void initialization() {
-        try {
-            DriverManager.registerDriver(new Driver());
-        } catch (SQLException e) {
-            logger.log(Level.FATAL, "Cannot register driver");
-            throw new PoolRuntimeException("Cannot register driver", e);
-        }
-
         ResourceBundle bundle = ResourceBundle.getBundle(PoolParameter.PROPERTIES_PATH);
+        String driverName = bundle.getString(PoolParameter.DRIVER_NAME);
+        try {
+            Class.forName(driverName);
+        } catch (ClassNotFoundException e) {
+            logger.log(Level.FATAL, "Cannot register driver");
+            throw new RuntimeException("Cannot register driver", e);
+        }
         String url = bundle.getString(PoolParameter.URL);
         String user = bundle.getString(PoolParameter.USER);
         String password = bundle.getString(PoolParameter.PASSWORD);
@@ -54,7 +52,6 @@ public class ConnectionPool {
             logger.log(Level.ERROR, "Error while parsing pool size", e);
             poolSize = 32;
         }
-
         freeConnections = new LinkedBlockingDeque<>(poolSize);
         givenConnections = new ArrayDeque<>();
         Properties properties = new Properties();
@@ -64,17 +61,14 @@ public class ConnectionPool {
         properties.put(PoolParameter.AUTO_RECONNECT, autoReconnect);
         properties.put(PoolParameter.ENCODING, encoding);
         properties.put(PoolParameter.UNICODE, useUnicode);
-
         fillingConnections(url, properties, poolSize);
-
         if (freeConnections.size() < poolSize) {
             int difference = poolSize - freeConnections.size();
             fillingConnections(url, properties, difference);
         }
-
         if (freeConnections.isEmpty()) {
             logger.log(Level.FATAL, "Cannot create connections");
-            throw new PoolRuntimeException("Cannot create connections");
+            throw new RuntimeException("Cannot create connections");
         }
     }
 

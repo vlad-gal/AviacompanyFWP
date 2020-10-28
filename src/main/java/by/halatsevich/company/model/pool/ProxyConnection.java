@@ -1,4 +1,4 @@
-package by.halatsevich.company.model.dao.pool;
+package by.halatsevich.company.model.pool;
 
 import java.sql.*;
 import java.util.Map;

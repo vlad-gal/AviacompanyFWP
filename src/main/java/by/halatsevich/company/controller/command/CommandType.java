@@ -14,7 +14,13 @@ public enum CommandType {
     AIRCRAFTS_PAGE(new AircraftsPageCommand()),
     AIRPORTS_PAGE(new AirportsPageCommand()),
     FLIGHTS_PAGE(new FlightsPageCommand()),
-    LOCALIZATION(new LocalizationCommand());
+    LOCALIZATION(new LocalizationCommand()),
+    AIRPORT_DETAIL_PAGE(new AirportDetailPageCommand()),
+    AIRCRAFT_DETAIL_PAGE(new AircraftDetailPageCommand()),
+    FORGOT_PASSWORD_PAGE(new ForgotPasswordPageCommand()),
+    USER_ACCOUNT_PAGE(new UserAccountPageCommand()),
+    CONFIRM_ACCOUNT(new ConfirmAccountCommand()),
+    FLIGHT_DETAIL_PAGE(new FlightDetailPageCommand());
 
     private Command command;
 

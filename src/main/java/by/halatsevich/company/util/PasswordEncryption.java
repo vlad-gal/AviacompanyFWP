@@ -1,4 +1,4 @@
-package by.halatsevich.company.model.service.util;
+package by.halatsevich.company.util;
 
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;

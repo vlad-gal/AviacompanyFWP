@@ -1,4 +1,4 @@
-package by.halatsevich.company.model.service.exception;
+package by.halatsevich.company.model.exception;
 
 public class ServiceException extends Exception{
     public ServiceException() {

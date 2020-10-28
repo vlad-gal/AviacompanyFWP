@@ -1,13 +1,12 @@
 package by.halatsevich.company.model.dao;
 
-import by.halatsevich.company.model.dao.exception.DaoException;
+import by.halatsevich.company.model.exception.DaoException;
 import by.halatsevich.company.model.entity.FlightDto;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface FlightDao extends BaseDao {
-    List<FlightDto> findAllFlights() throws DaoException;
+public interface FlightDao extends BaseDao<FlightDto> {
 
     Optional<FlightDto> findFlightByDepartureAirportId(int departureAirportId) throws DaoException;
 
@@ -23,7 +22,4 @@ public interface FlightDao extends BaseDao {
 
     boolean addFlight(FlightDto flightDto) throws DaoException;
 
-    boolean updateFlight(FlightDto flightDto) throws DaoException;
-
-    boolean removeFlight(int flightId) throws DaoException;
 }

@@ -21,7 +21,7 @@
         <Logger name="Console" level="debug" additivity="true">
             <AppenderRef ref="Console"/>
         </Logger>
-        <Logger name="Log_File" level="debug" additivity="false">
+        <Logger name="Log_File" level="debug" additivity="true">
             <AppenderRef ref="File"/>
         </Logger>
         <Root level="info">

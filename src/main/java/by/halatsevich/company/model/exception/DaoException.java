@@ -1,4 +1,4 @@
-package by.halatsevich.company.model.dao.exception;
+package by.halatsevich.company.model.exception;
 
 public class DaoException extends Exception {
     public DaoException() {

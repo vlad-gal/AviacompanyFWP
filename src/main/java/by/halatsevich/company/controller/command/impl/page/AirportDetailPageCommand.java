@@ -15,6 +15,7 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.Optional;
 
 public class AirportDetailPageCommand implements Command {
     private static final Logger logger = LogManager.getLogger(AirportDetailPageCommand.class);
@@ -27,8 +28,8 @@ public class AirportDetailPageCommand implements Command {
             ServiceFactory factory = ServiceFactory.getInstance();
             AirportService airportService = factory.getAirportService();
             try {
-                Airport airport = airportService.findAirportById(airportId);
-                if (airport != null) {
+                Optional<Airport> airport = airportService.findAirportById(airportId);
+                if (airport.isPresent()) {
                     request.setAttribute(ParameterName.AIRPORT, airport);
                     page = PagePath.DETAIL_PAGE;
                 } else {
