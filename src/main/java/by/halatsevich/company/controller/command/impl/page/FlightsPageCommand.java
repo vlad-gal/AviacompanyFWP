@@ -11,16 +11,14 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.List;
 
 public class FlightsPageCommand implements Command {
     private static final Logger logger = LogManager.getLogger(FlightsPageCommand.class);
 
     @Override
-    public String execute(HttpServletRequest request) throws ServletException, IOException {
+    public String execute(HttpServletRequest request) {
         ServiceFactory factory = ServiceFactory.getInstance();
         FlightService flightService = factory.getFlightService();
         String page;
@@ -32,7 +30,7 @@ public class FlightsPageCommand implements Command {
         } catch (ServiceException e) {
             logger.log(Level.ERROR, "Error while finding all actual flights", e);
             request.setAttribute(ParameterName.ERROR_MESSAGE, e);
-            page = PagePath.ERROR;
+            page = PagePath.ERROR_500;
         }
         return page;
     }

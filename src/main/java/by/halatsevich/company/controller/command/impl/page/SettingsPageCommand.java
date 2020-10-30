@@ -9,7 +9,7 @@
 //
 //public class SettingsPageCommand implements Command{
 //    @Override
-//    public String execute(HttpServletRequest request) throws ServletException, IOException {
+//    public String execute(HttpServletRequest request) {
 //        return PagePath.SETTING_PAGE;
 //    }
 //}

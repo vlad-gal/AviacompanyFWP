@@ -12,16 +12,14 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.Optional;
 
 public class AircraftDetailPageCommand implements Command {
     private static final Logger logger = LogManager.getLogger(AircraftDetailPageCommand.class);
 
     @Override
-    public String execute(HttpServletRequest request) throws ServletException, IOException {
+    public String execute(HttpServletRequest request) {
         String aircraftId = request.getParameter(ParameterName.AIRCRAFT_ID);
         String page;
         if (BaseValidator.isValidId(aircraftId)) {
@@ -39,11 +37,12 @@ public class AircraftDetailPageCommand implements Command {
             } catch (ServiceException e) {
                 logger.log(Level.ERROR, "Error while finding aircraft by id", e);
                 request.setAttribute(ParameterName.ERROR_MESSAGE, e);
-                page = PagePath.ERROR;
+                page = PagePath.ERROR_500;
             }
         } else {
-            logger.log(Level.WARN, "Invalid aircraft id");
-            page = PagePath.ERROR;
+            logger.log(Level.WARN, "Incorrect aircraft id");
+            request.setAttribute(ParameterName.INCORRECT_ID_FLAG, true);
+            page = PagePath.DETAIL_PAGE;
         }
         return page;
     }

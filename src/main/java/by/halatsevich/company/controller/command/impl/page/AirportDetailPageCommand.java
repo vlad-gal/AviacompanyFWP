@@ -12,16 +12,14 @@ import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
-import java.io.IOException;
 import java.util.Optional;
 
 public class AirportDetailPageCommand implements Command {
     private static final Logger logger = LogManager.getLogger(AirportDetailPageCommand.class);
 
     @Override
-    public String execute(HttpServletRequest request) throws ServletException, IOException {
+    public String execute(HttpServletRequest request) {
         String airportId = request.getParameter(ParameterName.AIRPORT_ID);
         String page;
         if (BaseValidator.isValidId(airportId)) {
@@ -39,11 +37,12 @@ public class AirportDetailPageCommand implements Command {
             } catch (ServiceException e) {
                 logger.log(Level.ERROR, "Error while finding airport by id", e);
                 request.setAttribute(ParameterName.ERROR_MESSAGE, e);
-                page = PagePath.ERROR;
+                page = PagePath.ERROR_500;
             }
         } else {
-            logger.log(Level.WARN, "Invalid airport id");
-            page = PagePath.ERROR;
+            logger.log(Level.WARN, "Incorrect airport id");
+            request.setAttribute(ParameterName.INCORRECT_ID_FLAG, true);
+            page = PagePath.DETAIL_PAGE;
         }
         return page;
     }
