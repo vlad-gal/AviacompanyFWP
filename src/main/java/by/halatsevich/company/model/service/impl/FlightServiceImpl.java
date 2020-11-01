@@ -5,8 +5,7 @@ import by.halatsevich.company.model.entity.*;
 import by.halatsevich.company.model.exception.DaoException;
 import by.halatsevich.company.model.exception.ServiceException;
 import by.halatsevich.company.model.service.FlightService;
-import by.halatsevich.company.model.service.comparator.FlightDepartDateComparator;
-import by.halatsevich.company.validator.BaseValidator;
+import by.halatsevich.company.model.service.FlightDepartDateComparator;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,6 +29,17 @@ public class FlightServiceImpl implements FlightService {
             throw new ServiceException("Error while finding all flights", e);
         }
         return flights;
+    }
+
+    public static void main(String[] args) {
+        FlightServiceImpl flightService = new FlightServiceImpl();
+        try {
+            for (Flight f : flightService.findAllFlights()) {
+                System.out.println(f);
+            }
+        } catch (ServiceException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -62,68 +72,30 @@ public class FlightServiceImpl implements FlightService {
         return flight;
     }
 
-    private Flight createFlight(DaoFactory factory, FlightDto flightDto) throws DaoException, ServiceException {
+    private Flight createFlight(DaoFactory factory, FlightDto flightDto) throws DaoException {
         UserDao userDao = factory.getUserDao();
         AircraftDao aircraftDao = factory.getAircraftDao();
         AirportDao airportDao = factory.getAirportDao();
         CrewDao crewDao = factory.getCrewDao();
-        Optional<Airport> optionalDepartureAirport = airportDao.findById(flightDto.getDepartureAirportId());
-        Airport departureAirport;
-        if (optionalDepartureAirport.isPresent()) {
-            departureAirport = optionalDepartureAirport.get();
-        } else {
-            throw new ServiceException("Departure airport not found");
-        }
-        Optional<Airport> optionalDestinationAirport = airportDao.findById(flightDto.getDestinationAirportId());
-        Airport destinationAirport;
-        if (optionalDestinationAirport.isPresent()) {
-            destinationAirport = optionalDestinationAirport.get();
-        } else {
-            throw new ServiceException("Destination airport not fount");
-        }
+        Airport departureAirport = airportDao.findById(flightDto.getDepartureAirportId()).get();
+        Airport destinationAirport = airportDao.findById(flightDto.getDestinationAirportId()).get();
         Date arriveTime = new Date(flightDto.getArriveTime());
         Date departTime = new Date(flightDto.getDepartTime());
-        Optional<Aircraft> optionalAircraft = aircraftDao.findById(flightDto.getAircraftId());
-        Aircraft aircraft;
-        if (optionalAircraft.isPresent()) {
-            aircraft = optionalAircraft.get();
-        } else {
-            throw new ServiceException("Aircraft not found");
-        }
-        Optional<User> optionalOperator = userDao.findById(flightDto.getOperatorId());
-        User operator;
-        if (optionalOperator.isPresent()) {
-            operator = optionalOperator.get();
-        } else {
-            throw new ServiceException("Operator not found");
-        }
+        Aircraft aircraft = aircraftDao.findById(flightDto.getAircraftId()).get();
+        User operator = userDao.findById(flightDto.getOperatorId()).get();
         Status flightStatus = flightDto.getStatus();
         Optional<CrewDto> optionalCrewDto = crewDao.findById(flightDto.getCrewId());
-        Crew crew = null;
-        if (optionalCrewDto.isPresent()) {
-            CrewDto crewDto = optionalCrewDto.get();
-            crew = createCrew(userDao, crewDao, crewDto);
-        }
+        CrewDto crewDto = optionalCrewDto.get();
+        Crew crew = createCrew(userDao, crewDao, crewDto);
         return new Flight(flightDto.getId(), departureAirport, destinationAirport, departTime, arriveTime, aircraft, crew, operator, flightStatus);
     }
 
-    private Crew createCrew(UserDao userDao, CrewDao crewDao, CrewDto crewDto) throws DaoException, ServiceException {
-        Optional<User> optionalDispatcher = userDao.findById(crewDto.getDispatcherId());
-        User dispatcher;
-        if (optionalDispatcher.isPresent()) {
-            dispatcher = optionalDispatcher.get();
-        } else {
-            throw new ServiceException("Dispatcher not found");
-        }
+    private Crew createCrew(UserDao userDao, CrewDao crewDao, CrewDto crewDto) throws DaoException {
+        User dispatcher = userDao.findById(crewDto.getDispatcherId()).get();
         List<Integer> usersIdByCrewId = crewDao.findUsersIdByCrewId(crewDto.getId());
         List<User> staff = new ArrayList<>();
         for (int userId : usersIdByCrewId) {
-            Optional<User> optionalUser = userDao.findById(userId);
-            if (optionalUser.isPresent()) {
-                staff.add(optionalUser.get());
-            } else {
-                throw new ServiceException("Member of crew not found");
-            }
+            staff.add(userDao.findById(userId).get());
         }
         int numberOfPilots = crewDto.getNumberOfPilots();
         int numberOfNavigators = crewDto.getNumberOfNavigators();

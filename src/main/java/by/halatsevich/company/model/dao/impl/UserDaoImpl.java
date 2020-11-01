@@ -21,8 +21,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public List<User> findAll() throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         ResultSet resultSet;
         List<User> users = new ArrayList<>();
@@ -47,8 +46,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Optional<User> findUserByLogin(String login) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         ResultSet resultSet;
         User user = null;
@@ -73,8 +71,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean findEmail(String email) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         ResultSet resultSet;
         boolean isFound = false;
@@ -97,8 +94,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean findLogin(String login) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         ResultSet resultSet;
         boolean isFound = false;
@@ -121,8 +117,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public String findPasswordByLogin(String login) throws DaoException { // TODO: 20.10.2020 test method
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         ResultSet resultSet;
         String password = null;
@@ -145,8 +140,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Optional<User> findById(int userId) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         ResultSet resultSet;
         User user = null;
@@ -184,8 +178,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public Optional<User> findUserByEmail(String email) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         ResultSet resultSet;
         User user = null;
@@ -210,8 +203,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean registration(RegistrationData registrationData) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         ResultSet resultSet;
         boolean isAdded = false;
@@ -258,8 +250,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean remove(int userId) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         boolean isRemoved = false;
         try {
@@ -281,8 +272,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean update(User user) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         boolean isUpdated = false;
         try {
@@ -306,7 +296,7 @@ public class UserDaoImpl implements UserDao {
                 isUpdated = true;
                 connection.commit();
             } else {
-                rollbackConnection(connection);
+                rollbackConnection(connection);//todo выкинуть
             }
             logger.log(Level.DEBUG, "Did user update? {}", isUpdated);
         } catch (SQLException e) {
@@ -323,8 +313,7 @@ public class UserDaoImpl implements UserDao {
 
     @Override
     public boolean updatePassword(String login, String password) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         boolean isUpdated = false;
         try {

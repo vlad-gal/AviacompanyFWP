@@ -15,7 +15,7 @@ public class PageRedirectSecurityFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
-        logger.log(Level.ERROR, "Invalid action");
-        httpResponse.sendError(404, PagePath.ERROR);
+        logger.log(Level.WARN, "Invalid action");
+        httpResponse.sendError(404, PagePath.ERROR_404);
     }
 }

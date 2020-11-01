@@ -28,7 +28,7 @@ public class ConfirmAccountCommand implements Command {
             UserService service = factory.getUserService();
             try {
                 Optional<User> user = service.findUserByEmail(email);
-                if (user.isPresent() && service.updateUserStatus(email, Status.ACTIVE)) {
+                if (user.isPresent() && service.updateUserStatus(user.get(), Status.ACTIVE)) {
                     page = PagePath.SUCCESSFUL_ACTIVATION;
                 } else {
                     page = PagePath.REGISTRATION;

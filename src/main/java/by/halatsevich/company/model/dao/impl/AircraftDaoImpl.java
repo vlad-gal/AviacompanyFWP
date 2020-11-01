@@ -19,8 +19,7 @@ public class AircraftDaoImpl implements AircraftDao {
 
     @Override
     public List<Aircraft> findAll() throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         ResultSet resultSet;
         List<Aircraft> aircrafts = new ArrayList<>();
@@ -49,8 +48,7 @@ public class AircraftDaoImpl implements AircraftDao {
 
     @Override
     public Optional<Aircraft> findById(int aircraftId) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         ResultSet resultSet;
         Aircraft aircraft = null;
@@ -75,8 +73,7 @@ public class AircraftDaoImpl implements AircraftDao {
 
     @Override
     public Optional<Aircraft> findAircraftByTailNumber(String tailNumber) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         ResultSet resultSet;
         Aircraft aircraft = null;
@@ -101,8 +98,7 @@ public class AircraftDaoImpl implements AircraftDao {
 
     @Override
     public List<Aircraft> findAircraftsByName(String aircraftName) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         ResultSet resultSet;
         List<Aircraft> aircrafts = new ArrayList<>();
@@ -123,8 +119,7 @@ public class AircraftDaoImpl implements AircraftDao {
 
     @Override
     public List<Aircraft> findAircraftsByType(Aircraft.AircraftType aircraftType) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         ResultSet resultSet;
         List<Aircraft> aircrafts = new ArrayList<>();
@@ -155,8 +150,7 @@ public class AircraftDaoImpl implements AircraftDao {
 
     @Override
     public boolean addAircraft(Aircraft aircraft) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         boolean isAdded = false;
         try {
@@ -181,8 +175,7 @@ public class AircraftDaoImpl implements AircraftDao {
 
     @Override
     public boolean update(Aircraft aircraft) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         boolean isUpdated = false;
         try {
@@ -208,8 +201,7 @@ public class AircraftDaoImpl implements AircraftDao {
 
     @Override
     public boolean remove(int aircraftId) throws DaoException { // TODO: 20.10.2020 test
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         boolean isRemoved = false;
         try {

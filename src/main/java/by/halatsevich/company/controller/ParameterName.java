@@ -75,7 +75,7 @@ public class ParameterName {
     public static final String USER = "user";
     public static final String ERROR_LOGIN_PASSWORD_FLAG = "errorLoginPasswordFlag";
     public static final String INACTIVE_USER_FLAG = "inactiveUserFlag";
-    public static final String USER_EXIST_FLAG = "userAlreadyExistFlag";
+    public static final String USER_ALREADY_EXIST_FLAG = "userAlreadyExistFlag";
     public static final String ERROR_MESSAGE = "errorMessage";
     public static final String ERROR_VALIDATION_FLAG = "errorValidationFlag";
     public static final String ERROR_REGISTER_USER_FLAG = "errorRegisterUserFlag";
@@ -96,4 +96,16 @@ public class ParameterName {
     public static final String FLIGHT_NOT_FOUND_FLAG = "flightNotFoundFlag";
     public static final String AUTHORIZATION_DATA = "authorizationData";
     public static final String USER_NOT_FOUND = "userNotFound";
+    public static final String EMAIL_NOT_EXIST_FLAG = "emailNotExistFlag";
+
+    public static final String INCORRECT_EMAIL_FLAG = "incorrectEmailFlag";
+    public static final String INCORRECT_PASSWORD_FLAG = "incorrectPasswordFlag";
+    public static final String INCORRECT_ID_FLAG = "incorrectIdFlag";
+    public static final String DIRECTION = "direction";
+    public static final String CURRENT_PAGE_NUMBER = "currentPageNumber";
+    public static final String PREVIOUS = "previous";
+    public static final String NEXT = "next";
+    public static final String UPDATING_SUCCESSFUL_FLAG = "updatingSuccessfulFlag";
+    public static final String ERROR_UPDATE_USER_FLAG = "errorUpdateUserFlag";
+    public static final String ERROR_UPDATE_PASSWORD_FLAG = "errorUpdatePasswordFlag";
 }

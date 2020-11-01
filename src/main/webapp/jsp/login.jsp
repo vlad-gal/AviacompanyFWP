@@ -26,11 +26,10 @@
                     <div class="card-body">
                         <h5 class="card-title text-center"><fmt:message key="local.common.authorization"/></h5>
                         <c:if test="${errorLoginPasswordFlag eq true}">
-                            <h5 class="errorLoginPass text-center"><fmt:message
-                                    key="local.common.errorLoginPassword"/></h5>
+                            <h6 class="errorLoginPass text-center"><fmt:message key="local.common.errorLoginPassword"/></h6>
                         </c:if>
                         <c:if test="${inactiveUserFlag eq true}">
-                            <h5 class="errorLoginPass text-center"><fmt:message key="local.common.inactiveUser"/></h5>
+                            <h6 class="errorLoginPass text-center"><fmt:message key="local.common.inactiveUser"/></h6>
                         </c:if>
                         <form method="POST" class="login-validation" name="loginForm"
                               action="${pageContext.request.contextPath}/controller">
@@ -39,12 +38,14 @@
                                 <label for="login"><fmt:message key="local.common.login"/></label>
                                 <input id="login" type="text" class="form-control" name="login"
                                        placeholder="<fmt:message key="local.common.login"/>"
-                                       value="${authorizationData.login}" pattern="[\w-]{3,40}" title="<fmt:message key="local.common.incorrectLoginMessage"/>" required
-                                       autofocus>
-                                <c:if test="${errorValidationFlag eq true }">
-                                    <div class="errorLoginPass">
+                                       value="${authorizationData.login}" pattern="[\w-]{3,40}"
+                                       title="<fmt:message key="local.common.incorrectLoginMessage"/>" required autofocus>
+                                <c:if test="${errorValidationFlag eq true}">
+                                    <c:if test="${authorizationData.login eq null}">
+                                        <div class="errorLoginPass">
                                             <p class="errorLoginPass text-center"><fmt:message key="local.common.incorrectLoginMessage"/></p>
-                                    </div>
+                                        </div>
+                                    </c:if>
                                 </c:if>
                             </div>
                             <div class="form-group">
@@ -58,19 +59,20 @@
                                        title="<fmt:message key="local.common.incorrectPasswordMessage"/>"
                                        placeholder="<fmt:message key="local.common.password"/>">
                                 <c:if test="${errorValidationFlag eq true}">
-                                    <div class="errorLoginPass">
+                                    <c:if test="${authorizationData.password eq null}">
+                                        <div class="errorLoginPass">
                                             <p class="errorLoginPass text-center"><fmt:message key="local.common.incorrectPasswordMessage"/></p>
-                                    </div>
+                                        </div>
+                                    </c:if>
                                 </c:if>
                             </div>
                             <div class="form-group m-0">
                                 <input type="submit" class="btn btn-primary btn-block"
-                                       value="<fmt:message key="local.common.authorization"/><">
+                                       value="<fmt:message key="local.common.authorization"/>">
                             </div>
                             <div class="mt-4 text-center">
-                                <fmt:message key="local.common.dontHaveAccount"/><a
-                                    href="controller?command=registration_page"><fmt:message
-                                    key="local.common.registration"/></a>
+                                <fmt:message key="local.common.dontHaveAccount"/> <a
+                                    href="controller?command=registration_page"><fmt:message key="local.common.registration"/></a>
                             </div>
                         </form>
                     </div>

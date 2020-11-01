@@ -28,7 +28,7 @@ public class AirportDetailPageCommand implements Command {
             try {
                 Optional<Airport> airport = airportService.findAirportById(airportId);
                 if (airport.isPresent()) {
-                    request.setAttribute(ParameterName.AIRPORT, airport);
+                    request.setAttribute(ParameterName.AIRPORT, airport.get());
                     page = PagePath.DETAIL_PAGE;
                 } else {
                     request.setAttribute(ParameterName.AIRPORT_NOT_FOUND_FLAG, true);

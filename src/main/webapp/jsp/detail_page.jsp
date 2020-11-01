@@ -35,6 +35,11 @@
                                     <h5><fmt:message key="local.detail.flightNotFound"/></h5>
                                 </div>
                             </c:when>
+                            <c:when test="${incorrectIdFlag eq true}">
+                                <div class="text-center">
+                                    <h5><fmt:message key="local.detail.incorrectId"/></h5>
+                                </div>
+                            </c:when>
                             <c:otherwise>
                                 <table class="table">
                                     <thead class="thead-light">
@@ -76,6 +81,11 @@
                                     <h5><fmt:message key="local.detail.airportNotFound"/></h5>
                                 </div>
                             </c:when>
+                            <c:when test="${incorrectIdFlag eq true}">
+                                <div class="text-center">
+                                    <h5><fmt:message key="local.detail.incorrectId"/></h5>
+                                </div>
+                            </c:when>
                             <c:otherwise>
                                 <table class="table">
                                     <thead class="thead-light">
@@ -95,7 +105,6 @@
                                 </table>
                             </c:otherwise>
                         </c:choose>
-
                     </div>
                 </div>
             </div>
@@ -111,6 +120,11 @@
                             <c:when test="${aircraftNotFoundFlag eq true}">
                                 <div class="text-center">
                                     <h5><fmt:message key="local.detail.aircraftNotFound"/></h5>
+                                </div>
+                            </c:when>
+                            <c:when test="${incorrectIdFlag eq true}">
+                                <div class="text-center">
+                                    <h5><fmt:message key="local.detail.incorrectId"/></h5>
                                 </div>
                             </c:when>
                             <c:otherwise>

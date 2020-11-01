@@ -1,5 +1,4 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <fmt:setLocale value="${sessionScope.lang}"/>
@@ -23,7 +22,7 @@
             <h6>
                 <fmt:message key="local.common.successfulRegistrationText"/>
             </h6>
-            <a href="${pageContext.request.contextPath}/controller?command=welcome_page"><fmt:message key="local.common.welcome"/></a>
+            <a href="${pageContext.request.contextPath}/controller?command=welcome_page"><fmt:message key="local.common.goToWelcome"/></a>
         </div>
     </div>
 </div>

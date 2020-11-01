@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="ctg" uri="paginationTags" %>
 
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="local"/>
@@ -47,20 +48,7 @@
                                     <th scope="col"><fmt:message key="local.flight.arriveTime"/></th>
                                 </tr>
                                 </thead>
-                                <tbody>
-                                <c:forEach var="flight" items="${flightList}" end="9">
-                                    <tr class="row-a"
-                                        onclick="document.location ='controller?command=flight_detail_page&flightId=${flight.id}'">
-                                        <td>${flight.departureAirport.airportName}, ${flight.departureAirport.city}, ${flight.departureAirport.country}</td>
-                                        <td>${flight.destinationAirport.airportName}, ${flight.destinationAirport.city}, ${flight.destinationAirport.country}</td>
-                                        <td><fmt:formatDate value="${flight.departTime}"
-                                                            pattern="d-MMMM-yyyy h:m"/></td>
-                                        <td><fmt:formatDate value="${flight.arriveTime}"
-                                                            pattern="d-MMMM-yyyy h:m"/></td>
-                                    </tr>
-                                </c:forEach>
-                                </tbody>
-                            </table>
+                                <ctg:flightPagination currentPageNumber="${currentPageNumber}"/>
                         </c:otherwise>
                     </c:choose>
                 </div>

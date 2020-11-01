@@ -10,57 +10,31 @@ import java.sql.SQLException;
 import java.util.ArrayDeque;
 import java.util.Properties;
 import java.util.Queue;
-import java.util.ResourceBundle;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 
-public class ConnectionPool {
-    private static Logger logger = LogManager.getLogger(ConnectionPool.class);
+public enum ConnectionPool {
+
+    INSTANCE;
+
+    private final Logger logger = LogManager.getLogger(ConnectionPool.class);
     private int poolSize;
-    private static ConnectionPool instance = new ConnectionPool();
     private BlockingQueue<ProxyConnection> freeConnections;
     private Queue<ProxyConnection> givenConnections;
 
-    private ConnectionPool() {
-        initialization();
-    }
-
-    public static ConnectionPool getInstance() {
-        return instance;
-    }
-
-    private void initialization() {
-        ResourceBundle bundle = ResourceBundle.getBundle(PoolParameter.PROPERTIES_PATH);
-        String driverName = bundle.getString(PoolParameter.DRIVER_NAME);
+    ConnectionPool() {
+        ConnectionConfig config = new ConnectionConfig();
         try {
-            Class.forName(driverName);
+            Class.forName(config.getDriverName());
         } catch (ClassNotFoundException e) {
             logger.log(Level.FATAL, "Cannot register driver");
             throw new RuntimeException("Cannot register driver", e);
         }
-        String url = bundle.getString(PoolParameter.URL);
-        String user = bundle.getString(PoolParameter.USER);
-        String password = bundle.getString(PoolParameter.PASSWORD);
-        String serverTimezone = bundle.getString(PoolParameter.TIMEZONE);
-        String autoReconnect = bundle.getString(PoolParameter.AUTO_RECONNECT);
-        String encoding = bundle.getString(PoolParameter.ENCODING);
-        String useUnicode = bundle.getString(PoolParameter.UNICODE);
-        String sizePoll = bundle.getString(PoolParameter.POLL_SIZE);
-        try {
-            poolSize = Integer.parseInt(sizePoll);
-        } catch (NumberFormatException e) {
-            logger.log(Level.ERROR, "Error while parsing pool size", e);
-            poolSize = 32;
-        }
+        poolSize = config.getPoolSize();
         freeConnections = new LinkedBlockingDeque<>(poolSize);
         givenConnections = new ArrayDeque<>();
-        Properties properties = new Properties();
-        properties.put(PoolParameter.USER, user);
-        properties.put(PoolParameter.PASSWORD, password);
-        properties.put(PoolParameter.TIMEZONE, serverTimezone);
-        properties.put(PoolParameter.AUTO_RECONNECT, autoReconnect);
-        properties.put(PoolParameter.ENCODING, encoding);
-        properties.put(PoolParameter.UNICODE, useUnicode);
+        String url = config.getUrl();
+        Properties properties = config.getProperties();
         fillingConnections(url, properties, poolSize);
         if (freeConnections.size() < poolSize) {
             int difference = poolSize - freeConnections.size();
@@ -72,8 +46,8 @@ public class ConnectionPool {
         }
     }
 
-    private void fillingConnections(String url, Properties properties, int count) {
-        for (int i = 0; i < count; i++) {
+    private void fillingConnections(String url, Properties properties, int poolSize) {
+        for (int i = 0; i < poolSize; i++) {
             try {
                 Connection connection = DriverManager.getConnection(url, properties);
                 ProxyConnection proxyConnection = new ProxyConnection(connection);

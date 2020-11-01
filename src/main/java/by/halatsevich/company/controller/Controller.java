@@ -28,21 +28,17 @@ public class Controller extends HttpServlet {
     }
 
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        CommandProvider provider = CommandProvider.getInstance();
         String commandName = req.getParameter(ParameterName.COMMAND);
-        Command command = provider.defineCommand(commandName);
+        Command command = CommandProvider.getInstance().defineCommand(commandName);
         logger.log(Level.INFO, "Command name - {}", commandName);
         String page = command.execute(req);
         HttpSession session = req.getSession();
-        session.setAttribute(ParameterName.CURRENT_PAGE,page);
-        RequestHandler handler = new RequestHandler();
-        handler.setAttributes(req);
-        session.setAttribute(ParameterName.REQUEST_ATTRIBUTES,handler);
-        req.getRequestDispatcher(page).forward(req,resp);
+        session.setAttribute(ParameterName.CURRENT_PAGE, page);
+        req.getRequestDispatcher(page).forward(req, resp);
     }
 
     @Override
     public void destroy() {
-        ConnectionPool.getInstance().destroyPool();
+        ConnectionPool.INSTANCE.destroyPool();
     }
 }

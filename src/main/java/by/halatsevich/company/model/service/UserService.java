@@ -14,15 +14,14 @@ public interface UserService {
     boolean registration(RegistrationData registrationData) throws ServiceException;
 
     List<User> findAllUsers() throws ServiceException;
-    boolean isUserExist(String login, String email) throws ServiceException;
-    boolean isEmailExist(String email) throws ServiceException;
-
-    boolean updateUserStatus(String email, Status active) throws ServiceException;
 
     Optional<User> findUserByEmail(String email) throws ServiceException;
 
+    Optional<User> findUserByLogin(String login) throws ServiceException;
+
+    boolean updateUserStatus(User user, Status active) throws ServiceException;
+
     boolean updatePassword(User user, String password) throws ServiceException;
 
-
-
+    boolean updateUser(User user) throws ServiceException;
 }

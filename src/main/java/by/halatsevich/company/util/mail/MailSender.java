@@ -13,6 +13,8 @@ import java.util.Properties;
 class MailSender {
     private static final Logger logger = LogManager.getLogger(MailSender.class);
     private static final String MIME_TYPE_TEXT_HTML = "text/plain; charset=utf-8";
+    private static final String NAME = "mail.user.name";
+    private static final String PASSWORD = "mail.user.password";
     private MimeMessage message;
     private String sendToEmail;
     private String mailSubject;
@@ -47,8 +49,8 @@ class MailSender {
     }
 
     private Session createSession(Properties configProperties) {
-        String userName = configProperties.getProperty(MailParameter.NAME);
-        String userPassword = configProperties.getProperty(MailParameter.PASSWORD);
+        String userName = configProperties.getProperty(NAME);
+        String userPassword = configProperties.getProperty(PASSWORD);
         return Session.getDefaultInstance(configProperties,
                 new Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {

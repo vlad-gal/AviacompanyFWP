@@ -81,6 +81,8 @@
                                            href="controller?command=user_account_page"><fmt:message key="local.common.account"/></a>
                                         <a class="dropdown-item"
                                            href="controller?command=settings_page"><fmt:message key="local.common.settings"/></a>
+                                        <a class="dropdown-item"
+                                           href="controller?command=change_password_page"><fmt:message key="local.common.changePassword"/></a>
                                     </div>
                                 </li>
                             </div>
@@ -93,7 +95,7 @@
                             <li class="nav-item active">
                                 <form name="log_out" method="post" action="/controller">
                                     <input type="hidden" name="command" value="log_out"/>
-                                    <button type="submit" class="btn btn-info">${lout}</button>
+                                    <button type="submit" class="btn btn-info"><fmt:message key="local.common.logout"/></button>
                                 </form>
                             </li>
                         </c:otherwise>

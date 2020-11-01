@@ -20,8 +20,7 @@ public class FlightDaoImpl implements FlightDao {
 
     @Override
     public List<FlightDto> findAll() throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         ResultSet resultSet;
         List<FlightDto> flightDtos;
@@ -47,8 +46,7 @@ public class FlightDaoImpl implements FlightDao {
 
     @Override
     public Optional<FlightDto> findById(int flightId) throws DaoException { // TODO: 20.10.2020 test method
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         ResultSet resultSet;
         FlightDto flightDto = null;
@@ -87,8 +85,7 @@ public class FlightDaoImpl implements FlightDao {
 
     @Override
     public Optional<FlightDto> findFlightByDepartureAirportId(int departureAirportId) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         ResultSet resultSet;
         FlightDto flightDto = null;
@@ -113,8 +110,7 @@ public class FlightDaoImpl implements FlightDao {
 
     @Override
     public Optional<FlightDto> findFlightByDestinationAirportId(int destinationAirportId) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         ResultSet resultSet;
         FlightDto flightDto = null;
@@ -139,8 +135,7 @@ public class FlightDaoImpl implements FlightDao {
 
     @Override
     public Optional<FlightDto> findFlightByDepartPeriodOfTime(long departTimeFrom, long departTimeTo) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         ResultSet resultSet;
         FlightDto flightDto = null;
@@ -165,8 +160,7 @@ public class FlightDaoImpl implements FlightDao {
     }
 
     public Optional<FlightDto> findFlightByArrivePeriodOfTime(long arriveTimeFrom, long arriveTimeTo) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         ResultSet resultSet;
         FlightDto flightDto = null;
@@ -192,8 +186,7 @@ public class FlightDaoImpl implements FlightDao {
 
     @Override
     public Optional<FlightDto> findFlightByCrewId(int crewId) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         ResultSet resultSet;
         FlightDto flightDto = null;
@@ -218,8 +211,7 @@ public class FlightDaoImpl implements FlightDao {
 
     @Override
     public Optional<FlightDto> findFlightByOperatorId(int operatorId) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         ResultSet resultSet;
         FlightDto flightDto = null;
@@ -244,8 +236,7 @@ public class FlightDaoImpl implements FlightDao {
 
     @Override
     public boolean addFlight(FlightDto flightDto) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         boolean isAdded = false;
         try {
@@ -275,8 +266,7 @@ public class FlightDaoImpl implements FlightDao {
 
     @Override
     public boolean update(FlightDto flightDto) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         boolean isUpdated = false;
         try {
@@ -307,8 +297,7 @@ public class FlightDaoImpl implements FlightDao {
 
     @Override
     public boolean remove(int flightId) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         boolean isRemoved = false;
         try {

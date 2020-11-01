@@ -17,7 +17,7 @@
 //
 //public class CreateUserCommand implements Command {
 //    @Override
-//    public String execute(HttpServletRequest request) throws ServletException, IOException {
+//    public String execute(HttpServletRequest request) {
 //        String login = request.getParameter(ParameterName.LOGIN);
 //        String password = request.getParameter(ParameterName.PASSWORD);
 //        String email = request.getParameter(ParameterName.EMAIL);
@@ -44,7 +44,7 @@
 //                    }
 //                } else {
 //                    logger.log(Level.WARN, "User already exist");
-//                    request.setAttribute(ParameterName.USER_EXIST_FLAG, true);
+//                    request.setAttribute(ParameterName.USER_ALREADY_EXIST_FLAG, true);
 //                    page = PagePath.REGISTRATION;
 //                }
 //

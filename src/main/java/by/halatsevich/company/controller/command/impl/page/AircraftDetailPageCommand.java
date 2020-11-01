@@ -28,7 +28,7 @@ public class AircraftDetailPageCommand implements Command {
             try {
                 Optional<Aircraft> aircraft = aircraftService.findAircraftById(aircraftId);
                 if (aircraft.isPresent()) {
-                    request.setAttribute(ParameterName.AIRCRAFT, aircraft);
+                    request.setAttribute(ParameterName.AIRCRAFT, aircraft.get());
                     page = PagePath.DETAIL_PAGE;
                 } else {
                     request.setAttribute(ParameterName.AIRCRAFT_NOT_FOUND_FLAG, true);

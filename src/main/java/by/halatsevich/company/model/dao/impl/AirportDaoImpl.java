@@ -19,8 +19,7 @@ public class AirportDaoImpl implements AirportDao {
 
     @Override
     public List<Airport> findAll() throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         ResultSet resultSet;
         List<Airport> airports = new ArrayList<>();
@@ -49,8 +48,7 @@ public class AirportDaoImpl implements AirportDao {
 
     @Override
     public Optional<Airport> findById(int airportId) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         ResultSet resultSet;
         Airport airport = null;
@@ -75,8 +73,7 @@ public class AirportDaoImpl implements AirportDao {
 
     @Override
     public Optional<Airport> findAirportByName(String airportName) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         ResultSet resultSet;
         Airport airport = null;
@@ -101,8 +98,7 @@ public class AirportDaoImpl implements AirportDao {
 
     @Override
     public List<Airport> findAirportsByCity(String cityName) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         ResultSet resultSet;
         List<Airport> airports = new ArrayList<>();
@@ -123,8 +119,7 @@ public class AirportDaoImpl implements AirportDao {
 
     @Override
     public List<Airport> findAirportsByCountry(String countryName) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         ResultSet resultSet;
         List<Airport> airports = new ArrayList<>();
@@ -154,8 +149,7 @@ public class AirportDaoImpl implements AirportDao {
 
     @Override
     public boolean addAirport(Airport airport) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         boolean isAdded = false;
         try {
@@ -179,8 +173,7 @@ public class AirportDaoImpl implements AirportDao {
 
     @Override
     public boolean update(Airport airport) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         boolean isUpdated = false;
         try {
@@ -205,8 +198,7 @@ public class AirportDaoImpl implements AirportDao {
 
     @Override
     public boolean remove(int airportId) throws DaoException { // TODO: 20.10.2020 test method
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         boolean isRemoved = false;
         try {

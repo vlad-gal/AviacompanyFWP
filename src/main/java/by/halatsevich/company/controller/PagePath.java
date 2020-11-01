@@ -14,7 +14,12 @@ public class PagePath {
     public static final String AIRPORTS = "/jsp/airports.jsp";
     public static final String DETAIL_PAGE = "/jsp/detail_page.jsp";
     public static final String SUCCESSFUL_ACTIVATION = "/jsp/successful_activation.jsp";
-    public static final String FORGOT_PASSWORD = "/jsp/forgot_password_page.jsp";
-    public static final String RESET_PASSWORD = "/jsp/reset_password_page.jsp";
-    public static final String RESET_PASSWORD_LINK_SENT = "/jsp/reset_password_link_sent.jsp";
+    public static final String FORGOT_PASSWORD = "/jsp/forgot_password.jsp";
+    public static final String RESET_PASSWORD = "/jsp/reset_password.jsp";
+    public static final String RESET_PASSWORD_LINK_SENT = "/jsp/reset_link_sent.jsp";
+    public static final String ERROR_500 = "/jsp/error/error_500.jsp";
+    public static final String ERROR_404 = "/jsp/error/error_404.jsp";
+    public static final String SUCCESSFUL_PASSWORD_RESET = "/jsp/successful_reset.jsp";
+    public static final String SETTING_PAGE = "/jsp/settings.jsp";
+    public static final String CHANGE_PASSWORD = "/jsp/change_password.jsp";
 }

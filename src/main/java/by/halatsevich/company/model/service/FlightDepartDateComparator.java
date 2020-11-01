@@ -1,4 +1,4 @@
-package by.halatsevich.company.model.service.comparator;
+package by.halatsevich.company.model.service;
 
 import by.halatsevich.company.model.entity.Flight;
 

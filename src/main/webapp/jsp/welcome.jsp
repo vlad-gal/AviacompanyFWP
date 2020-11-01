@@ -44,11 +44,6 @@
                     <div class="text-center">
                         <h5 class="card-title"><fmt:message key="local.flight.emptyFlightList"/></h5>
                     </div>
-                    <c:if test="${errorGetDataFromDBFlag eq true}">
-                        <div class="text-center">
-                            <h5 class="card-title"><fmt:message key="local.error.errorGetFlightDataFromDB"/></h5>
-                        </div>
-                    </c:if>
                 </c:when>
                 <c:otherwise>
                     <table class="table table-hover" id="sort-flight">

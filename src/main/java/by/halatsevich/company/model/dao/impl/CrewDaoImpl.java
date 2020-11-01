@@ -20,8 +20,7 @@ public class CrewDaoImpl implements CrewDao {
 
     @Override
     public List<CrewDto> findAll() throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         ResultSet resultSet;
         List<CrewDto> crewDtos = new ArrayList<>();
@@ -58,8 +57,7 @@ public class CrewDaoImpl implements CrewDao {
 
     @Override
     public Optional<CrewDto> findById(int crewId) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         ResultSet resultSet;
         CrewDto crewDto = null;
@@ -84,8 +82,7 @@ public class CrewDaoImpl implements CrewDao {
 
     @Override
     public Optional<CrewDto> findCrewByDispatcherId(int dispatcherId) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         ResultSet resultSet;
         CrewDto crewDto = null;
@@ -110,8 +107,7 @@ public class CrewDaoImpl implements CrewDao {
 
     @Override
     public List<Integer> findUsersIdByCrewId(int crewId) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         ResultSet resultSet;
         List<Integer> usersId = new ArrayList<>();
@@ -135,8 +131,7 @@ public class CrewDaoImpl implements CrewDao {
 
     @Override
     public boolean addCrew(CrewDto crewDto) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         boolean isAdded = false;
         try {
@@ -164,8 +159,7 @@ public class CrewDaoImpl implements CrewDao {
 
     @Override
     public boolean addUserIntoCrew(int crewId, int userId) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         boolean isAdded = false;
         try {
@@ -188,8 +182,7 @@ public class CrewDaoImpl implements CrewDao {
 
     @Override
     public boolean updateUserIntoCrew(int crewId, int oldUserId, int userId) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         boolean isUpdated = false;
         try {
@@ -213,8 +206,7 @@ public class CrewDaoImpl implements CrewDao {
 
     @Override
     public boolean updateDispatcherIntoCrew(int crewId, int oldDispatcherId, int dispatcherId) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         boolean isUpdated = false;
         try {
@@ -238,8 +230,7 @@ public class CrewDaoImpl implements CrewDao {
 
     @Override
     public boolean update(CrewDto crewDto) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         boolean isUpdated = false;
         try {
@@ -268,8 +259,7 @@ public class CrewDaoImpl implements CrewDao {
 
     @Override
     public boolean remove(int crewId) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         boolean isRemoved = false;
         try {
@@ -293,8 +283,7 @@ public class CrewDaoImpl implements CrewDao {
 
     @Override
     public boolean removeUserFromCrew(int crewId, int userId) throws DaoException {
-        ConnectionPool pool = ConnectionPool.getInstance();
-        Connection connection = pool.getConnection();
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
         boolean isRemoved = false;
         try {
