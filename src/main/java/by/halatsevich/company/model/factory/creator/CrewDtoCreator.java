@@ -19,6 +19,7 @@ public class CrewDtoCreator implements EntityCreator<CrewDto> {
         int numberOfStewardesses = (int) crewParameter.get(ColumnName.NUMBER_OF_STEWARDESSES);
         String statusName = (String) crewParameter.get(ColumnName.STATUS_NAME);
         Status status = Status.valueOf(statusName);
-        return new CrewDto(crewId, dispatcherId, numberOfPilots, numberOfNavigators, numberOfRadioman, numberOfStewardesses, status);
+        String crewName = (String) crewParameter.get(ColumnName.CREW_NAME);
+        return new CrewDto(crewId, crewName, dispatcherId, numberOfPilots, numberOfNavigators, numberOfRadioman, numberOfStewardesses, status);
     }
 }

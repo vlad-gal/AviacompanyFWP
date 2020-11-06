@@ -39,7 +39,7 @@ public class ResetPasswordCommand implements Command {
                     }
                 } else {
                     logger.log(Level.WARN, "Email not exist");
-                    request.setAttribute("emailNotExistFlag", true);
+                    request.setAttribute(ParameterName.EMAIL_NOT_EXIST_FLAG, true);
                     page = PagePath.FORGOT_PASSWORD;
                 }
             } catch (ServiceException e) {

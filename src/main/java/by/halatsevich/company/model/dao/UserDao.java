@@ -4,7 +4,6 @@ import by.halatsevich.company.model.exception.DaoException;
 import by.halatsevich.company.model.entity.RegistrationData;
 import by.halatsevich.company.model.entity.User;
 
-import java.util.List;
 import java.util.Optional;
 
 public interface UserDao extends BaseDao<User> {
@@ -18,8 +17,9 @@ public interface UserDao extends BaseDao<User> {
 
     String findPasswordByLogin(String login) throws DaoException;
 
-    boolean registration(RegistrationData registrationData) throws DaoException;
+    boolean registration(RegistrationData registrationData, User.Role role) throws DaoException;
 
     boolean updatePassword(String login, String password) throws DaoException;
 
+    boolean registrationUserByAdmin(RegistrationData registrationData, String role) throws DaoException;
 }

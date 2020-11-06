@@ -13,6 +13,7 @@ import by.halatsevich.company.util.PasswordEncryption;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class UserServiceImpl implements UserService {
     @Override
@@ -49,14 +50,28 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean registration(RegistrationData registrationData) throws ServiceException {
+    public List<User> findUsersByStatus(String status) throws ServiceException {
+        List<User> users = findAllUsers();
+        return users.stream().filter(user -> user.getStatus() == Status.valueOf(status.toUpperCase()))
+                .filter(user -> user.getRole() != User.Role.ADMIN).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<User> findUsersByRoleAndStatus(User.Role role, Status status) throws ServiceException {
+        List<User> users = findAllUsers();
+        return users.stream().filter(user -> user.getStatus() == status)
+                .filter(user -> user.getRole() == role).collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean registration(RegistrationData registrationData, String role) throws ServiceException {
         DaoFactory factory = DaoFactory.getInstance();
         UserDao userDao = factory.getUserDao();
         boolean isUserRegistered;
         try {
             String encryptedPassword = PasswordEncryption.encryptPassword(registrationData.getPassword());
             registrationData.setPassword(encryptedPassword);
-            isUserRegistered = userDao.registration(registrationData);
+            isUserRegistered = userDao.registration(registrationData, User.Role.valueOf(role.toUpperCase()));
         } catch (DaoException e) {
             throw new ServiceException("Error while registering user", e);
         }
@@ -95,12 +110,23 @@ public class UserServiceImpl implements UserService {
         UserDao userDao = factory.getUserDao();
         boolean isUserUpdated;
         try {
-            String encryptedPassword = PasswordEncryption.encryptPassword(password);
-            isUserUpdated = userDao.updatePassword(user.getEmail(), encryptedPassword);
+            isUserUpdated = userDao.updatePassword(user.getEmail(), PasswordEncryption.encryptPassword(password));
         } catch (DaoException e) {
             throw new ServiceException("Error while updating password", e);
         }
         return isUserUpdated;
+    }
+
+    @Override
+    public List<User> findAllInactiveUsers() throws ServiceException {
+        List<User> users = findAllUsers();
+        return users.stream().filter(user -> user.getStatus() == Status.INACTIVE).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<User> findAllUsersWithoutRole() throws ServiceException {
+        List<User> users = findAllUsers();
+        return users.stream().filter(user -> user.getRole() == User.Role.DEFAULT).collect(Collectors.toList());
     }
 
     @Override
@@ -114,6 +140,21 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException("Error while updating user", e);
         }
         return isUserUpdated;
+    }
+
+    @Override
+    public boolean registrationUserByAdmin(RegistrationData registrationData, String role) throws ServiceException {
+        DaoFactory factory = DaoFactory.getInstance();
+        UserDao userDao = factory.getUserDao();
+        boolean isUserRegistered;
+        try {
+            String encryptedPassword = PasswordEncryption.encryptPassword(registrationData.getPassword());
+            registrationData.setPassword(encryptedPassword);
+            isUserRegistered = userDao.registrationUserByAdmin(registrationData, role);
+        } catch (DaoException e) {
+            throw new ServiceException("Error while registering user", e);
+        }
+        return isUserRegistered;
     }
 
     @Override

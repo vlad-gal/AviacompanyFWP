@@ -2,15 +2,16 @@ package by.halatsevich.company.validator;
 
 import by.halatsevich.company.model.entity.AuthorizationData;
 import by.halatsevich.company.model.entity.RegistrationData;
+import by.halatsevich.company.model.entity.User;
 
-public class UserValidator extends BaseValidator{
+public class UserValidator extends BaseValidator {
     private static final String REGEX_LOGIN = "[\\w-]{3,40}";
     private static final String REGEX_PASSWORD = "[^\\s]{8,25}";
     private static final String REGEX_EMAIL = "[\\w-.]{3,20}@[a-zA-Zа-яА-Я]{2,14}\\.[a-zа-я]{2,6}";
     private static final String REGEX_TELEPHONE_NUMBER = "\\d{12}";
     private static final String REGEX_NAME = "[A-ZА-Я][a-zа-я]{1,14}";
 
-    private UserValidator(){
+    private UserValidator() {
     }
 
     public static boolean isValidAuthorizationData(AuthorizationData authorizationData) {
@@ -55,23 +56,34 @@ public class UserValidator extends BaseValidator{
         return isCorrect;
     }
 
-    public static boolean isValidLogin(String login){
+    public static boolean isValidLogin(String login) {
         return (login != null && login.matches(REGEX_LOGIN));
     }
 
-    public static boolean isValidPassword(String password){
+    public static boolean isValidPassword(String password) {
         return (password != null && password.matches(REGEX_PASSWORD));
     }
 
-    public static boolean isValidEmail(String email){
+    public static boolean isValidEmail(String email) {
         return (email != null && email.matches(REGEX_EMAIL));
     }
 
-    public static boolean isValidName(String name){
+    public static boolean isValidName(String name) {
         return (name != null && name.matches(REGEX_NAME));
     }
 
-    public static boolean isValidTelephoneNumber(String telephoneNumber){
+    public static boolean isValidTelephoneNumber(String telephoneNumber) {
         return (telephoneNumber != null && telephoneNumber.matches(REGEX_TELEPHONE_NUMBER));
+    }
+
+    public static boolean isValidRole(String role) {
+        boolean flag;
+        try {
+            User.Role.valueOf(role.toUpperCase());
+            flag = true;
+        } catch (IllegalArgumentException e) {
+            flag = false;
+        }
+        return flag;
     }
 }

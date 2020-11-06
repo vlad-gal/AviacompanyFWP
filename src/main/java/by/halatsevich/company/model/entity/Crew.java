@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Crew extends Entity {
     private User dispatcher;
+    private String crewName;
     private List<User> staff;
     private int numberOfPilots;
     private int numberOfNavigators;
@@ -14,8 +15,10 @@ public class Crew extends Entity {
     public Crew() {
     }
 
-    public Crew(User dispatcher, List<User> staff, int numberOfPilots, int numberOfNavigators, int numberOfRadioman, int numberOfStewardesses, Status status) {
+    public Crew(User dispatcher, String crewName, List<User> staff, int numberOfPilots, int numberOfNavigators, int numberOfRadioman, int numberOfStewardesses, Status status) {
+
         this.dispatcher = dispatcher;
+        this.crewName = crewName;
         this.staff = staff;
         this.numberOfPilots = numberOfPilots;
         this.numberOfNavigators = numberOfNavigators;
@@ -24,9 +27,10 @@ public class Crew extends Entity {
         this.status = status;
     }
 
-    public Crew(int id, User dispatcher, List<User> staff, int numberOfPilots, int numberOfNavigators, int numberOfRadioman, int numberOfStewardesses, Status status) {
+    public Crew(int id, User dispatcher, String crewName, List<User> staff, int numberOfPilots, int numberOfNavigators, int numberOfRadioman, int numberOfStewardesses, Status status) {
         super(id);
         this.dispatcher = dispatcher;
+        this.crewName = crewName;
         this.staff = staff;
         this.numberOfPilots = numberOfPilots;
         this.numberOfNavigators = numberOfNavigators;
@@ -41,6 +45,14 @@ public class Crew extends Entity {
 
     public void setDispatcher(User dispatcher) {
         this.dispatcher = dispatcher;
+    }
+
+    public String getCrewName() {
+        return crewName;
+    }
+
+    public void setCrewName(String crewName) {
+        this.crewName = crewName;
     }
 
     public List<User> getStaff() {
@@ -104,6 +116,7 @@ public class Crew extends Entity {
         if (numberOfRadioman != crew.numberOfRadioman) return false;
         if (numberOfStewardesses != crew.numberOfStewardesses) return false;
         if (!dispatcher.equals(crew.dispatcher)) return false;
+        if (!crewName.equals(crew.crewName)) return false;
         if (!staff.equals(crew.staff)) return false;
         return status == crew.status;
     }
@@ -112,6 +125,7 @@ public class Crew extends Entity {
     public int hashCode() {
         int result = super.hashCode();
         result = 31 * result + dispatcher.hashCode();
+        result = 31 * result + crewName.hashCode();
         result = 31 * result + staff.hashCode();
         result = 31 * result + numberOfPilots;
         result = 31 * result + numberOfNavigators;
@@ -125,6 +139,7 @@ public class Crew extends Entity {
     public String toString() {
         final StringBuilder sb = new StringBuilder("Crew{");
         sb.append("dispatcher=").append(dispatcher);
+        sb.append(", crewName='").append(crewName).append('\'');
         sb.append(", staff=").append(staff);
         sb.append(", numberOfPilots=").append(numberOfPilots);
         sb.append(", numberOfNavigators=").append(numberOfNavigators);

@@ -36,6 +36,8 @@ public class AuthorizationCommand implements Command {
                 if (optionalUser.isPresent()) {
                     if (optionalUser.get().getStatus() == Status.ACTIVE) {
                         session.setAttribute(ParameterName.USER, optionalUser.get());
+                        session.setAttribute(ParameterName.ROLES, User.Role.values());
+                        session.setAttribute(ParameterName.STATUSES, Status.values());
                         page = PagePath.USER_ACCOUNT;
                     } else {
                         request.setAttribute(ParameterName.INACTIVE_USER_FLAG, true);

@@ -2,6 +2,7 @@ package by.halatsevich.company.tag;
 
 import by.halatsevich.company.controller.ParameterName;
 import by.halatsevich.company.model.entity.Flight;
+import by.halatsevich.company.model.entity.User;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -30,6 +31,7 @@ public class FlightPaginationTag extends TagSupport {
         HttpSession session = pageContext.getSession();
         List<Flight> flights = (List<Flight>) session.getAttribute(ParameterName.FLIGHT_LIST);
         String lang = (String) session.getAttribute(ParameterName.LANG);
+//        User user = (User) session.getAttribute(ParameterName.USER);
         SimpleDateFormat dateFormat = new SimpleDateFormat(DATA_PATTERN, new Locale(lang));
         int firstIndex = currentPageNumber * COUNT_OF_ITEMS - COUNT_OF_ITEMS;
         int lastIndex = Math.min(currentPageNumber * COUNT_OF_ITEMS, flights.size());
@@ -43,6 +45,9 @@ public class FlightPaginationTag extends TagSupport {
                 out.write("<td>" + flight.getDestinationAirport().getAirportName() + ", " + flight.getDestinationAirport().getCity() + ", " + flight.getDestinationAirport().getCountry() + "</td>");
                 out.write("<td>" + dateFormat.format(flight.getDepartTime()) + "</td>");
                 out.write("<td>" + dateFormat.format(flight.getArriveTime()) + "</td>");
+//                if (user != null && (user.getRole() == User.Role.ADMIN || user.getRole() == User.Role.OPERATOR)) {
+//                    out.write("<td>" + dateFormat.format(flight.getArriveTime()) + "</td>");
+//                }
                 out.write("</tr>");
             }
             out.write("</tbody>");

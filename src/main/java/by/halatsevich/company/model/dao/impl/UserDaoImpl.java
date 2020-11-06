@@ -45,6 +45,97 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public boolean registration(RegistrationData registrationData, User.Role role) throws DaoException {
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
+        PreparedStatement statement = null;
+        ResultSet resultSet;
+        boolean isAdded = false;
+        try {
+            int inactiveStatus = Status.INACTIVE.ordinal() + 1;
+            connection.setAutoCommit(false);
+            statement = connection.prepareStatement(SqlQuery.INSERT_USER, new String[]{ColumnName.USER_ID});
+            statement.setString(1, registrationData.getEmail());
+            statement.setString(2, registrationData.getLogin());
+            statement.setString(3, registrationData.getPassword());
+            statement.setInt(4, role.ordinal()+1);// todo переделать таблицу начинать индексацию с 0
+            statement.setInt(5, inactiveStatus);
+            int firstAdd = statement.executeUpdate();
+            resultSet = statement.getGeneratedKeys();
+            int userId = -1;
+            while (resultSet.next()) {
+                userId = resultSet.getInt(1);
+            }
+            statement = connection.prepareStatement(SqlQuery.INSERT_PERSONAL_DATA);
+            statement.setInt(1, userId);
+            statement.setString(2, registrationData.getFirstName());
+            statement.setString(3, registrationData.getLastName());
+            statement.setLong(4, Long.parseLong(registrationData.getTelephoneNumber()));
+            int secondAdd = statement.executeUpdate();
+            if (firstAdd + secondAdd == 2) {
+                isAdded = true;
+                connection.commit();
+            } else {
+                rollbackConnection(connection);
+            }
+            logger.log(Level.DEBUG, "Did user add? {}", isAdded);
+        } catch (SQLException e) {
+            rollbackConnection(connection);
+            returnAutoCommit(connection);
+            throw new DaoException("Error while inserting user", e);
+        } finally {
+            closeStatement(statement);
+            returnAutoCommit(connection);
+            closeConnection(connection);
+        }
+        return isAdded;
+    }
+
+    @Override
+    public boolean registrationUserByAdmin(RegistrationData registrationData, String role) throws DaoException {
+        Connection connection = ConnectionPool.INSTANCE.getConnection();
+        PreparedStatement statement = null;
+        ResultSet resultSet;
+        boolean isAdded = false;
+        try {
+            connection.setAutoCommit(false);
+            statement = connection.prepareStatement(SqlQuery.INSERT_USER, new String[]{ColumnName.USER_ID});
+            statement.setString(1, registrationData.getEmail());
+            statement.setString(2, registrationData.getLogin());
+            statement.setString(3, registrationData.getPassword());
+            statement.setInt(4, User.Role.valueOf(role.toUpperCase()).ordinal() + 1);
+            statement.setInt(5, Status.ACTIVE.ordinal() + 1);
+            int firstAdd = statement.executeUpdate();
+            resultSet = statement.getGeneratedKeys();
+            int userId = -1;
+            while (resultSet.next()) {
+                userId = resultSet.getInt(1);
+            }
+            statement = connection.prepareStatement(SqlQuery.INSERT_PERSONAL_DATA);
+            statement.setInt(1, userId);
+            statement.setString(2, registrationData.getFirstName());
+            statement.setString(3, registrationData.getLastName());
+            statement.setLong(4, Long.parseLong(registrationData.getTelephoneNumber()));
+            int secondAdd = statement.executeUpdate();
+            if (firstAdd + secondAdd == 2) {
+                isAdded = true;
+                connection.commit();
+            } else {
+                rollbackConnection(connection);
+            }
+            logger.log(Level.DEBUG, "Did user add? {}", isAdded);
+        } catch (SQLException e) {
+            rollbackConnection(connection);
+            returnAutoCommit(connection);
+            throw new DaoException("Error while inserting user", e);
+        } finally {
+            closeStatement(statement);
+            returnAutoCommit(connection);
+            closeConnection(connection);
+        }
+        return isAdded;
+    }
+
+    @Override
     public Optional<User> findUserByLogin(String login) throws DaoException {
         Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
@@ -102,7 +193,7 @@ public class UserDaoImpl implements UserDao {
             statement = connection.prepareStatement(SqlQuery.SELECT_USER_LOGIN);
             statement.setString(1, login);
             resultSet = statement.executeQuery();
-            while (resultSet.next()){
+            while (resultSet.next()) {
                 isFound = true;
             }
             logger.log(Level.DEBUG, "Did login find? {}", isFound);
@@ -185,7 +276,7 @@ public class UserDaoImpl implements UserDao {
         EntityFactory factory = EntityFactory.getInstance();
         try {
             statement = connection.prepareStatement(SqlQuery.SELECT_USER_BY_EMAIL);
-            statement.setString(1,email);
+            statement.setString(1, email);
             resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 Map<String, Object> userData = createUserData(resultSet);
@@ -199,53 +290,6 @@ public class UserDaoImpl implements UserDao {
             closeConnection(connection);
         }
         return Optional.ofNullable(user);
-    }
-
-    @Override
-    public boolean registration(RegistrationData registrationData) throws DaoException {
-        Connection connection = ConnectionPool.INSTANCE.getConnection();
-        PreparedStatement statement = null;
-        ResultSet resultSet;
-        boolean isAdded = false;
-        try {
-            int defaultRole = User.Role.DEFAULT.ordinal() + 1;
-            int inactiveStatus = Status.INACTIVE.ordinal() + 1;
-            connection.setAutoCommit(false);
-            statement = connection.prepareStatement(SqlQuery.INSERT_USER, new String[]{ColumnName.USER_ID});
-            statement.setString(1, registrationData.getEmail());
-            statement.setString(2, registrationData.getLogin());
-            statement.setString(3, registrationData.getPassword());
-            statement.setInt(4, defaultRole);
-            statement.setInt(5, inactiveStatus);
-            int firstAdd = statement.executeUpdate();
-            resultSet = statement.getGeneratedKeys();
-            int userId = -1;
-            while (resultSet.next()) {
-                userId = resultSet.getInt(1);
-            }
-            statement = connection.prepareStatement(SqlQuery.INSERT_PERSONAL_DATA);
-            statement.setInt(1, userId);
-            statement.setString(2, registrationData.getFirstName());
-            statement.setString(3, registrationData.getLastName());
-            statement.setLong(4, Long.parseLong(registrationData.getTelephoneNumber()));
-            int secondAdd = statement.executeUpdate();
-            if (firstAdd + secondAdd == 2) {
-                isAdded = true;
-                connection.commit();
-            } else {
-                rollbackConnection(connection);
-            }
-            logger.log(Level.DEBUG, "Did user add? {}", isAdded);
-        } catch (SQLException e) {
-            rollbackConnection(connection);
-            returnAutoCommit(connection);
-            throw new DaoException("Error while inserting user", e);
-        } finally {
-            closeStatement(statement);
-            returnAutoCommit(connection);
-            closeConnection(connection);
-        }
-        return isAdded;
     }
 
     @Override

@@ -52,6 +52,7 @@ public class CrewDaoImpl implements CrewDao {
         crewData.put(ColumnName.NUMBER_OF_RADIOMAN, resultSet.getInt(5));
         crewData.put(ColumnName.NUMBER_OF_STEWARDESSES, resultSet.getInt(6));
         crewData.put(ColumnName.STATUS_NAME, resultSet.getString(7).toUpperCase());
+        crewData.put(ColumnName.CREW_NAME, resultSet.getString(8));
         return crewData;
     }
 
@@ -143,6 +144,7 @@ public class CrewDaoImpl implements CrewDao {
             statement.setInt(5, crewDto.getNumberOfStewardesses());
             int statusId = crewDto.getStatus().ordinal() + 1;
             statement.setInt(6, statusId);
+            statement.setString(7, crewDto.getCrewName());
             int add = statement.executeUpdate();
             if (add == 1) {
                 isAdded = true;
@@ -243,6 +245,7 @@ public class CrewDaoImpl implements CrewDao {
             int statusId = crewDto.getStatus().ordinal() + 1;
             statement.setInt(6, statusId);
             statement.setInt(7, crewDto.getId());
+            statement.setString(8, crewDto.getCrewName());
             int update = statement.executeUpdate();
             if (update == 1) {
                 isUpdated = true;

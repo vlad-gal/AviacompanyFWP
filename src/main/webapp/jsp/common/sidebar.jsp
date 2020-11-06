@@ -55,31 +55,26 @@
                         <span>Users</span>
                     </h6>
                     <li class="nav-item">
-                        <a class="nav-link" href="controller?command=all_users">
-                            All users
+                        <a class="nav-link" href="controller?command=all_users&status=active">
+                            Active users
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="controller?command=all_users&status=inactive">
                             Inactive users
-                        </a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            Users without roles
                         </a>
                     </li>
                     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
                         <span>Flights</span>
                     </h6>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            All flights
+                        <a class="nav-link" href="controller?command=all_flights&status=active">
+                            Active current flights
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            Current flights
+                        <a class="nav-link" href="controller?command=all_flights&status=inactive">
+                            Inactive flights
                         </a>
                     </li>
                     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">

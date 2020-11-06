@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 
     <title><fmt:message key="local.common.successfulActivationTitle"/></title>
+    <%--todo объединить все саксесс страницы--%>
 </head>
 <body>
 <div class="container text-center">

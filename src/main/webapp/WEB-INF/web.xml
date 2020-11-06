@@ -35,6 +35,7 @@
     <filter-mapping>
         <filter-name>EncodingFilter</filter-name>
         <url-pattern>/*</url-pattern>
+        <!--<dispatcher>FORWARD</dispatcher>-->
     </filter-mapping>
     <error-page>
         <error-code>404</error-code>

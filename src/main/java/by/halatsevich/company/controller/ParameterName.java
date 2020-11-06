@@ -95,7 +95,7 @@ public class ParameterName {
     public static final String FLIGHT = "flight";
     public static final String FLIGHT_NOT_FOUND_FLAG = "flightNotFoundFlag";
     public static final String AUTHORIZATION_DATA = "authorizationData";
-    public static final String USER_NOT_FOUND = "userNotFound";
+    public static final String USER_NOT_FOUND_FLAG = "userNotFoundFlag";
     public static final String EMAIL_NOT_EXIST_FLAG = "emailNotExistFlag";
 
     public static final String INCORRECT_EMAIL_FLAG = "incorrectEmailFlag";
@@ -108,4 +108,27 @@ public class ParameterName {
     public static final String UPDATING_SUCCESSFUL_FLAG = "updatingSuccessfulFlag";
     public static final String ERROR_UPDATE_USER_FLAG = "errorUpdateUserFlag";
     public static final String ERROR_UPDATE_PASSWORD_FLAG = "errorUpdatePasswordFlag";
+    public static final String ROLES = "roles";
+    public static final String REGISTRATION_SUCCESSFUL_FLAG = "registrationSuccessfulFlag";
+    public static final String STATUSES = "statuses";
+    public static final String UPDATING_USER = "updatingUser";
+    public static final String INCORRECT_LOGIN_FLAG = "incorrectLoginFlag";
+    public static final String ALL_USERS_LIST = "allUsersList";
+    public static final String ALL_INACTIVE_USERS_LIST = "allInactiveUsersList";
+    public static final String ALL_USERS_WITHOUT_ROLE_LIST = "allUsersWithoutRoleList";
+    public static final String ALL_FLIGHTS_LIST = "allFlightsList";
+    public static final String DEPARTURE_AIRPORT = "departureAirport";
+    public static final String DESTINATION_AIRPORT = "destinationAirport";
+    public static final String DEPART_TIME = "departTime";
+    public static final String ARRIVE_TIME = "arriveTime";
+    public static final String CREW = "crew";
+    public static final String ERROR_CREATE_FLIGHT_FLAG = "errorCreateFlightFlag";
+    public static final String CREATE_FLIGHT_SUCCESSFUL_FLAG = "createFlightSuccessfulFlag";
+    public static final String AIRPORTS = "airports";
+    public static final String AIRCRAFTS = "aircrafts";
+    public static final String CREWS = "crews";
+    public static final String OPERATORS = "operators";
+    public static final String OPERATOR = "operator";
+    public static final String DEPARTURE_AIRPORT_ERROR = "departureAirport";
+    public static final String UPDATING_FLIGHT = "updatingFlight";
 }

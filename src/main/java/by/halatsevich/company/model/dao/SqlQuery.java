@@ -121,29 +121,29 @@ public class SqlQuery {
     public static final String REMOVE_FLIGHT_BY_ID =
             "UPDATE flights SET statusId = ? WHERE flightId = ?";
     //crew
-
+// TODO: 03.11.2020 проверить все запросы крю и дао
     public static final String SELECT_ALL_CREWS =
             "SELECT crews.crewId, crews.dispatcherId, crews.numberOfPilots, crews.numberOfNavigators, crews.numberOfRadioman, " +
-                    "crews.numberOfStewardesses, statuses.statusName " +
+                    "crews.numberOfStewardesses, statuses.statusName, crews.crewName " +
                     "FROM crews " +
                     "JOIN statuses ON statuses.statusId = crews.statusId";
     public static final String SELECT_CREW_BY_ID =
             "SELECT crews.crewId, crews.dispatcherId, crews.numberOfPilots, crews.numberOfNavigators, crews.numberOfRadioman, " +
-                    "crews.numberOfStewardesses, statuses.statusName " +
+                    "crews.numberOfStewardesses, statuses.statusName, crews.crewName " +
                     "FROM crews " +
                     "JOIN statuses ON statuses.statusId = crews.statusId " +
                     "WHERE crews.crewId = ?";
     public static final String SELECT_CREW_BY_DISPATCHER_ID =
             "SELECT crews.crewId, crews.dispatcherId, crews.numberOfPilots, crews.numberOfNavigators, crews.numberOfRadioman, " +
-                    "crews.numberOfStewardesses, statuses.statusName " +
+                    "crews.numberOfStewardesses, statuses.statusName, crews.crewName " +
                     "FROM crews " +
                     "JOIN statuses ON statuses.statusId = crews.statusId " +
                     "WHERE crews.dispatcherId = ?";
     public static final String SELECT_USERS_ID_BY_CREW_ID =
             "SELECT userId FROM crews_has_users WHERE crewId = ?";
     public static final String INSERT_CREW =
-            "INSERT INTO crews (dispatcherId, numberOfPilots, numberOfNavigators, numberOfRadioman, numberOfStewardesses, statusId) " +
-                    "VALUES (?,?,?,?,?,?)";
+            "INSERT INTO crews (dispatcherId, numberOfPilots, numberOfNavigators, numberOfRadioman, numberOfStewardesses, statusId, crewName) " +
+                    "VALUES (?,?,?,?,?,?,?)";
     public static final String INSERT_USER_INTO_CREW =
             "INSERT INTO crews_has_users (crewId, userId) VALUES (?,?)";
     public static final String UPDATE_USER_INTO_CREW =
@@ -152,7 +152,7 @@ public class SqlQuery {
             "UPDATE crews SET dispatcherId = ? WHERE (dispatcherId = ? AND crewId = ?)";
     public static final String UPDATE_CREW =
             "UPDATE crews SET dispatcherId = ?, numberOfPilots = ?, numberOfNavigators = ?, numberOfRadioman = ?, " +
-                    "numberOfStewardesses = ?, statusId = ? WHERE crewId = ?";
+                    "numberOfStewardesses = ?, statusId = ?, crewNae = ? WHERE crewId = ?";
     public static final String REMOVE_CREW_BY_ID =
             "UPDATE crews SET statusId = ? WHERE crewId = ?";
     public static final String REMOVE_USER_FROM_CREW_BY_ID =

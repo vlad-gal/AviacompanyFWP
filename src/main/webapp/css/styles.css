@@ -8,6 +8,7 @@ body {
 
 img{
     max-width: 100%;
+    margin-bottom: 25px;
     height: auto;
 }
 
@@ -22,9 +23,6 @@ img{
 
 header .nav-item {
     margin-left: 15px;
-}
-body .card {
-    margin-top: 25px;
 }
 body .row {
     margin-top: 25px;

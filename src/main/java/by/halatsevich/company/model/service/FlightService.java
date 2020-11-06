@@ -1,6 +1,7 @@
 package by.halatsevich.company.model.service;
 
 import by.halatsevich.company.model.entity.Flight;
+import by.halatsevich.company.model.exception.DaoException;
 import by.halatsevich.company.model.exception.ServiceException;
 
 import java.util.List;
@@ -30,4 +31,7 @@ public interface FlightService {
 
      boolean removeFlight(int flightId) throws ServiceException;
 
+    List<Flight> findFlightsByStatus(String status) throws ServiceException;
+
+    boolean addFlight(String departureAirportId, String destinationAirportId, String departTime, String arriveTime, String crewId, String aircraftId, String operatorId) throws ServiceException;
 }

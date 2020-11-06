@@ -31,6 +31,7 @@ public class ColumnName {
     public static final String NUMBER_OF_NAVIGATORS = "numberOfNavigators";
     public static final String NUMBER_OF_RADIOMAN = "numberOfRadioman";
     public static final String NUMBER_OF_STEWARDESSES = "numberOfStewardesses";
+    public static final String CREW_NAME = "crewName";
     //airports
     public static final String AIRPORT_ID = "airportId";
     public static final String AIRPORT_NAME = "airportName";

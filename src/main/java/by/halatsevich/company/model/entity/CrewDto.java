@@ -1,6 +1,7 @@
 package by.halatsevich.company.model.entity;
 
 public class CrewDto extends Entity {
+    private String crewName;
     private int dispatcherId;
     private int numberOfPilots;
     private int numberOfNavigators;
@@ -11,8 +12,9 @@ public class CrewDto extends Entity {
     public CrewDto() {
     }
 
-    public CrewDto(int id, int dispatcherId, int numberOfPilots, int numberOfNavigators, int numberOfRadioman, int numberOfStewardesses, Status status) {
+    public CrewDto(int id, String crewName, int dispatcherId, int numberOfPilots, int numberOfNavigators, int numberOfRadioman, int numberOfStewardesses, Status status) {
         super(id);
+        this.crewName = crewName;
         this.dispatcherId = dispatcherId;
         this.numberOfPilots = numberOfPilots;
         this.numberOfNavigators = numberOfNavigators;
@@ -21,13 +23,23 @@ public class CrewDto extends Entity {
         this.status = status;
     }
 
-    public CrewDto(int dispatcherId, int numberOfPilots, int numberOfNavigators, int numberOfRadioman, int numberOfStewardesses, Status status) {
+    public CrewDto(String crewName, int dispatcherId, int numberOfPilots, int numberOfNavigators, int numberOfRadioman, int numberOfStewardesses, Status status) {
+
+        this.crewName = crewName;
         this.dispatcherId = dispatcherId;
         this.numberOfPilots = numberOfPilots;
         this.numberOfNavigators = numberOfNavigators;
         this.numberOfRadioman = numberOfRadioman;
         this.numberOfStewardesses = numberOfStewardesses;
         this.status = status;
+    }
+
+    public String getCrewName() {
+        return crewName;
+    }
+
+    public void setCrewName(String crewName) {
+        this.crewName = crewName;
     }
 
     public int getDispatcherId() {
@@ -91,12 +103,14 @@ public class CrewDto extends Entity {
         if (numberOfNavigators != crewDto.numberOfNavigators) return false;
         if (numberOfRadioman != crewDto.numberOfRadioman) return false;
         if (numberOfStewardesses != crewDto.numberOfStewardesses) return false;
+        if (!crewName.equals(crewDto.crewName)) return false;
         return status == crewDto.status;
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
+        result = 31 * result + crewName.hashCode();
         result = 31 * result + dispatcherId;
         result = 31 * result + numberOfPilots;
         result = 31 * result + numberOfNavigators;
@@ -109,7 +123,8 @@ public class CrewDto extends Entity {
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("CrewDto{");
-        sb.append("dispatcherId=").append(dispatcherId);
+        sb.append("crewName='").append(crewName).append('\'');
+        sb.append(", dispatcherId=").append(dispatcherId);
         sb.append(", numberOfPilots=").append(numberOfPilots);
         sb.append(", numberOfNavigators=").append(numberOfNavigators);
         sb.append(", numberOfRadioman=").append(numberOfRadioman);

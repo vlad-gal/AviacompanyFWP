@@ -22,4 +22,8 @@ public class PagePath {
     public static final String SUCCESSFUL_PASSWORD_RESET = "/jsp/successful_reset.jsp";
     public static final String SETTING_PAGE = "/jsp/settings.jsp";
     public static final String CHANGE_PASSWORD = "/jsp/change_password.jsp";
+    public static final String CREATE_USER = "/jsp/create_user.jsp";
+    public static final String UPDATE_USER = "/jsp/update_user.jsp";
+    public static final String CREATE_FLIGHT = "/jsp/create_flight.jsp";
+    public static final String UPDATE_FLIGHT = "/jsp/update_flight.jsp";
 }

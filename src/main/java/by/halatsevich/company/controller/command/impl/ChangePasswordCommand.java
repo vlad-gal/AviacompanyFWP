@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class ChangePasswordCommand implements Command {
-    private static final Logger logger = LogManager.getLogger(RegistrationCommand.class);
+    private static final Logger logger = LogManager.getLogger(ChangePasswordCommand.class);
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -39,7 +39,7 @@ public class ChangePasswordCommand implements Command {
                     page = PagePath.CHANGE_PASSWORD;
                 }
             } catch (ServiceException e) {
-                logger.log(Level.ERROR, "Cannot updating password", e);
+                logger.log(Level.ERROR, "Error while updating password", e);
                 request.setAttribute(ParameterName.ERROR_MESSAGE, e);
                 page = PagePath.ERROR_500;
             }

@@ -17,18 +17,34 @@
     <title>${authorizationTitle}</title>
 </head>
 <body>
-    <jsp:include page="common/header.jsp"/>
-    <div class="container vh-100">
-        <div class="row">
-            <div class="col-3">
-                <jsp:include page="common/sidebar.jsp"/>
-            </div>
-            <div class="col-9">
-                <jsp:include page="common/content.jsp"/>
-            </div>
+<jsp:include page="common/header.jsp"/>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-3">
+            <jsp:include page="common/sidebar.jsp"/>
+        </div>
+        <div class="col-9">
+            <c:choose>
+                <c:when test="${user.role eq 'ADMIN'}">
+                    <jsp:include page="common/admin_content.jsp"/>
+                </c:when>
+                <c:when test="${user.role eq 'OPERATOR'}">
+                    <jsp:include page="common/operator_content.jsp"/>
+                </c:when>
+                <c:when test="${user.role eq 'DISPATCHER'}">
+                    <jsp:include page="common/dispatcher_content.jsp"/>
+                </c:when>
+                <c:when test="${user.role eq 'PILOT' || user.role eq 'NAVIGATOR' || user.role eq 'RADIOMAN' || user.role eq 'STEWARDESS'}">
+                    <jsp:include page="common/staff_content.jsp"/>
+                </c:when>
+                <c:otherwise>
+                    <jsp:include page="common/default_content.jsp"/>
+                </c:otherwise>
+            </c:choose>
         </div>
     </div>
-    <jsp:include page="common/footer.jsp"/>
+</div>
+<jsp:include page="common/footer.jsp"/>
 </body>
 </html>
 <script src="${pageContext.request.contextPath}/js/jquery-3.5.1.slim.min.js"></script>

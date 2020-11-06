@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/login.css">
 
-    <title><fmt:message key="local.common.registrationTitle"/></title>
+    <title><fmt:message key="local.common.registrationUserTitle"/></title>
 </head>
 <body class="login-page">
 <jsp:include page="common/header.jsp"/>
@@ -24,19 +24,22 @@
             <div class="card-wrapper">
                 <div class="card fat">
                     <div class="card-body">
-                        <h5 class="card-title text-center"><fmt:message key="local.common.registrationTitle"/></h5>
+                        <h5 class="card-title text-center"><fmt:message key="local.common.registrationUserTitle"/></h5>
                         <c:if test="${errorRegisterUserFlag eq true}">
                             <h6 class="errorLoginPass text-center"><fmt:message key="local.common.errorRegisterUser"/></h6>
                         </c:if>
                         <c:if test="${userAlreadyExistFlag eq true}">
                             <h6 class="errorLoginPass text-center"><fmt:message key="local.common.userAlreadyExist"/></h6>
                         </c:if>
+                        <c:if test="${registrationSuccessfulFlag eq true}">
+                            <h6 class="alert-success text-center"><fmt:message key="local.common.registrationUserSuccessful"/></h6>
+                        </c:if>
                         <c:if test="${errorValidationFlag eq true}">
                             <h6 class="errorLoginPass text-center"><fmt:message key="local.common.errorValidation"/></h6>
                         </c:if>
                         <form method="POST" class="login-validation" name="registrationForm"
                               action="${pageContext.request.contextPath}/controller">
-                            <input type="hidden" name="command" value="registration">
+                            <input type="hidden" name="command" value="create_user">
                             <div class="form-group">
                                 <label for="login"><fmt:message key="local.common.login"/></label>
                                 <input id="login" type="text" class="form-control" name="login"
@@ -79,13 +82,6 @@
                                     </div>
                                 </c:if>
                             </c:if>
-                            <div class="form-group">
-                                <label for="confirmPassword"><fmt:message key="local.common.confirmPassword"/></label>
-                                <input id="confirmPassword" type="password" class="form-control" name="confirmPassword"
-                                       placeholder="<fmt:message key="local.common.confirmPassword"/>" pattern="[^\s]{8,25}"
-                                       title="<fmt:message key="local.common.incorrectPasswordMessage"/>"
-                                       value="" required>
-                            </div>
                             <div class="form-group">
                                 <label for="firstName"><fmt:message key="local.common.firstName"/></label>
                                 <input id="firstName" type="text" class="form-control" name="firstName"
@@ -133,17 +129,13 @@
                                 <select id="role" name="role" class="custom-select">
                                     <c:forEach var="role" items="${sessionScope.roles}" begin="1" end="6">
                                         <option>
-                                                ${role}
+                                            ${role}
                                         </option>
-                                    </c:forEach>
+                                        </c:forEach>
                                 </select>
                             </div>
                             <div class="form-group m-0">
-                                <input type="submit" class="btn btn-primary btn-block" value="<fmt:message key="local.common.registration"/>">
-                            </div>
-                            <div class="mt-4 text-center">
-                                <fmt:message key="local.common.haveAccount"/> <a
-                                    href="controller?command=authorization_page"><fmt:message key="local.common.authorizationTitle"/></a>
+                                <input type="submit" class="btn btn-primary btn-block" value="<fmt:message key="local.common.registrationUser"/>">
                             </div>
                         </form>
                     </div>
@@ -159,5 +151,4 @@
 <script src="${pageContext.request.contextPath}/js/popper.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/01efe1ad65.js"></script>
-<script src="${pageContext.request.contextPath}/js/check-password.js"></script>
 

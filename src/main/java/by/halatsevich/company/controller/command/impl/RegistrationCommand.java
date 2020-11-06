@@ -30,17 +30,18 @@ public class RegistrationCommand implements Command {
         String firstName = request.getParameter(ParameterName.FIRST_NAME);
         String lastName = request.getParameter(ParameterName.LAST_NAME);
         String telephoneNumber = request.getParameter(ParameterName.TELEPHONE_NUMBER);
+        String role = request.getParameter(ParameterName.ROLE);
         HttpSession session = request.getSession();
         String page;
         RegistrationData registrationData = new RegistrationData(login, email, password, firstName, lastName, telephoneNumber);
-        if (UserValidator.isValidRegistrationData(registrationData) && password.equals(confirmPassword)) {
+        if (UserValidator.isValidRegistrationData(registrationData) && UserValidator.isValidRole(role) && password.equals(confirmPassword)) {
             ServiceFactory factory = ServiceFactory.getInstance();
             UserService service = factory.getUserService();
             try {
                 Optional<User> userByEmail = service.findUserByEmail(email);
                 Optional<User> userByLogin = service.findUserByLogin(login);
                 if (!userByEmail.isPresent() && !userByLogin.isPresent()) {
-                    boolean isUserRegistered = service.registration(registrationData);
+                    boolean isUserRegistered = service.registration(registrationData, role);
                     if (isUserRegistered) {
                         MailUtil.getInstance().sendMessage((String) session.getAttribute(ParameterName.LANG),
                                 email, request.getRequestURL().toString(), MailUtil.MailType.ACTIVATION);
@@ -55,9 +56,8 @@ public class RegistrationCommand implements Command {
                     request.setAttribute(ParameterName.USER_ALREADY_EXIST_FLAG, true);
                     page = PagePath.REGISTRATION;
                 }
-
             } catch (ServiceException e) {
-                logger.log(Level.ERROR, "Cannot register user", e);
+                logger.log(Level.ERROR, "Error while registering user", e);
                 request.setAttribute(ParameterName.ERROR_MESSAGE, e);
                 page = PagePath.ERROR_500;
             }
