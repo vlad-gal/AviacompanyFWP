@@ -25,7 +25,8 @@ public class FlightServiceImpl implements FlightService {
         try {
             flightDtos = flightDao.findAll();
             for (FlightDto flightDto : flightDtos) {
-                flights.add(createFlight(factory, flightDto));
+                Flight flight = createFlight(factory, flightDto);
+                flights.add(flight);
             }
         } catch (DaoException e) {
             throw new ServiceException("Error while finding all flights", e);
@@ -36,14 +37,11 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public List<Flight> findAllActualFlights() throws ServiceException {
         List<Flight> flights = findAllFlights();
-        List<Flight> actualFlights = new ArrayList<>();// todo сделать стримами
-        for (Flight flight : flights) {
-            if (flight.getStatus() == Status.ACTIVE && (flight.getArriveTime().compareTo(new Date()) > 0)) {
-                actualFlights.add(flight);
-            }
-        }
-        actualFlights.sort(new FlightDepartDateComparator());
-        return actualFlights;
+        return flights.stream()
+                .filter(flight -> flight.getStatus() == Status.ACTIVE)
+                .filter(flight -> flight.getArriveTime().compareTo(new Date()) > 0)
+                .sorted(new FlightDepartDateComparator())
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -72,40 +70,6 @@ public class FlightServiceImpl implements FlightService {
         return flight;
     }
 
-    private Flight createFlight(DaoFactory factory, FlightDto flightDto) throws DaoException {
-        UserDao userDao = factory.getUserDao();
-        AircraftDao aircraftDao = factory.getAircraftDao();
-        AirportDao airportDao = factory.getAirportDao();
-        CrewDao crewDao = factory.getCrewDao();
-        Airport departureAirport = airportDao.findById(flightDto.getDepartureAirportId()).get();
-        Airport destinationAirport = airportDao.findById(flightDto.getDestinationAirportId()).get();
-        Date arriveTime = new Date(flightDto.getArriveTime());
-        Date departTime = new Date(flightDto.getDepartTime());
-        Aircraft aircraft = aircraftDao.findById(flightDto.getAircraftId()).get();
-        User operator = userDao.findById(flightDto.getOperatorId()).get();
-        Status flightStatus = flightDto.getStatus();
-        Optional<CrewDto> optionalCrewDto = crewDao.findById(flightDto.getCrewId());
-        CrewDto crewDto = optionalCrewDto.get();
-        Crew crew = createCrew(userDao, crewDao, crewDto);
-        return new Flight(flightDto.getId(), departureAirport, destinationAirport, departTime, arriveTime, aircraft, crew, operator, flightStatus);
-    }
-
-    private Crew createCrew(UserDao userDao, CrewDao crewDao, CrewDto crewDto) throws DaoException {
-        User dispatcher = userDao.findById(crewDto.getDispatcherId()).get();
-        List<Integer> usersIdByCrewId = crewDao.findUsersIdByCrewId(crewDto.getId());
-        List<User> staff = new ArrayList<>();
-        for (int userId : usersIdByCrewId) {
-            staff.add(userDao.findById(userId).get());
-        }
-        int numberOfPilots = crewDto.getNumberOfPilots();
-        int numberOfNavigators = crewDto.getNumberOfNavigators();
-        int numberOfRadioman = crewDto.getNumberOfRadioman();
-        int numberOfStewardesses = crewDto.getNumberOfStewardesses();
-        Status crewStatus = crewDto.getStatus();
-        String crewName = crewDto.getCrewName();
-        return new Crew(dispatcher, crewName, staff, numberOfPilots, numberOfNavigators, numberOfRadioman, numberOfStewardesses, crewStatus);
-    }
-
     @Override
     public boolean addFlight(String departureAirportId, String destinationAirportId, String departTime, String arriveTime, String crewId, String aircraftId, String operatorId) throws ServiceException {
         boolean isAdded;
@@ -122,7 +86,7 @@ public class FlightServiceImpl implements FlightService {
         try {
             isAdded = flightDao.addFlight(flightDto);
         } catch (DaoException e) {
-            throw new ServiceException("Error while adding flight",e);
+            throw new ServiceException("Error while adding flight", e);
         }
         return isAdded;
     }
@@ -170,5 +134,39 @@ public class FlightServiceImpl implements FlightService {
     @Override
     public boolean removeFlight(int flightId) throws ServiceException {
         return false;
+    }
+
+    private Flight createFlight(DaoFactory factory, FlightDto flightDto) throws DaoException {
+        UserDao userDao = factory.getUserDao();
+        AircraftDao aircraftDao = factory.getAircraftDao();
+        AirportDao airportDao = factory.getAirportDao();
+        CrewDao crewDao = factory.getCrewDao();
+        Airport departureAirport = airportDao.findById(flightDto.getDepartureAirportId()).get();
+        Airport destinationAirport = airportDao.findById(flightDto.getDestinationAirportId()).get();
+        Date arriveTime = new Date(flightDto.getArriveTime());
+        Date departTime = new Date(flightDto.getDepartTime());
+        Aircraft aircraft = aircraftDao.findById(flightDto.getAircraftId()).get();
+        User operator = userDao.findById(flightDto.getOperatorId()).get();
+        Status flightStatus = flightDto.getStatus();
+        Optional<CrewDto> optionalCrewDto = crewDao.findById(flightDto.getCrewId());
+        CrewDto crewDto = optionalCrewDto.get();
+        Crew crew = createCrew(userDao, crewDao, crewDto);
+        return new Flight(flightDto.getId(), departureAirport, destinationAirport, departTime, arriveTime, aircraft, crew, operator, flightStatus);
+    }
+
+    private Crew createCrew(UserDao userDao, CrewDao crewDao, CrewDto crewDto) throws DaoException {
+        User dispatcher = userDao.findById(crewDto.getDispatcherId()).get();
+        List<Integer> usersIdByCrewId = crewDao.findUsersIdByCrewId(crewDto.getId());
+        List<User> staff = new ArrayList<>();
+        for (int userId : usersIdByCrewId) {
+            staff.add(userDao.findById(userId).get());
+        }
+        int numberOfPilots = crewDto.getNumberOfPilots();
+        int numberOfNavigators = crewDto.getNumberOfNavigators();
+        int numberOfRadioman = crewDto.getNumberOfRadioman();
+        int numberOfStewardesses = crewDto.getNumberOfStewardesses();
+        Status crewStatus = crewDto.getStatus();
+        String crewName = crewDto.getCrewName();
+        return new Crew(dispatcher, crewName, staff, numberOfPilots, numberOfNavigators, numberOfRadioman, numberOfStewardesses, crewStatus);
     }
 }

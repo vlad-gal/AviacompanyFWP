@@ -5,7 +5,6 @@
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="local"/>
 
-<!doctype html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -34,11 +33,8 @@
                 <c:when test="${user.role eq 'DISPATCHER'}">
                     <jsp:include page="common/dispatcher_content.jsp"/>
                 </c:when>
-                <c:when test="${user.role eq 'PILOT' || user.role eq 'NAVIGATOR' || user.role eq 'RADIOMAN' || user.role eq 'STEWARDESS'}">
-                    <jsp:include page="common/staff_content.jsp"/>
-                </c:when>
                 <c:otherwise>
-                    <jsp:include page="common/default_content.jsp"/>
+                    <jsp:include page="common/staff_content.jsp"/>
                 </c:otherwise>
             </c:choose>
         </div>
@@ -50,4 +46,3 @@
 <script src="${pageContext.request.contextPath}/js/jquery-3.5.1.slim.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/popper.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-<script src="${pageContext.request.contextPath}/js/01efe1ad65.js"></script>

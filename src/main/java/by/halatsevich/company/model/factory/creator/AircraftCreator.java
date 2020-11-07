@@ -1,8 +1,9 @@
 package by.halatsevich.company.model.factory.creator;
 
 import by.halatsevich.company.model.dao.ColumnName;
-import by.halatsevich.company.model.factory.EntityCreator;
 import by.halatsevich.company.model.entity.Aircraft;
+import by.halatsevich.company.model.entity.Status;
+import by.halatsevich.company.model.factory.EntityCreator;
 
 import java.util.Map;
 
@@ -15,6 +16,8 @@ public class AircraftCreator implements EntityCreator<Aircraft> {
         String aircraftName = (String) aircraftParameter.get(ColumnName.AIRCRAFT_NAME);
         String aircraftTypeName = (String) aircraftParameter.get(ColumnName.AIRCRAFT_TYPE);
         Aircraft.AircraftType aircraftType = Aircraft.AircraftType.valueOf(aircraftTypeName);
-        return new Aircraft(aircraftId, tailNumber, aircraftName, aircraftType);
+        String aircraftStatusName = (String) aircraftParameter.get(ColumnName.STATUS_NAME);
+        Status aircraftStatus = Status.valueOf(aircraftStatusName);
+        return new Aircraft(aircraftId, tailNumber, aircraftName, aircraftType, aircraftStatus);
     }
 }

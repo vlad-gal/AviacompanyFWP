@@ -33,7 +33,7 @@ public class RegistrationCommand implements Command {
         String role = request.getParameter(ParameterName.ROLE);
         HttpSession session = request.getSession();
         String page;
-        RegistrationData registrationData = new RegistrationData(login, email, password, firstName, lastName, telephoneNumber);
+        RegistrationData registrationData = new RegistrationData(login, email, password, firstName, lastName, telephoneNumber,role,"inactive");
         if (UserValidator.isValidRegistrationData(registrationData) && UserValidator.isValidRole(role) && password.equals(confirmPassword)) {
             ServiceFactory factory = ServiceFactory.getInstance();
             UserService service = factory.getUserService();
@@ -41,7 +41,7 @@ public class RegistrationCommand implements Command {
                 Optional<User> userByEmail = service.findUserByEmail(email);
                 Optional<User> userByLogin = service.findUserByLogin(login);
                 if (!userByEmail.isPresent() && !userByLogin.isPresent()) {
-                    boolean isUserRegistered = service.registration(registrationData, role);
+                    boolean isUserRegistered = service.registration(registrationData);
                     if (isUserRegistered) {
                         MailUtil.getInstance().sendMessage((String) session.getAttribute(ParameterName.LANG),
                                 email, request.getRequestURL().toString(), MailUtil.MailType.ACTIVATION);

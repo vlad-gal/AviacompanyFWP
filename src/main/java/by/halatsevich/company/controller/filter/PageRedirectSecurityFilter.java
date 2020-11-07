@@ -6,6 +6,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.*;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
@@ -15,7 +16,8 @@ public class PageRedirectSecurityFilter implements Filter {
     @Override
     public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
         HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
-        logger.log(Level.WARN, "Invalid action");
+        HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
+        logger.log(Level.ERROR, "Invalid action from {}", httpRequest.getRequestURL());
         httpResponse.sendError(404, PagePath.ERROR_404);
     }
 }

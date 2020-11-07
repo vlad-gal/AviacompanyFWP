@@ -16,4 +16,24 @@
             <rtexprvalue>true</rtexprvalue>
         </attribute>
     </tag>
+    <tag>
+        <name>aircraftPagination</name>
+        <tag-class>by.halatsevich.company.tag.AircraftPaginationTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>currentPageNumber</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+    <tag>
+        <name>airportPagination</name>
+        <tag-class>by.halatsevich.company.tag.AirportPaginationTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>currentPageNumber</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
 </taglib>

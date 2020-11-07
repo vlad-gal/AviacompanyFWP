@@ -6,12 +6,12 @@ import by.halatsevich.company.model.entity.Aircraft;
 import by.halatsevich.company.model.exception.DaoException;
 import by.halatsevich.company.model.exception.ServiceException;
 import by.halatsevich.company.model.service.AircraftService;
-import by.halatsevich.company.validator.BaseValidator;
 
 import java.util.List;
 import java.util.Optional;
 
 public class AircraftServiceImpl implements AircraftService {
+
     @Override
     public List<Aircraft> findAllAircrafts() throws ServiceException {
         DaoFactory factory = DaoFactory.getInstance();

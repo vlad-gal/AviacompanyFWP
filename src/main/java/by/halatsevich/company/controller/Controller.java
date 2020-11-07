@@ -13,7 +13,6 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-//@WebServlet(urlPatterns = "/controller")
 public class Controller extends HttpServlet {
     private static final Logger logger = LogManager.getLogger(Controller.class);
 

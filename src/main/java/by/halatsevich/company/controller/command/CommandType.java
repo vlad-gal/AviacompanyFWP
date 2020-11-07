@@ -17,8 +17,8 @@ public enum CommandType {
     AIRPORTS_PAGE(new AirportsPageCommand()),
     FLIGHTS_PAGE(new FlightsPageCommand()),
     LOCALIZATION(new LocalizationCommand()),
-    AIRPORT_DETAIL_PAGE(new AirportDetailPageCommand()),
-    AIRCRAFT_DETAIL_PAGE(new AircraftDetailPageCommand()),
+//    AIRPORT_DETAIL_PAGE(new AirportDetailPageCommand()),
+//    AIRCRAFT_DETAIL_PAGE(new AircraftDetailPageCommand()),
     FORGOT_PASSWORD_PAGE(request -> PagePath.FORGOT_PASSWORD),
     FORGOT_PASSWORD(new ForgotPasswordCommand()),
     RESET_PASSWORD(new ResetPasswordCommand()),
@@ -37,8 +37,8 @@ public enum CommandType {
     ADMIN_UPDATE_USER(new AdminUpdateUserCommand()),
     ALL_FLIGHTS(new AllFlightCommand()),
     CREATE_FLIGHT(new CreateFlightCommand()),
-    UPDATE_FLIGHT_PAGE(new UpdateFlightPageCommand()),
-    FLIGHT_DETAIL_PAGE(new FlightDetailPageCommand());
+    UPDATE_FLIGHT_PAGE(new UpdateFlightPageCommand());
+//    FLIGHT_DETAIL_PAGE(new FlightDetailPageCommand());
 
     private Command command;
 

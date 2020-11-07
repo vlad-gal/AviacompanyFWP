@@ -95,5 +95,4 @@
 <script src="${pageContext.request.contextPath}/js/jquery-3.5.1.slim.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/popper.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-<script src="${pageContext.request.contextPath}/js/01efe1ad65.js"></script>
 <script src="${pageContext.request.contextPath}/js/check-password.js"></script>

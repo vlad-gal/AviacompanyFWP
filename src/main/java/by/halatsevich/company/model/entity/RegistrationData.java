@@ -7,15 +7,20 @@ public class RegistrationData {
     private String firstName;
     private String lastName;
     private String telephoneNumber;
+    private String role;
+    private String status;
 
-    public RegistrationData(String login, String email, String password, String firstName, String lastName, String telephoneNumber) {
+    public RegistrationData(String login, String email, String password, String firstName, String lastName, String telephoneNumber, String role, String status) {
         this.login = login;
         this.email = email;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
         this.telephoneNumber = telephoneNumber;
+        this.role = role;
+        this.status = status;
     }
+
 
     public String getLogin() {
         return login;
@@ -65,4 +70,19 @@ public class RegistrationData {
         this.telephoneNumber = telephoneNumber;
     }
 
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
 }

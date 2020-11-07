@@ -1,8 +1,7 @@
 package by.halatsevich.company.tag;
 
 import by.halatsevich.company.controller.ParameterName;
-import by.halatsevich.company.model.entity.Flight;
-import by.halatsevich.company.model.entity.User;
+import by.halatsevich.company.model.entity.Aircraft;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,13 +11,10 @@ import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.JspWriter;
 import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
-import java.text.SimpleDateFormat;
 import java.util.List;
-import java.util.Locale;
 
-public class FlightPaginationTag extends TagSupport {
-    private static final Logger logger = LogManager.getLogger(FlightPaginationTag.class);
-    private static final String DATA_PATTERN = "d-MMMM-yyyy h:m";
+public class AircraftPaginationTag extends TagSupport {
+    private static final Logger logger = LogManager.getLogger(AircraftPaginationTag.class);
     private static final int COUNT_OF_ITEMS = 10;
     private int currentPageNumber;
 
@@ -29,21 +25,18 @@ public class FlightPaginationTag extends TagSupport {
     @Override
     public int doStartTag() throws JspException {
         HttpSession session = pageContext.getSession();
-        List<Flight> flights = (List<Flight>) session.getAttribute(ParameterName.FLIGHT_LIST);
-        String lang = (String) session.getAttribute(ParameterName.LANG);
-        SimpleDateFormat dateFormat = new SimpleDateFormat(DATA_PATTERN, new Locale(lang));
+        List<Aircraft> aircrafts = (List<Aircraft>) session.getAttribute(ParameterName.AIRCRAFT_LIST);
         int firstIndex = currentPageNumber * COUNT_OF_ITEMS - COUNT_OF_ITEMS;
-        int lastIndex = Math.min(currentPageNumber * COUNT_OF_ITEMS, flights.size());
+        int lastIndex = Math.min(currentPageNumber * COUNT_OF_ITEMS, aircrafts.size());
         try {
             JspWriter out = pageContext.getOut();
             for (int i = firstIndex; i < lastIndex; i++) {
-                Flight flight = flights.get(i);
+                Aircraft aircraft = aircrafts.get(i);
                 out.write("<tbody>");
                 out.write("<tr>");
-                out.write("<td>" + flight.getDepartureAirport().getAirportName() + ", " + flight.getDepartureAirport().getCity() + ", " + flight.getDepartureAirport().getCountry() + "</td>");
-                out.write("<td>" + flight.getDestinationAirport().getAirportName() + ", " + flight.getDestinationAirport().getCity() + ", " + flight.getDestinationAirport().getCountry() + "</td>");
-                out.write("<td>" + dateFormat.format(flight.getDepartTime()) + "</td>");
-                out.write("<td>" + dateFormat.format(flight.getArriveTime()) + "</td>");
+                out.write("<td>" + aircraft.getTailNumber() + "</td>");
+                out.write("<td>" + aircraft.getAircraftName() + "</td>");
+                out.write("<td>" + aircraft.getAircraftType().getTypeName() + "</td>");
                 out.write("</tr>");
             }
             out.write("</tbody>");
@@ -59,7 +52,7 @@ public class FlightPaginationTag extends TagSupport {
                         "    </li>");
             }
             out.write("<li class=\"page-item\"><div class=\"page-link\">" + currentPageNumber + "</div></li>");
-            if (lastIndex < flights.size()) {
+            if (lastIndex < aircrafts.size()) {
                 out.write("<a class=\"page-link\" href=\"controller?command=pagination&direction=next\" aria-label=\"Next\">\n" +
                         "        <span aria-hidden=\"true\">&raquo;</span>\n" +
                         "        <span class=\"sr-only\">Next</span>\n" +
@@ -68,7 +61,7 @@ public class FlightPaginationTag extends TagSupport {
             }
             out.write(" </ul></div>");
         } catch (IOException e) {
-            logger.log(Level.ERROR, "Error while writing into out stream",e);
+            logger.log(Level.ERROR, "Error while writing into out stream", e);
             throw new JspException(e);
         }
         return SKIP_BODY;

@@ -23,18 +23,18 @@ public enum ConnectionPool {
     private Queue<ProxyConnection> givenConnections;
 
     ConnectionPool() {
-        ConnectionConfig config = new ConnectionConfig();
+        ConnectionConfig config = ConnectionConfig.getInstance();
         try {
-            Class.forName(config.getDriverName());
+            Class.forName(config.driverName);
         } catch (ClassNotFoundException e) {
             logger.log(Level.FATAL, "Cannot register driver");
             throw new RuntimeException("Cannot register driver", e);
         }
-        poolSize = config.getPoolSize();
+        poolSize = config.poolSize;
         freeConnections = new LinkedBlockingDeque<>(poolSize);
         givenConnections = new ArrayDeque<>();
-        String url = config.getUrl();
-        Properties properties = config.getProperties();
+        String url = config.url;
+        Properties properties = config.properties;
         fillingConnections(url, properties, poolSize);
         if (freeConnections.size() < poolSize) {
             int difference = poolSize - freeConnections.size();
@@ -64,7 +64,7 @@ public enum ConnectionPool {
             connection = freeConnections.take();
             givenConnections.offer(connection);
         } catch (InterruptedException e) {
-            logger.log(Level.ERROR, "Error while taking connection from queue");
+            logger.log(Level.ERROR, "Error while taking connection from queue", e);
         }
         return connection;
     }
@@ -83,9 +83,9 @@ public enum ConnectionPool {
                 freeConnections.take().reallyClose();
             }
         } catch (SQLException e) {
-            logger.log(Level.ERROR, "Error while closing connection");
+            logger.log(Level.ERROR, "Error while closing connection", e);
         } catch (InterruptedException e) {
-            logger.log(Level.ERROR, "Error while taking connection from queue");
+            logger.log(Level.ERROR, "Error while taking connection from queue", e);
         } finally {
             deregisterDrivers();
         }

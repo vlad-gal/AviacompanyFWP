@@ -64,14 +64,14 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean registration(RegistrationData registrationData, String role) throws ServiceException {
+    public boolean registration(RegistrationData registrationData) throws ServiceException {
         DaoFactory factory = DaoFactory.getInstance();
         UserDao userDao = factory.getUserDao();
         boolean isUserRegistered;
         try {
             String encryptedPassword = PasswordEncryption.encryptPassword(registrationData.getPassword());
             registrationData.setPassword(encryptedPassword);
-            isUserRegistered = userDao.registration(registrationData, User.Role.valueOf(role.toUpperCase()));
+            isUserRegistered = userDao.registration(registrationData);
         } catch (DaoException e) {
             throw new ServiceException("Error while registering user", e);
         }
@@ -118,18 +118,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public List<User> findAllInactiveUsers() throws ServiceException {
-        List<User> users = findAllUsers();
-        return users.stream().filter(user -> user.getStatus() == Status.INACTIVE).collect(Collectors.toList());
-    }
-
-    @Override
-    public List<User> findAllUsersWithoutRole() throws ServiceException {
-        List<User> users = findAllUsers();
-        return users.stream().filter(user -> user.getRole() == User.Role.DEFAULT).collect(Collectors.toList());
-    }
-
-    @Override
     public boolean updateUser(User user) throws ServiceException {
         DaoFactory factory = DaoFactory.getInstance();
         UserDao userDao = factory.getUserDao();
@@ -140,21 +128,6 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException("Error while updating user", e);
         }
         return isUserUpdated;
-    }
-
-    @Override
-    public boolean registrationUserByAdmin(RegistrationData registrationData, String role) throws ServiceException {
-        DaoFactory factory = DaoFactory.getInstance();
-        UserDao userDao = factory.getUserDao();
-        boolean isUserRegistered;
-        try {
-            String encryptedPassword = PasswordEncryption.encryptPassword(registrationData.getPassword());
-            registrationData.setPassword(encryptedPassword);
-            isUserRegistered = userDao.registrationUserByAdmin(registrationData, role);
-        } catch (DaoException e) {
-            throw new ServiceException("Error while registering user", e);
-        }
-        return isUserRegistered;
     }
 
     @Override

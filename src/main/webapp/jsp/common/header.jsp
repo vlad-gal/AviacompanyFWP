@@ -87,10 +87,10 @@
                                 </li>
                             </div>
                             <li class="nav-item active">
-                                <div class="nav-link"><fmt:message key="local.common.role"/>: ${user.role}</div>
+                                <div class="nav-link"><fmt:message key="local.common.role"/>: ${user.role.roleName}</div>
                             </li>
                             <li class="nav-item active">
-                                <div class="nav-link"><fmt:message key="local.common.status"/>: ${user.status}</div>
+                                <div class="nav-link"><fmt:message key="local.common.status"/>: ${user.status.statusName}</div>
                             </li>
                             <li class="nav-item active">
                                 <form name="log_out" method="post" action="/controller">

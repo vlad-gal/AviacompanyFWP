@@ -10,7 +10,23 @@ public class User extends Entity {
     private Status status;
 
     public enum Role {
-        ADMIN, OPERATOR, DISPATCHER, PILOT, RADIOMAN, NAVIGATOR, STEWARDESS, DEFAULT
+        ADMIN("Administrator"),
+        OPERATOR("Operator"),
+        DISPATCHER("Dispatcher"),
+        PILOT("Pilot"),
+        RADIOMAN("Radioman"),
+        NAVIGATOR("Navigator"),
+        STEWARDESS("Stewardess");
+
+        private String roleName;
+
+        Role(String roleName) {
+            this.roleName = roleName;
+        }
+
+        public String getRoleName() {
+            return roleName;
+        }
     }
 
     public User() {
@@ -118,8 +134,8 @@ public class User extends Entity {
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (int) (telephoneNumber ^ (telephoneNumber >>> 32));
-        result = 31 * result + (role != null ? role.hashCode() : 0);
-        result = 31 * result + (status != null ? status.hashCode() : 0);
+        result = 31 * result + role.hashCode();
+        result = 31 * result + status.hashCode();
         return result;
     }
 

@@ -12,6 +12,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public class AirportsPageCommand implements Command {
@@ -21,11 +22,13 @@ public class AirportsPageCommand implements Command {
     public String execute(HttpServletRequest request) {
         ServiceFactory factory = ServiceFactory.getInstance();
         AirportService airportService = factory.getAirportService();
+        HttpSession session = request.getSession();
         String page;
         List<Airport> airportList;
         try {
             airportList = airportService.findAllAirports();
-            request.setAttribute(ParameterName.AIRPORT_LIST, airportList);
+            session.setAttribute(ParameterName.AIRPORT_LIST, airportList);
+            session.setAttribute(ParameterName.CURRENT_PAGE_NUMBER, 1);
             page = PagePath.AIRPORTS;
         } catch (ServiceException e) {
             logger.log(Level.ERROR, "Error while finding all airports", e);

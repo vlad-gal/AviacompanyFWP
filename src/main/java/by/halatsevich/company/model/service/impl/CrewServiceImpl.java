@@ -11,7 +11,8 @@ import by.halatsevich.company.model.service.CrewService;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class CrewServiceImpl implements CrewService{
+public class CrewServiceImpl implements CrewService {
+
     @Override
     public List<CrewDto> findCrewsByStatus(Status status) throws ServiceException {
         DaoFactory factory = DaoFactory.getInstance();

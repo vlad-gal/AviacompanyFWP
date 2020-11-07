@@ -12,7 +12,7 @@ import java.util.Optional;
 public interface UserService {
     Optional<User> authorization(AuthorizationData authorizationData) throws ServiceException;
 
-    boolean registration(RegistrationData registrationData, String role) throws ServiceException;
+    boolean registration(RegistrationData registrationData) throws ServiceException;
 
     List<User> findAllUsers() throws ServiceException;
 
@@ -25,12 +25,6 @@ public interface UserService {
     boolean updatePassword(User user, String password) throws ServiceException;
 
     boolean updateUser(User user) throws ServiceException;
-
-    boolean registrationUserByAdmin(RegistrationData registrationData, String role) throws ServiceException;
-
-    List<User> findAllInactiveUsers() throws ServiceException;
-
-    List<User> findAllUsersWithoutRole() throws ServiceException;
 
     List<User> findUsersByStatus(String status) throws ServiceException;
 

@@ -9,17 +9,18 @@ import java.util.Properties;
 
 class ConnectionConfig {
     private final Logger logger = LogManager.getLogger(ConnectionConfig.class);
+    private static final ConnectionConfig instance = new ConnectionConfig();
     private static final String PROPERTIES_PATH = "db.properties";
     private static final String DB_URL = "url";
     private static final String DB_POLL_SIZE = "poolSize";
     private static final String DB_DRIVER_NAME = "driverName";
-    private Properties properties;
-    private String url;
-    private int poolSize;
-    private String driverName;
+    final Properties properties;
+    final String url;
+    final int poolSize;
+    final String driverName;
 
 
-    ConnectionConfig() {
+    private ConnectionConfig() {
         ClassLoader classLoader = getClass().getClassLoader();
         properties = new Properties();
         try {
@@ -29,29 +30,19 @@ class ConnectionConfig {
             throw new RuntimeException("Error while reading database properties", e);
         }
         String sizePoll = properties.getProperty(DB_POLL_SIZE);
+        int poolSizeTemp;
         try {
-            poolSize = Integer.parseInt(sizePoll);
+            poolSizeTemp = Integer.parseInt(sizePoll);
         } catch (NumberFormatException e) {
             logger.log(Level.ERROR, "Error while parsing pool size", e);
-            poolSize = 8;
+            poolSizeTemp = 8;
         }
+        poolSize = poolSizeTemp;
         url = properties.getProperty(DB_URL);
         driverName = properties.getProperty(DB_DRIVER_NAME);
     }
 
-    public Properties getProperties() {
-        return properties;
-    }
-
-    public String getUrl() {
-        return url;
-    }
-
-    public int getPoolSize() {
-        return poolSize;
-    }
-
-    public String getDriverName() {
-        return driverName;
+    public static ConnectionConfig getInstance() {
+        return instance;
     }
 }

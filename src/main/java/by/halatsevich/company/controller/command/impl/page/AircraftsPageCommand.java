@@ -12,6 +12,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public class AircraftsPageCommand implements Command {
@@ -21,11 +22,13 @@ public class AircraftsPageCommand implements Command {
     public String execute(HttpServletRequest request) {
         ServiceFactory factory = ServiceFactory.getInstance();
         AircraftService aircraftService = factory.getAircraftService();
+        HttpSession session = request.getSession();
         String page;
         List<Aircraft> aircraftList;
         try {
             aircraftList = aircraftService.findAllAircrafts();
-            request.setAttribute(ParameterName.AIRCRAFT_LIST, aircraftList);
+            session.setAttribute(ParameterName.AIRCRAFT_LIST, aircraftList);
+            session.setAttribute(ParameterName.CURRENT_PAGE_NUMBER, 1);
             page = PagePath.AIRCRAFTS;
         } catch (ServiceException e) {
             logger.log(Level.ERROR, "Error while finding all aircrafts", e);

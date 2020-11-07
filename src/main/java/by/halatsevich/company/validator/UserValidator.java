@@ -4,7 +4,7 @@ import by.halatsevich.company.model.entity.AuthorizationData;
 import by.halatsevich.company.model.entity.RegistrationData;
 import by.halatsevich.company.model.entity.User;
 
-public class UserValidator extends BaseValidator {
+public class UserValidator {
     private static final String REGEX_LOGIN = "[\\w-]{3,40}";
     private static final String REGEX_PASSWORD = "[^\\s]{8,25}";
     private static final String REGEX_EMAIL = "[\\w-.]{3,20}@[a-zA-Zа-яА-Я]{2,14}\\.[a-zа-я]{2,6}";

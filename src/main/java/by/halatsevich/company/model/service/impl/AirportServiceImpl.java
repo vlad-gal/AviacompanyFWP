@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 public class AirportServiceImpl implements AirportService {
+
     @Override
     public List<Airport> findAllAirports() throws ServiceException {
         DaoFactory factory = DaoFactory.getInstance();
