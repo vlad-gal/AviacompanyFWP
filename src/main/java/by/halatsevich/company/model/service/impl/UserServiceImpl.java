@@ -78,19 +78,19 @@ public class UserServiceImpl implements UserService {
         return isUserRegistered;
     }
 
-    @Override
-    public boolean updateUserStatus(User user, Status status) throws ServiceException {
-        DaoFactory factory = DaoFactory.getInstance();
-        UserDao userDao = factory.getUserDao();
-        boolean isUserUpdated;
-        try {
-            user.setStatus(status);
-            isUserUpdated = userDao.update(user);
-        } catch (DaoException e) {
-            throw new ServiceException("Error while updating user status", e);
-        }
-        return isUserUpdated;
-    }
+//    @Override
+//    public boolean updateUserStatus(User user, Status status) throws ServiceException {
+//        DaoFactory factory = DaoFactory.getInstance();
+//        UserDao userDao = factory.getUserDao();
+//        boolean isUserUpdated;
+//        try {
+//            user.setStatus(status);
+//            isUserUpdated = userDao.update(user);
+//        } catch (DaoException e) {
+//            throw new ServiceException("Error while updating user status", e);
+//        }
+//        return isUserUpdated;
+//    }
 
     @Override
     public Optional<User> findUserByEmail(String email) throws ServiceException {

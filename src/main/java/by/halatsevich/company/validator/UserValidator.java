@@ -4,15 +4,12 @@ import by.halatsevich.company.model.entity.AuthorizationData;
 import by.halatsevich.company.model.entity.RegistrationData;
 import by.halatsevich.company.model.entity.User;
 
-public class UserValidator {
+public abstract class UserValidator extends BaseValidator {
     private static final String REGEX_LOGIN = "[\\w-]{3,40}";
     private static final String REGEX_PASSWORD = "[^\\s]{8,25}";
     private static final String REGEX_EMAIL = "[\\w-.]{3,20}@[a-zA-Zа-яА-Я]{2,14}\\.[a-zа-я]{2,6}";
     private static final String REGEX_TELEPHONE_NUMBER = "\\d{12}";
     private static final String REGEX_NAME = "[A-ZА-Я][a-zа-я]{1,14}";
-
-    private UserValidator() {
-    }
 
     public static boolean isValidAuthorizationData(AuthorizationData authorizationData) {
         boolean isCorrect = true;
@@ -52,6 +49,14 @@ public class UserValidator {
         if (!isValidTelephoneNumber(registrationData.getTelephoneNumber())) {
             isCorrect = false;
             registrationData.setTelephoneNumber(null);
+        }
+        if (!isValidRole(registrationData.getRole())) {
+            isCorrect = false;
+            registrationData.setRole(null);
+        }
+        if (!isValidStatus(registrationData.getStatus())) {
+            isCorrect = false;
+            registrationData.setRole(null);
         }
         return isCorrect;
     }

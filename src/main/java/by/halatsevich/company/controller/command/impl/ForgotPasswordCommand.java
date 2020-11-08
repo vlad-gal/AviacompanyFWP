@@ -33,8 +33,10 @@ public class ForgotPasswordCommand implements Command {
                 if (user.isPresent()) {
                     MailUtil.getInstance().sendMessage((String) session.getAttribute(ParameterName.LANG),
                             email, request.getRequestURL().toString(), MailUtil.MailType.RESET);
-                    page = PagePath.RESET_PASSWORD_LINK_SENT;
+                    request.setAttribute(ParameterName.RESET_LINK_SENT_SUCCESSFUL_FLAG, true);
+                    page = PagePath.SUCCESSFUL_MESSAGE;
                 } else {
+                    logger.log(Level.ERROR, "Email not exist");
                     request.setAttribute(ParameterName.EMAIL_NOT_EXIST_FLAG, true);
                     page = PagePath.FORGOT_PASSWORD;
                 }
@@ -44,7 +46,7 @@ public class ForgotPasswordCommand implements Command {
                 page = PagePath.ERROR_500;
             }
         } else {
-            logger.log(Level.WARN, "Incorrect email");
+            logger.log(Level.ERROR, "Incorrect email");
             request.setAttribute(ParameterName.INCORRECT_EMAIL_FLAG, true);
             page = PagePath.FORGOT_PASSWORD;
         }

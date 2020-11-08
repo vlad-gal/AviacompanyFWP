@@ -31,8 +31,7 @@
                         <c:if test="${inactiveUserFlag eq true}">
                             <h6 class="errorLoginPass text-center"><fmt:message key="local.common.inactiveUser"/></h6>
                         </c:if>
-                        <form method="POST" class="login-validation" name="loginForm"
-                              action="${pageContext.request.contextPath}/controller">
+                        <form method="POST" action="${pageContext.request.contextPath}/controller">
                             <input type="hidden" name="command" value="authorization">
                             <div class="form-group">
                                 <label for="login"><fmt:message key="local.common.login"/></label>

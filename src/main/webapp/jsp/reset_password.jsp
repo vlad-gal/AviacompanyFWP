@@ -5,7 +5,6 @@
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="local"/>
 
-<!doctype html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -17,48 +16,46 @@
     <title><fmt:message key="local.common.resetPasswordTitle"/></title>
 </head>
 <body class="login-page">
-<section class="h-100">
-    <div class="container h-100">
-        <div class="row justify-content-md-center align-items-center h-100">
-            <div class="card-wrapper">
-                <div class="card fat">
-                    <div class="card-body">
-                        <h5 class="card-title text-center"><fmt:message key="local.common.resetPasswordTitle"/></h5>
-                        <form method="POST" class="login-validation" name="resetForm"
-                              action="${pageContext.request.contextPath}/controller">
-                            <input type="hidden" name="command" value="reset_password">
-                            <div class="form-group m-2">
-                                <label for="password"><fmt:message key="local.common.newPassword"/></label>
-                                <input id="password" type="password" class="form-control" name="password"
-                                       placeholder="<fmt:message key="local.common.password"/>"
-                                       value="" pattern="[\w-!@#$%^&*~,.:;/]{8,25}"
-                                       title="<fmt:message key="local.common.incorrectPasswordMessage"/>" required
-                                       autofocus>
-                                <c:if test="${incorrectPasswordFlag eq true}">
-                                    <div class="errorLoginPass">
-                                        <p class="errorLoginPass text-center"><fmt:message
-                                                key="local.common.incorrectPasswordMessage"/></p>
-                                    </div>
-                                </c:if>
-                                <c:if test="${emailNotExistFlag eq true}">
-                                <div class="errorLoginPass">
-                                    <p class="errorLoginPass text-center"><fmt:message
-                                            key="local.common.emailNotExist"/></p>
+<main class="content">
+        <div class="container">
+            <div class="row justify-content-md-center align-items-center">
+                <div class="card-wrapper">
+                    <div class="card fat">
+                        <div class="card-body">
+                            <h5 class="card-title text-center"><fmt:message key="local.common.resetPasswordTitle"/></h5>
+                            <form method="POST" name="resetPasswordForm" action="${pageContext.request.contextPath}/controller">
+                                <input type="hidden" name="command" value="reset_password">
+                                <div class="form-group m-2">
+                                    <label for="password"><fmt:message key="local.common.newPassword"/></label>
+                                    <input id="password" type="password" class="form-control" name="password"
+                                           placeholder="<fmt:message key="local.common.password"/>"
+                                           value="" pattern="[\w-!@#$%^&*~,.:;/]{8,25}"
+                                           title="<fmt:message key="local.common.incorrectPasswordMessage"/>" required
+                                           autofocus>
+                                    <c:if test="${incorrectPasswordFlag eq true}">
+                                        <div class="errorLoginPass">
+                                            <p class="errorLoginPass text-center"><fmt:message
+                                                    key="local.common.incorrectPasswordMessage"/></p>
+                                        </div>
+                                    </c:if>
+                                    <c:if test="${emailNotExistFlag eq true}">
+                                        <div class="errorLoginPass">
+                                            <p class="errorLoginPass text-center"><fmt:message
+                                                    key="local.common.emailNotExist"/></p>
+                                        </div>
+                                    </c:if>
                                 </div>
-                                </c:if>
-                            </div>
-
-                            <div class="form-group m-2 mt-4">
-                                <input type="submit" class="btn btn-primary btn-block"
-                                       value="<fmt:message key="local.common.resetPasswordTitle"/>">
-                            </div>
-                        </form>
+                                <div class="form-group m-2 mt-4">
+                                    <input type="submit" class="btn btn-primary btn-block"
+                                           value="<fmt:message key="local.common.resetPasswordTitle"/>">
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+</main>
 </body>
 </html>
 <script src="${pageContext.request.contextPath}/js/jquery-3.5.1.slim.min.js"></script>

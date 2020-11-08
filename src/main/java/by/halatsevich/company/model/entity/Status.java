@@ -3,7 +3,7 @@ package by.halatsevich.company.model.entity;
 public enum Status {
     ACTIVE("Active"),
     INACTIVE("Inactive"),
-    IN_FLIGHT("In flight"),
+    FLY("Fly"),
     BUSY("Busy");
 
     private String statusName;

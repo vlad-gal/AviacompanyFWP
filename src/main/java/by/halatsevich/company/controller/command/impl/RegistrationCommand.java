@@ -4,6 +4,7 @@ import by.halatsevich.company.controller.PagePath;
 import by.halatsevich.company.controller.ParameterName;
 import by.halatsevich.company.controller.command.Command;
 import by.halatsevich.company.model.entity.RegistrationData;
+import by.halatsevich.company.model.entity.Status;
 import by.halatsevich.company.model.entity.User;
 import by.halatsevich.company.model.exception.ServiceException;
 import by.halatsevich.company.model.service.ServiceFactory;
@@ -33,8 +34,9 @@ public class RegistrationCommand implements Command {
         String role = request.getParameter(ParameterName.ROLE);
         HttpSession session = request.getSession();
         String page;
-        RegistrationData registrationData = new RegistrationData(login, email, password, firstName, lastName, telephoneNumber,role,"inactive");
-        if (UserValidator.isValidRegistrationData(registrationData) && UserValidator.isValidRole(role) && password.equals(confirmPassword)) {
+        RegistrationData registrationData = new RegistrationData(login, email, password, firstName, lastName,
+                telephoneNumber, role, Status.INACTIVE.getStatusName());
+        if (UserValidator.isValidRegistrationData(registrationData) && password.equals(confirmPassword)) {
             ServiceFactory factory = ServiceFactory.getInstance();
             UserService service = factory.getUserService();
             try {
@@ -45,14 +47,17 @@ public class RegistrationCommand implements Command {
                     if (isUserRegistered) {
                         MailUtil.getInstance().sendMessage((String) session.getAttribute(ParameterName.LANG),
                                 email, request.getRequestURL().toString(), MailUtil.MailType.ACTIVATION);
-                        page = PagePath.SUCCESSFUL_REGISTRATION;
+                        request.setAttribute(ParameterName.REGISTRATION_SUCCESSFUL_FLAG, true);
+                        page = PagePath.SUCCESSFUL_MESSAGE;
                     } else {
-                        logger.log(Level.WARN, "Cannot register user");
+                        logger.log(Level.ERROR, "Cannot register user");
+                        request.setAttribute(ParameterName.REGISTRATION_DATA, registrationData);
                         request.setAttribute(ParameterName.ERROR_REGISTER_USER_FLAG, true);
                         page = PagePath.REGISTRATION;
                     }
                 } else {
-                    logger.log(Level.WARN, "User already exist");
+                    logger.log(Level.ERROR, "User already exist");
+                    request.setAttribute(ParameterName.REGISTRATION_DATA, registrationData);
                     request.setAttribute(ParameterName.USER_ALREADY_EXIST_FLAG, true);
                     page = PagePath.REGISTRATION;
                 }
@@ -62,6 +67,7 @@ public class RegistrationCommand implements Command {
                 page = PagePath.ERROR_500;
             }
         } else {
+            logger.log(Level.ERROR, "Invalid validation");
             request.setAttribute(ParameterName.ERROR_VALIDATION_FLAG, true);
             request.setAttribute(ParameterName.REGISTRATION_DATA, registrationData);
             page = PagePath.REGISTRATION;

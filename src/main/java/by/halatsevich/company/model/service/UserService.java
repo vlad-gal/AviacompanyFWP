@@ -20,7 +20,7 @@ public interface UserService {
 
     Optional<User> findUserByLogin(String login) throws ServiceException;
 
-    boolean updateUserStatus(User user, Status active) throws ServiceException;
+//    boolean updateUserStatus(User user, Status active) throws ServiceException;
 
     boolean updatePassword(User user, String password) throws ServiceException;
 

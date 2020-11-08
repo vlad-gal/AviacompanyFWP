@@ -1,12 +1,22 @@
 package by.halatsevich.company.validator;
 
-public class BaseValidator {
-    private static final String REGEX_ID = "[1-9]\\d*";
+import by.halatsevich.company.model.entity.Status;
 
-    private BaseValidator(){}
+public abstract class BaseValidator {
+    private static final String REGEX_ID = "[1-9]\\d*";
 
     public static boolean isValidId(String entityId) {
         return (entityId != null && entityId.matches(REGEX_ID));
     }
 
+    public static boolean isValidStatus(String status) {
+        boolean flag;
+        try {
+            Status.valueOf(status.toUpperCase());
+            flag = true;
+        } catch (IllegalArgumentException e) {
+            flag = false;
+        }
+        return flag;
+    }
 }

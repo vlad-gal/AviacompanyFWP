@@ -27,11 +27,20 @@ public class ConfirmAccountCommand implements Command {
             ServiceFactory factory = ServiceFactory.getInstance();
             UserService service = factory.getUserService();
             try {
-                Optional<User> user = service.findUserByEmail(email);
-                if (user.isPresent() && service.updateUserStatus(user.get(), Status.ACTIVE)) {
-                    page = PagePath.SUCCESSFUL_ACTIVATION;
+                Optional<User> optionalUser = service.findUserByEmail(email);
+                if (optionalUser.isPresent()) {
+                    User user =  optionalUser.get();
+                    user.setStatus(Status.ACTIVE);
+                    if (service.updateUser(user)){
+                        request.setAttribute(ParameterName.ACTIVATION_SUCCESSFUL_FLAG, true);
+                        page = PagePath.SUCCESSFUL_MESSAGE;
+                    } else {
+                        logger.log(Level.ERROR, "User not activated");
+                        page = PagePath.ERROR_404;
+                    }
                 } else {
-                    page = PagePath.REGISTRATION;
+                    logger.log(Level.ERROR, "User not found");
+                    page = PagePath.ERROR_404;
                 }
             } catch (ServiceException e) {
                 logger.log(Level.ERROR, "Error while updating users status", e);

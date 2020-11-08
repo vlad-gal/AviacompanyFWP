@@ -4,6 +4,7 @@ import by.halatsevich.company.controller.PagePath;
 import by.halatsevich.company.controller.ParameterName;
 import by.halatsevich.company.controller.command.Command;
 import by.halatsevich.company.model.entity.RegistrationData;
+import by.halatsevich.company.model.entity.Status;
 import by.halatsevich.company.model.entity.User;
 import by.halatsevich.company.model.exception.ServiceException;
 import by.halatsevich.company.model.service.ServiceFactory;
@@ -29,7 +30,7 @@ public class CreateUserCommand implements Command {
         String telephoneNumber = request.getParameter(ParameterName.TELEPHONE_NUMBER);
         String role = request.getParameter(ParameterName.ROLE);
         String page;
-        RegistrationData registrationData = new RegistrationData(login, email, password, firstName, lastName, telephoneNumber,role,"active");
+        RegistrationData registrationData = new RegistrationData(login, email, password, firstName, lastName, telephoneNumber,role, Status.ACTIVE.getStatusName());
         if (UserValidator.isValidRegistrationData(registrationData)) {
             ServiceFactory factory = ServiceFactory.getInstance();
             UserService service = factory.getUserService();
@@ -40,16 +41,17 @@ public class CreateUserCommand implements Command {
                     boolean isUserRegistered = service.registration(registrationData);
                     if (isUserRegistered) {
                         request.setAttribute(ParameterName.REGISTRATION_SUCCESSFUL_FLAG,true);
-
                         page = PagePath.CREATE_USER;
                     } else {
-                        logger.log(Level.WARN, "Cannot register user");
+                        logger.log(Level.ERROR, "Cannot register user");
                         request.setAttribute(ParameterName.ERROR_REGISTER_USER_FLAG, true);
+                        request.setAttribute(ParameterName.REGISTRATION_DATA, registrationData);
                         page = PagePath.CREATE_USER;
                     }
                 } else {
-                    logger.log(Level.WARN, "User already exist");
+                    logger.log(Level.ERROR, "User already exist");
                     request.setAttribute(ParameterName.USER_ALREADY_EXIST_FLAG, true);
+                    request.setAttribute(ParameterName.REGISTRATION_DATA, registrationData);
                     page = PagePath.CREATE_USER;
                 }
             } catch (ServiceException e) {
@@ -58,6 +60,7 @@ public class CreateUserCommand implements Command {
                 page = PagePath.ERROR_500;
             }
         } else {
+            logger.log(Level.ERROR, "Invalid validation");
             request.setAttribute(ParameterName.ERROR_VALIDATION_FLAG, true);
             request.setAttribute(ParameterName.REGISTRATION_DATA, registrationData);
             page = PagePath.CREATE_USER;

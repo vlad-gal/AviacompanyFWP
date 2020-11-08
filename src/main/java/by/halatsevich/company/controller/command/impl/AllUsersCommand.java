@@ -12,6 +12,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public class AllUsersCommand implements Command {
@@ -20,12 +21,20 @@ public class AllUsersCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         String status = request.getParameter(ParameterName.STATUS);
+        HttpSession session = request.getSession();
         String page;
         ServiceFactory factory = ServiceFactory.getInstance();
         UserService service = factory.getUserService();
         try {
-            List<User> userList = service.findUsersByStatus(status);
-            request.setAttribute(ParameterName.ALL_USERS_LIST, userList);
+            List<User> userList;
+            if (status != null) {
+                userList = service.findUsersByStatus(status);
+            } else {
+                userList = service.findAllUsers();
+            }
+            session.setAttribute(ParameterName.CURRENT_PAGE_NUMBER, 1);
+            session.setAttribute(ParameterName.SHOW_USERS_FLAG, true);
+            session.setAttribute(ParameterName.ALL_USERS_LIST, userList);
             page = PagePath.USER_ACCOUNT;
         } catch (ServiceException e) {
             logger.log(Level.ERROR, "Error while finding all users by status", e);

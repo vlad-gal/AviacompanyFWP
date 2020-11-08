@@ -12,6 +12,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public class AllFlightCommand implements Command {
@@ -20,13 +21,15 @@ public class AllFlightCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         String status = request.getParameter(ParameterName.STATUS);
+        HttpSession session = request.getSession();
         String page;
         ServiceFactory factory = ServiceFactory.getInstance();
         FlightService service = factory.getFlightService();
         try {
             List<Flight> flightList = service.findFlightsByStatus(status);
-            request.setAttribute(ParameterName.ALL_FLIGHTS_LIST, flightList);
-            // TODO: 05.11.2020 сюда добавить все объекты аэропорты и тд в сессию 
+            session.setAttribute(ParameterName.CURRENT_PAGE_NUMBER, 1);
+            session.setAttribute(ParameterName.FLIGHT_LIST, flightList);
+            session.setAttribute(ParameterName.SHOW_FLIGHTS_FLAG, true);
             page = PagePath.USER_ACCOUNT;
         } catch (ServiceException e) {
             logger.log(Level.ERROR, "Error while finding all flights by status", e);

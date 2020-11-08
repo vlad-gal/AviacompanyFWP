@@ -30,6 +30,7 @@ public class FlightPaginationTag extends TagSupport {
     public int doStartTag() throws JspException {
         HttpSession session = pageContext.getSession();
         List<Flight> flights = (List<Flight>) session.getAttribute(ParameterName.FLIGHT_LIST);
+        User mainUser = (User) session.getAttribute(ParameterName.USER);
         String lang = (String) session.getAttribute(ParameterName.LANG);
         SimpleDateFormat dateFormat = new SimpleDateFormat(DATA_PATTERN, new Locale(lang));
         int firstIndex = currentPageNumber * COUNT_OF_ITEMS - COUNT_OF_ITEMS;
@@ -44,6 +45,17 @@ public class FlightPaginationTag extends TagSupport {
                 out.write("<td>" + flight.getDestinationAirport().getAirportName() + ", " + flight.getDestinationAirport().getCity() + ", " + flight.getDestinationAirport().getCountry() + "</td>");
                 out.write("<td>" + dateFormat.format(flight.getDepartTime()) + "</td>");
                 out.write("<td>" + dateFormat.format(flight.getArriveTime()) + "</td>");
+                if (mainUser != null){
+                    out.write("<td>" + flight.getCrew().getCrewName() + "</td>");
+                    out.write("<td>" + flight.getStatus().getStatusName() + "</td>");
+                    out.write("<td>" + flight.getOperator().getFirstName() + " " + flight.getOperator().getLastName() + "</td>");
+                    if (mainUser.getRole() == User.Role.ADMIN || mainUser.getRole() == User.Role.OPERATOR) {
+                        out.write("<td><div class=\"d-inline-flex\"><div class=\"ml-2\">");
+                        out.write("<a href=\"controller?command=update_flight_page&flightId=" + flight.getId());
+                        out.write("\" class=\"btn btn-info\">Edit</a>");
+                        out.write("</div></div></td>");
+                    }
+                }
                 out.write("</tr>");
             }
             out.write("</tbody>");
@@ -68,7 +80,7 @@ public class FlightPaginationTag extends TagSupport {
             }
             out.write(" </ul></div>");
         } catch (IOException e) {
-            logger.log(Level.ERROR, "Error while writing into out stream",e);
+            logger.log(Level.ERROR, "Error while writing into out stream", e);
             throw new JspException(e);
         }
         return SKIP_BODY;

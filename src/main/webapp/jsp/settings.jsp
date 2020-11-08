@@ -5,7 +5,6 @@
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="local"/>
 
-<!doctype html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -18,9 +17,9 @@
 </head>
 <body class="login-page">
 <jsp:include page="common/header.jsp"/>
-    <section class="h-100">
-        <div class="container h-100">
-            <div class="row justify-content-md-center h-100">
+<main class="content">
+        <div class="container">
+            <div class="row justify-content-md-center">
                 <div class="card-wrapper">
                     <div class="card fat">
                         <div class="card-body">
@@ -34,8 +33,7 @@
                             <c:if test="${errorUpdateUserFlag eq true}">
                                 <h6 class="errorLoginPass text-center"><fmt:message key="local.common.errorUpdating"/></h6>
                             </c:if>
-                            <form method="POST" class="login-validation" name="registrationForm"
-                                  action="${pageContext.request.contextPath}/controller">
+                            <form method="POST" name="settingForm" action="${pageContext.request.contextPath}/controller">
                                 <input type="hidden" name="command" value="update_user">
                                 <div class="form-group">
                                     <label for="firstName"><fmt:message key="local.common.firstName"/></label>
@@ -88,7 +86,7 @@
                 </div>
             </div>
         </div>
-    </section>
+</main>
 <jsp:include page="common/footer.jsp"/>
 </body>
 </html>

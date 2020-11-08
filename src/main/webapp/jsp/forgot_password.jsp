@@ -5,7 +5,6 @@
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="local"/>
 
-<!doctype html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -17,21 +16,20 @@
     <title><fmt:message key="local.common.resetPasswordTitle"/></title>
 </head>
 <body class="login-page">
-<section class="h-100">
-    <div class="container h-100">
-        <div class="row justify-content-md-center align-items-center h-100">
-            <div class="card-wrapper">
+<main class="content">
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <div class="card-wrapper ">
                 <div class="card fat">
                     <div class="card-body">
                         <h5 class="card-title text-center"><fmt:message key="local.common.resetPasswordTitle"/></h5>
                         <c:if test="${emailNotExistFlag eq true}">
                             <h6 class="errorLoginPass text-center"><fmt:message key="local.common.emailNotExist"/></h6>
                         </c:if>
-                        <form method="POST" class="login-validation" name="resetForm"
-                              action="${pageContext.request.contextPath}/controller">
+                        <form method="POST" name="forgotPasswordForm" action="${pageContext.request.contextPath}/controller">
                             <input type="hidden" name="command" value="forgot_password">
                             <div class="form-group">
-                                <label for="email"><fmt:message key="local.common.email"/></label>
+                                <label for="email"><fmt:message key="local.common.email"/>*</label>
                                 <input id="email" type="email" class="form-control" name="email"
                                        placeholder="<fmt:message key="local.common.email"/>"
                                        value="" pattern="[\w-.]+@[a-zA-Z]+\.[a-z]{2,6}"
@@ -60,7 +58,7 @@
             </div>
         </div>
     </div>
-</section>
+</main>
 </body>
 </html>
 <script src="${pageContext.request.contextPath}/js/jquery-3.5.1.slim.min.js"></script>

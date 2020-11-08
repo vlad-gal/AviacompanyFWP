@@ -34,7 +34,7 @@ public class ChangePasswordCommand implements Command {
                     request.setAttribute(ParameterName.UPDATING_SUCCESSFUL_FLAG, true);
                     page = PagePath.CHANGE_PASSWORD;
                 } else {
-                    logger.log(Level.WARN, "Cannot updating password");
+                    logger.log(Level.ERROR, "Cannot updating password");
                     request.setAttribute(ParameterName.ERROR_UPDATE_PASSWORD_FLAG, true);
                     page = PagePath.CHANGE_PASSWORD;
                 }
@@ -44,6 +44,7 @@ public class ChangePasswordCommand implements Command {
                 page = PagePath.ERROR_500;
             }
         } else {
+            logger.log(Level.ERROR, "Invalid password");
             request.setAttribute(ParameterName.ERROR_VALIDATION_FLAG, true);
             page = PagePath.CHANGE_PASSWORD;
         }

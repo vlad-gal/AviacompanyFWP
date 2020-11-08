@@ -39,7 +39,8 @@ public class UpdateUserCommand implements Command {
                     request.setAttribute(ParameterName.UPDATING_SUCCESSFUL_FLAG, true);
                     page = PagePath.SETTING_PAGE;
                 } else {
-                    logger.log(Level.WARN, "Cannot updating user");
+                    logger.log(Level.ERROR, "Cannot updating user");
+                    request.setAttribute(ParameterName.USER, user);
                     request.setAttribute(ParameterName.ERROR_UPDATE_USER_FLAG, true);
                     page = PagePath.SETTING_PAGE;
                 }

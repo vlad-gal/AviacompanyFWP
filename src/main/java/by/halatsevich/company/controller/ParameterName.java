@@ -131,4 +131,8 @@ public class ParameterName {
     public static final String OPERATOR = "operator";
     public static final String DEPARTURE_AIRPORT_ERROR = "departureAirport";
     public static final String UPDATING_FLIGHT = "updatingFlight";
+    public static final String ACTIVATION_SUCCESSFUL_FLAG = "activationSuccessfulFlag";
+    public static final String RESET_LINK_SENT_SUCCESSFUL_FLAG = "resetLinkSentSuccessfulFlag";
+    public static final String SHOW_USERS_FLAG = "showUsersFlag";
+    public static final String SHOW_FLIGHTS_FLAG = "showFlightsFlag";
 }

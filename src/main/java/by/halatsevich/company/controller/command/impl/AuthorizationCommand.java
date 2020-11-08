@@ -40,10 +40,12 @@ public class AuthorizationCommand implements Command {
                         session.setAttribute(ParameterName.STATUSES, Status.values());
                         page = PagePath.USER_ACCOUNT;
                     } else {
+                        logger.log(Level.ERROR, "User inactive");
                         request.setAttribute(ParameterName.INACTIVE_USER_FLAG, true);
                         page = PagePath.AUTHORIZATION;
                     }
                 } else {
+                    logger.log(Level.ERROR, "User not found");
                     request.setAttribute(ParameterName.ERROR_LOGIN_PASSWORD_FLAG, true);
                     page = PagePath.AUTHORIZATION;
                 }

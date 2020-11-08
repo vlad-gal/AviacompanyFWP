@@ -36,7 +36,7 @@ public class UpdateFlightPageCommand implements Command {
                 page = PagePath.ERROR_500;
             }
         } else {
-            logger.log(Level.WARN, "Incorrect flight id");
+            logger.log(Level.ERROR, "Incorrect flight id");
             request.setAttribute(ParameterName.INCORRECT_ID_FLAG, true);
             page = PagePath.UPDATE_FLIGHT;
         }

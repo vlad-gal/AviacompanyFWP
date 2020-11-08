@@ -8,6 +8,7 @@ import by.halatsevich.company.model.entity.User;
 import by.halatsevich.company.model.exception.ServiceException;
 import by.halatsevich.company.model.service.ServiceFactory;
 import by.halatsevich.company.model.service.UserService;
+import by.halatsevich.company.validator.BaseValidator;
 import by.halatsevich.company.validator.UserValidator;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -30,24 +31,26 @@ public class AdminUpdateUserCommand implements Command {
         String status = request.getParameter(ParameterName.STATUS);
         String page;
         if (UserValidator.isValidName(firstName) && UserValidator.isValidName(lastName)
-                && UserValidator.isValidTelephoneNumber(telephoneNumber)) {
+                && UserValidator.isValidTelephoneNumber(telephoneNumber)
+                && UserValidator.isValidRole(role)
+                && BaseValidator.isValidStatus(status)) {
             ServiceFactory factory = ServiceFactory.getInstance();
             UserService service = factory.getUserService();
             try {
                 updatingUser.setFirstName(firstName);
                 updatingUser.setLastName(lastName);
                 updatingUser.setTelephoneNumber(Long.parseLong(telephoneNumber));
-                updatingUser.setRole(User.Role.valueOf(role));
-                updatingUser.setStatus(Status.valueOf(status));
+                updatingUser.setRole(User.Role.valueOf(role.toUpperCase()));
+                updatingUser.setStatus(Status.valueOf(status.toUpperCase()));
                 boolean isUserUpdated = service.updateUser(updatingUser);
                 if (isUserUpdated) {
                     request.setAttribute(ParameterName.UPDATING_SUCCESSFUL_FLAG, true);
-                    session.setAttribute(ParameterName.UPDATING_USER,updatingUser);
+                    request.setAttribute(ParameterName.UPDATING_USER, updatingUser);
                     page = PagePath.UPDATE_USER;
                 } else {
-                    logger.log(Level.WARN, "Cannot updating user");
-                    request.setAttribute(ParameterName.FIRST_NAME, firstName);
-                    session.setAttribute(ParameterName.UPDATING_USER,updatingUser);
+                    logger.log(Level.ERROR, "Cannot updating user");
+                    request.setAttribute(ParameterName.ERROR_UPDATE_USER_FLAG, true);
+                    request.setAttribute(ParameterName.UPDATING_USER, updatingUser);
                     page = PagePath.UPDATE_USER;
                 }
             } catch (ServiceException e) {
@@ -57,7 +60,7 @@ public class AdminUpdateUserCommand implements Command {
             }
         } else {
             request.setAttribute(ParameterName.ERROR_VALIDATION_FLAG, true);
-            session.setAttribute(ParameterName.UPDATING_USER,updatingUser);
+            request.setAttribute(ParameterName.UPDATING_USER, updatingUser);
             page = PagePath.UPDATE_USER;
         }
         return page;

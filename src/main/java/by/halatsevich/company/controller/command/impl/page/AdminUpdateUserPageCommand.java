@@ -33,8 +33,8 @@ public class AdminUpdateUserPageCommand implements Command {
                     session.setAttribute(ParameterName.UPDATING_USER, userByLogin.get());
                     page = PagePath.UPDATE_USER;
                 } else {
-                    request.setAttribute(ParameterName.USER_NOT_FOUND_FLAG, true);
-                    page = PagePath.UPDATE_USER;
+                    logger.log(Level.ERROR, "User not found");
+                    page = PagePath.ERROR_404;
                 }
             } catch (ServiceException e) {
                 logger.log(Level.ERROR, "Error while finding user by login", e);
@@ -42,9 +42,8 @@ public class AdminUpdateUserPageCommand implements Command {
                 page = PagePath.ERROR_500;
             }
         } else {
-            logger.log(Level.WARN, "Incorrect user login");
-            request.setAttribute(ParameterName.INCORRECT_LOGIN_FLAG, true);
-            page = PagePath.UPDATE_USER;
+            logger.log(Level.ERROR, "Incorrect user login");
+            page = PagePath.ERROR_404;
         }
         return page;
     }

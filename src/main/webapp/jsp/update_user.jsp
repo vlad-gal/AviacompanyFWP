@@ -5,7 +5,6 @@
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="local"/>
 
-<!doctype html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -18,9 +17,9 @@
 </head>
 <body class="login-page">
 <jsp:include page="common/header.jsp"/>
-<section class="h-100">
-    <div class="container h-100">
-        <div class="row justify-content-md-center h-100">
+<main class="content">
+    <div class="container">
+        <div class="row justify-content-md-center">
             <div class="card-wrapper">
                 <div class="card fat">
                     <div class="card-body">
@@ -34,11 +33,10 @@
                         <c:if test="${errorUpdateUserFlag eq true}">
                             <h6 class="errorLoginPass text-center"><fmt:message key="local.common.errorUpdating"/></h6>
                         </c:if>
-                        <form method="POST" class="login-validation" name="updatingForm"
-                              action="${pageContext.request.contextPath}/controller">
+                        <form method="POST" name="updatingForm" action="${pageContext.request.contextPath}/controller">
                             <input type="hidden" name="command" value="admin_update_user">
                             <div class="form-group">
-                                <label for="firstName"><fmt:message key="local.common.firstName"/></label>
+                                <label for="firstName"><fmt:message key="local.common.firstName"/>*</label>
                                 <input id="firstName" type="text" class="form-control" name="firstName"
                                        placeholder="<fmt:message key="local.common.firstName"/>" pattern="[A-ZА-Я][a-zа-я]+"
                                        title="<fmt:message key="local.common.incorrectNameMessage"/>"
@@ -52,7 +50,7 @@
                                 </c:if>
                             </c:if>
                             <div class="form-group">
-                                <label for="lastName"><fmt:message key="local.common.lastName"/></label>
+                                <label for="lastName"><fmt:message key="local.common.lastName"/>*</label>
                                 <input id="lastName" type="text" class="form-control" name="lastName"
                                        placeholder="<fmt:message key="local.common.lastName"/>" pattern="[A-ZА-Я][a-zа-я]+"
                                        title="<fmt:message key="local.common.incorrectNameMessage"/>"
@@ -66,7 +64,7 @@
                                 </c:if>
                             </c:if>
                             <div class="form-group">
-                                <label for="telephoneNumber"><fmt:message key="local.common.telephoneNumber"/></label>
+                                <label for="telephoneNumber"><fmt:message key="local.common.telephoneNumber"/>*</label>
                                 <input id="telephoneNumber" type="tel" class="form-control" name="telephoneNumber"
                                        placeholder="<fmt:message key="local.common.telephoneNumber"/>" pattern="\d{12}"
                                        title="<fmt:message key="local.common.incorrectTelephoneMessage"/>"
@@ -80,16 +78,16 @@
                                 </c:if>
                             </c:if>
                             <div class="form-group">
-                                <label for="role"><fmt:message key="local.common.role"/></label>
+                                <label for="role"><fmt:message key="local.common.role"/>*</label>
                                 <select id="role" name="role" class="custom-select">
                                     <c:forEach var="role" items="${sessionScope.roles}" begin="1" end="6">
                                         <c:choose>
                                             <c:when test="${updatingUser.role == role}">
-                                                <option selected>${role}</option>
+                                                <option selected>${role.roleName}</option>
                                             </c:when>
                                             <c:otherwise>
                                                 <option>
-                                                        ${role}
+                                                        ${role.roleName}
                                                 </option>
                                             </c:otherwise>
                                         </c:choose>
@@ -97,16 +95,16 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="status"><fmt:message key="local.common.status"/></label>
+                                <label for="status"><fmt:message key="local.common.status"/>*</label>
                                 <select id="status" name="status" class="custom-select">
                                     <c:forEach var="status" items="${sessionScope.statuses}">
                                         <c:choose>
                                             <c:when test="${updatingUser.status == status}">
-                                                <option selected>${status}</option>
+                                                <option selected>${status.statusName}</option>
                                             </c:when>
                                             <c:otherwise>
                                                 <option>
-                                                        ${status}
+                                                        ${status.statusName}
                                                 </option>
                                             </c:otherwise>
                                         </c:choose>
@@ -122,7 +120,7 @@
             </div>
         </div>
     </div>
-</section>
+</main>
 <jsp:include page="common/footer.jsp"/>
 </body>
 </html>

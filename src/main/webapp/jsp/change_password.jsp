@@ -17,49 +17,48 @@
 </head>
 <body class="login-page">
 <jsp:include page="common/header.jsp"/>
-<section class="h-100">
-    <div class="container h-100">
-        <div class="row justify-content-md-center h-100">
-            <div class="card-wrapper">
-                <div class="card fat">
-                    <div class="card-body">
-                        <h5 class="card-title text-center"><fmt:message key="local.common.changePassword"/></h5>
-                        <c:if test="${errorValidationFlag eq true}">
-                            <h6 class="errorLoginPass text-center"><fmt:message key="local.common.errorValidation"/></h6>
-                        </c:if>
-                        <c:if test="${updatingSuccessfulFlag eq true}">
-                            <h6 class="alert-success text-center"><fmt:message key="local.common.updatingSuccessful"/></h6>
-                        </c:if>
-                        <c:if test="${errorUpdatePasswordFlag eq true}">
-                            <h6 class="errorLoginPass text-center"><fmt:message key="local.common.errorUpdating"/></h6>
-                        </c:if>
-                        <form method="POST" class="login-validation" name="registrationForm"
-                              action="${pageContext.request.contextPath}/controller">
-                            <input type="hidden" name="command" value="change_password">
-                            <div class="form-group">
-                                <label for="password"><fmt:message key="local.common.newPassword"/></label>
-                                <input id="password" type="password" class="form-control" name="password"
-                                       placeholder="<fmt:message key="local.common.newPassword"/>" pattern="[^\s]{8,25}"
-                                       title="<fmt:message key="local.common.incorrectPasswordMessage"/>"
-                                       value="" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="confirmPassword"><fmt:message key="local.common.confirmPassword"/></label>
-                                <input id="confirmPassword" type="password" class="form-control" name="confirmPassword"
-                                       placeholder="<fmt:message key="local.common.confirmPassword"/>" pattern="[^\s]{8,25}"
-                                       title="<fmt:message key="local.common.incorrectPasswordMessage"/>"
-                                       value="" required>
-                            </div>
-                            <div class="form-group m-0">
-                                <input type="submit" class="btn btn-primary btn-block" value="<fmt:message key="local.common.change"/>">
-                            </div>
-                        </form>
+<main class="content">
+        <div class="container">
+            <div class="row justify-content-md-center">
+                <div class="card-wrapper">
+                    <div class="card fat">
+                        <div class="card-body">
+                            <h5 class="card-title text-center"><fmt:message key="local.common.changePassword"/></h5>
+                            <c:if test="${errorValidationFlag eq true}">
+                                <h6 class="errorLoginPass text-center"><fmt:message key="local.common.errorValidation"/></h6>
+                            </c:if>
+                            <c:if test="${updatingSuccessfulFlag eq true}">
+                                <h6 class="alert-success text-center"><fmt:message key="local.common.updatingSuccessful"/></h6>
+                            </c:if>
+                            <c:if test="${errorUpdatePasswordFlag eq true}">
+                                <h6 class="errorLoginPass text-center"><fmt:message key="local.common.errorUpdating"/></h6>
+                            </c:if>
+                            <form method="POST" name="changePasswordForm" action="${pageContext.request.contextPath}/controller">
+                                <input type="hidden" name="command" value="change_password">
+                                <div class="form-group">
+                                    <label for="password"><fmt:message key="local.common.newPassword"/>*</label>
+                                    <input id="password" type="password" class="form-control" name="password"
+                                           placeholder="<fmt:message key="local.common.newPassword"/>" pattern="[^\s]{8,25}"
+                                           title="<fmt:message key="local.common.incorrectPasswordMessage"/>"
+                                           value="" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="confirmPassword"><fmt:message key="local.common.confirmPassword"/>*</label>
+                                    <input id="confirmPassword" type="password" class="form-control" name="confirmPassword"
+                                           placeholder="<fmt:message key="local.common.confirmPassword"/>" pattern="[^\s]{8,25}"
+                                           title="<fmt:message key="local.common.incorrectPasswordMessage"/>"
+                                           value="" required>
+                                </div>
+                                <div class="form-group m-0">
+                                    <input type="submit" class="btn btn-primary btn-block" value="<fmt:message key="local.common.change"/>">
+                                </div>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+</main>
 <jsp:include page="common/footer.jsp"/>
 </body>
 </html>
