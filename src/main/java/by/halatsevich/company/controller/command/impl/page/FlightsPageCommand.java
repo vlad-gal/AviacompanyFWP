@@ -4,6 +4,7 @@ import by.halatsevich.company.controller.PagePath;
 import by.halatsevich.company.controller.ParameterName;
 import by.halatsevich.company.controller.command.Command;
 import by.halatsevich.company.model.entity.Flight;
+import by.halatsevich.company.model.entity.Status;
 import by.halatsevich.company.model.exception.ServiceException;
 import by.halatsevich.company.model.service.FlightService;
 import by.halatsevich.company.model.service.ServiceFactory;
@@ -26,7 +27,7 @@ public class FlightsPageCommand implements Command {
         String page;
         List<Flight> flightList;
         try {
-            flightList = flightService.findAllActualFlights();
+            flightList = flightService.findFlightsByStatus(Status.ACTIVE.getStatusName());
             session.setAttribute(ParameterName.FLIGHT_LIST, flightList);
             session.setAttribute(ParameterName.CURRENT_PAGE_NUMBER, 1);
             page = PagePath.FLIGHTS;

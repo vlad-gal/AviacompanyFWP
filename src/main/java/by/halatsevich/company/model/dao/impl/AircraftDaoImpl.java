@@ -30,6 +30,18 @@ public class AircraftDaoImpl implements AircraftDao {
     }
 
     @Override
+    public List<Aircraft> findAllByStatus(Status status) throws DaoException {
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_ALL_AIRCRAFT_BY_STATUS)) {
+            statement.setInt(1, status.ordinal());
+            ResultSet resultSet = statement.executeQuery();
+            return createAircrafts(resultSet);
+        } catch (SQLException e) {
+            throw new DaoException("Error while finding all aircrafts", e);
+        }
+    }
+
+    @Override
     public Optional<Aircraft> findById(int aircraftId) throws DaoException {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_AIRCRAFT_BY_ID)) {

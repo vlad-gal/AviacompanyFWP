@@ -23,15 +23,19 @@ public class FlightDaoImpl implements FlightDao {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_ALL_FLIGHTS)) {
             ResultSet resultSet = statement.executeQuery();
-            List<FlightDto> flightDtos = new ArrayList<>();
-            EntityFactory factory = EntityFactory.getInstance();
-            while (resultSet.next()) {
-                Map<String, Object> flightData = createFlightData(resultSet);
-                FlightDto flightDto = factory.getFlightDtoCreator().create(flightData);
-                logger.log(Level.DEBUG, "Flight found: {}", flightDto);
-                flightDtos.add(flightDto);
-            }
-            return flightDtos;
+            return createFlightDtos(resultSet);
+        } catch (SQLException e) {
+            throw new DaoException("Error while finding all flight", e);
+        }
+    }
+
+    @Override
+    public List<FlightDto> findAllByStatus(Status status) throws DaoException {
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_ALL_FLIGHTS_BY_STATUS)) {
+            statement.setInt(1, status.ordinal());
+            ResultSet resultSet = statement.executeQuery();
+            return createFlightDtos(resultSet);
         } catch (SQLException e) {
             throw new DaoException("Error while finding all flight", e);
         }
@@ -133,13 +137,13 @@ public class FlightDaoImpl implements FlightDao {
             statement.setLong(5, flightDto.getAircraftId());
             statement.setInt(6, flightDto.getOperatorId());
             statement.setInt(7, flightDto.getCrewId());
-            int statusId = flightDto.getStatus().ordinal() + 1;
-            statement.setInt(8, statusId);
+            statement.setInt(8,  flightDto.getStatus().ordinal());
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new DaoException("Error while inserting flightDto", e);
         }
     }
+
     @Override
     public boolean update(FlightDto flightDto) throws DaoException {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
@@ -194,6 +198,31 @@ public class FlightDaoImpl implements FlightDao {
             logger.log(Level.DEBUG, "FlightDto found: {}", flightDto);
         }
         return Optional.ofNullable(flightDto);
+    }
+
+    private List<FlightDto> createFlightDtos(ResultSet resultSet) throws SQLException {
+        List<FlightDto> flightDtos = new ArrayList<>();
+        EntityFactory factory = EntityFactory.getInstance();
+        while (resultSet.next()) {
+            Map<String, Object> flightData = createFlightData(resultSet);
+            FlightDto flightDto = factory.getFlightDtoCreator().create(flightData);
+            logger.log(Level.DEBUG, "Flight found: {}", flightDto);
+            flightDtos.add(flightDto);
+        }
+        return flightDtos;
+    }
+
+    @Override
+    public List<FlightDto> findUsersFlightsByStatus(int userId, Status status) throws DaoException {
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_ALL_USERS_FLIGHTS_BY_STATUS)) {
+            statement.setInt(1, status.ordinal());
+            statement.setInt(2, userId);
+            ResultSet resultSet = statement.executeQuery();
+            return createFlightDtos(resultSet);
+        } catch (SQLException e) {
+            throw new DaoException("Error while finding all flight", e);
+        }
     }
 }
 

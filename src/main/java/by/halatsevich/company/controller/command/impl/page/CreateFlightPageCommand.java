@@ -3,9 +3,15 @@ package by.halatsevich.company.controller.command.impl.page;
 import by.halatsevich.company.controller.PagePath;
 import by.halatsevich.company.controller.ParameterName;
 import by.halatsevich.company.controller.command.Command;
-import by.halatsevich.company.model.entity.*;
+import by.halatsevich.company.model.entity.Aircraft;
+import by.halatsevich.company.model.entity.Airport;
+import by.halatsevich.company.model.entity.Crew;
+import by.halatsevich.company.model.entity.Status;
 import by.halatsevich.company.model.exception.ServiceException;
-import by.halatsevich.company.model.service.*;
+import by.halatsevich.company.model.service.AircraftService;
+import by.halatsevich.company.model.service.AirportService;
+import by.halatsevich.company.model.service.CrewService;
+import by.halatsevich.company.model.service.ServiceFactory;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,24 +30,20 @@ public class CreateFlightPageCommand implements Command {
         CrewService crewService = factory.getCrewService();
         AirportService airportService = factory.getAirportService();
         AircraftService aircraftService = factory.getAircraftService();
-        UserService userService = factory.getUserService();
-        List<CrewDto> crews;
+        List<Crew> crews;
         List<Airport> airports;
         List<Aircraft> aircrafts;
-        List<User> operators;
         String page;
         try {
-            crews = crewService.findCrewsByStatus(Status.ACTIVE);
+            crews = crewService.findCrewsByStatus(Status.ACTIVE.getStatusName());
             airports = airportService.findAllAirports();
-            aircrafts = aircraftService.findAllAircrafts();
-            operators = userService.findUsersByRoleAndStatus(User.Role.OPERATOR,Status.ACTIVE);
+            aircrafts = aircraftService.findAircraftsByStatus(Status.ACTIVE.getStatusName());
             session.setAttribute(ParameterName.CREWS, crews);
             session.setAttribute(ParameterName.AIRPORTS, airports);
             session.setAttribute(ParameterName.AIRCRAFTS, aircrafts);
-            session.setAttribute(ParameterName.OPERATORS, operators);
             page = PagePath.CREATE_FLIGHT;
         } catch (ServiceException e) {
-            logger.log(Level.ERROR, "Error while finding all crews", e);
+            logger.log(Level.ERROR, "Error while finding all parts of crews", e);
             request.setAttribute(ParameterName.ERROR_MESSAGE, e);
             page = PagePath.ERROR_500;
         }

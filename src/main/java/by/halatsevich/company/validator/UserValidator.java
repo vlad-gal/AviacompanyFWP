@@ -82,12 +82,14 @@ public abstract class UserValidator extends BaseValidator {
     }
 
     public static boolean isValidRole(String role) {
-        boolean flag;
-        try {
-            User.Role.valueOf(role.toUpperCase());
-            flag = true;
-        } catch (IllegalArgumentException e) {
-            flag = false;
+        boolean flag = false;
+        if (role != null){
+            try {
+                User.Role.valueOf(role.toUpperCase());
+                flag = true;
+            } catch (IllegalArgumentException e) {
+                flag = false;
+            }
         }
         return flag;
     }

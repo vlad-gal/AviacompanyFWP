@@ -26,4 +26,13 @@ public class PagePath {
     public static final String UPDATE_USER = "/jsp/update_user.jsp";
     public static final String CREATE_FLIGHT = "/jsp/create_flight.jsp";
     public static final String UPDATE_FLIGHT = "/jsp/update_flight.jsp";
+    public static final String CREATE_CREW = "/jsp/create_crew.jsp";
+
+    public static final String ADD_USER_INTO_CREW = "/jsp/add_user_into_crew_page.jsp";
+    public static final String SHOW_CREW = "/jsp/show_crew.jsp";
+    public static final String UPDATE_CREW = "/jsp/update_crew.jsp";
+    public static final String CREATE_AIRPORT = "/jsp/create_airport.jsp";
+    public static final String CREATE_AIRCRAFT = "/jsp/create_aircraft.jsp";
+    public static final String UPDATE_AIRPORT = "/jsp/update_airport.jsp";
+    public static final String UPDATE_AIRCRAFT = "/jsp/update_aircraft.jsp";
 }

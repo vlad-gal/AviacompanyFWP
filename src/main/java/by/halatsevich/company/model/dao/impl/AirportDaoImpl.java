@@ -4,6 +4,7 @@ import by.halatsevich.company.model.dao.AirportDao;
 import by.halatsevich.company.model.dao.ColumnName;
 import by.halatsevich.company.model.dao.SqlQuery;
 import by.halatsevich.company.model.entity.Airport;
+import by.halatsevich.company.model.entity.Status;
 import by.halatsevich.company.model.exception.DaoException;
 import by.halatsevich.company.model.factory.EntityFactory;
 import by.halatsevich.company.model.pool.ConnectionPool;
@@ -26,6 +27,11 @@ public class AirportDaoImpl implements AirportDao {
         } catch (SQLException e) {
             throw new DaoException("Error while finding all airports", e);
         }
+    }
+
+    @Override
+    public List<Airport> findAllByStatus(Status status) throws DaoException {
+        throw new UnsupportedOperationException("Operation find all by status not allowed with airport");
     }
 
     @Override
@@ -119,7 +125,7 @@ public class AirportDaoImpl implements AirportDao {
 
     @Override
     public boolean remove(int airportId) throws DaoException {
-        throw new UnsupportedOperationException("Operation Remove not allowed with airport");
+        throw new UnsupportedOperationException("Operation remove not allowed with airport");
     }
 
     private Map<String, Object> createAirportData(ResultSet resultSet) throws SQLException {

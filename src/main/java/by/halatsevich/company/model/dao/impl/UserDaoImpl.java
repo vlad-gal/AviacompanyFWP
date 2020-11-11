@@ -39,6 +39,31 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+    public List<User> findAllByStatus(Status status) throws DaoException {
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_ALL_USERS_BY_STATUS)) {
+            statement.setInt(1, status.ordinal());
+            ResultSet resultSet = statement.executeQuery();
+            return createUsers(resultSet);
+        } catch (SQLException e) {
+            throw new DaoException("Error while finding all users by status", e);
+        }
+    }
+
+    @Override
+    public List<User> findUsersByRoleAndStatus(User.Role role, Status status) throws DaoException {
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_ALL_USERS_BY_ROLE_AND_STATUS)) {
+            statement.setInt(1, status.ordinal());
+            statement.setInt(2, role.ordinal());
+            ResultSet resultSet = statement.executeQuery();
+            return createUsers(resultSet);
+        } catch (SQLException e) {
+            throw new DaoException("Error while finding all users by role and status", e);
+        }
+    }
+
+    @Override
     public boolean registration(RegistrationData registrationData) throws DaoException {
         Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
@@ -221,5 +246,16 @@ public class UserDaoImpl implements UserDao {
         userData.put(ColumnName.LAST_NAME, resultSet.getString(7));
         userData.put(ColumnName.TELEPHONE_NUMBER, resultSet.getLong(8));
         return userData;
+    }
+
+    private List<User> createUsers(ResultSet resultSet) throws SQLException {
+        List<User> users = new ArrayList<>();
+        while (resultSet.next()) {
+            Map<String, Object> userData = createUserData(resultSet);
+            User user = EntityFactory.getInstance().getUserCreator().create(userData);
+            logger.log(Level.DEBUG, "User found: {}", user);
+            users.add(user);
+        }
+        return users;
     }
 }

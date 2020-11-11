@@ -19,11 +19,6 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="controller?command=all_users">
-                            <fmt:message key="local.sidebar.allUsers"/>
-                        </a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="controller?command=all_users&status=active">
                             <fmt:message key="local.sidebar.activeUsers"/>
                         </a>
@@ -47,137 +42,227 @@
                         <span><fmt:message key="local.common.flights"/></span>
                     </h6>
                     <li class="nav-item">
+                        <a class="nav-link" href="controller?command=all_flights&status=active">
+                            <fmt:message key="local.sidebar.activeFlights"/>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="controller?command=all_flights&status=inactive">
+                            <fmt:message key="local.sidebar.inactiveFlights"/>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="controller?command=all_flights&status=fly">
+                            <fmt:message key="local.sidebar.flyingFlights"/>
+                        </a>
+                    </li>
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span><fmt:message key="local.crew.crews"/></span>
+                    </h6>
+                    <li class="nav-item">
+                        <a class="nav-link" href="controller?command=all_crews&status=active">
+                            <fmt:message key="local.sidebar.activeCrews"/>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="controller?command=all_crews&status=inactive">
+                            <fmt:message key="local.sidebar.inactiveCrews"/>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="controller?command=all_crews&status=fly">
+                            <fmt:message key="local.sidebar.flyingCrews"/>
+                        </a>
+                    </li>
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span><fmt:message key="local.common.airports"/></span>
+                    </h6>
+                    <li class="nav-item">
+                        <a class="nav-link" href="controller?command=create_airport_page">
+                            <fmt:message key="local.sidebar.createAirport"/>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="controller?command=all_airports">
+                            <fmt:message key="local.sidebar.allAirports"/>
+                        </a>
+                    </li>
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span><fmt:message key="local.common.aircrafts"/></span>
+                    </h6>
+                    <li class="nav-item">
+                        <a class="nav-link" href="controller?command=create_aircraft_page">
+                            <fmt:message key="local.sidebar.createAircraft"/>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="controller?command=all_aircrafts&status=active">
+                            <fmt:message key="local.sidebar.activeAircrafts"/>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="controller?command=all_aircrafts&status=inactive">
+                            <fmt:message key="local.sidebar.inactiveAircrafts"/>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="controller?command=all_aircrafts&status=fly">
+                            <fmt:message key="local.sidebar.flyingAircrafts"/>
+                        </a>
+                    </li>
+                </c:when>
+                <c:when test="${user.role eq 'OPERATOR'}">
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span><fmt:message key="local.common.flights"/></span>
+                    </h6>
+                    <li class="nav-item">
                         <a class="nav-link" href="controller?command=create_flight_page">
                             <fmt:message key="local.common.createFlight"/>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="controller?command=all_flights&status=active">
-                            Active current flights
+                            <fmt:message key="local.sidebar.activeFlights"/>
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="controller?command=all_flights&status=inactive">
-                            Inactive flights
+                            <fmt:message key="local.sidebar.inactiveFlights"/>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="controller?command=all_flights&status=fly">
+                            <fmt:message key="local.sidebar.flyingFlights"/>
                         </a>
                     </li>
                     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                        <span>Crews</span>
+                        <span><fmt:message key="local.crew.crews"/></span>
                     </h6>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            All crews
+                        <a class="nav-link" href="controller?command=all_crews&status=active">
+                            <fmt:message key="local.sidebar.activeCrews"/>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            Active crews
+                        <a class="nav-link" href="controller?command=all_crews&status=inactive">
+                            <fmt:message key="local.sidebar.inactiveCrews"/>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="controller?command=all_crews&status=fly">
+                            <fmt:message key="local.sidebar.flyingCrews"/>
                         </a>
                     </li>
                     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                        <span>Airports</span>
-                    </h6>
+                        <span><fmt:message key="local.common.airports"/></span>
+                    </h6>>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            All airports
+                        <a class="nav-link" href="controller?command=all_airports">
+                            <fmt:message key="local.sidebar.allAirports"/>
                         </a>
                     </li>
                     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                        <span>Aircrafts</span>
+                        <span><fmt:message key="local.common.aircrafts"/></span>
                     </h6>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            All aircrafts
-                        </a>
-                    </li>
-                </c:when>
-                <c:when test="${user.role eq 'OPERATOR'}">
-                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                        <span>Flights</span>
-                    </h6>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            All flights
+                        <a class="nav-link" href="controller?command=all_aircrafts&status=active">
+                            <fmt:message key="local.sidebar.activeAircrafts"/>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            Current flights
-                        </a>
-                    </li>
-                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                        <span>Crews</span>
-                    </h6>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            All crews
+                        <a class="nav-link" href="controller?command=all_aircrafts&status=inactive">
+                            <fmt:message key="local.sidebar.inactiveAircrafts"/>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            Active crews
-                        </a>
-                    </li>
-                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                        <span>Airports</span>
-                    </h6>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            All airports
-                        </a>
-                    </li>
-                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                        <span>Aircrafts</span>
-                    </h6>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            All aircrafts
+                        <a class="nav-link" href="controller?command=all_aircrafts&status=fly">
+                            <fmt:message key="local.sidebar.flyingAircrafts"/>
                         </a>
                     </li>
                 </c:when>
                 <c:when test="${user.role eq 'DISPATCHER'}">
                     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-2 mb-1 text-muted">
-                        <span>Users</span>
+                        <span><fmt:message key="local.sidebar.users"/></span>
                     </h6>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            All users
+                        <a class="nav-link" href="controller?command=all_users&status=active&role=pilot">
+                            <fmt:message key="local.sidebar.pilots"/>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="controller?command=all_users&status=active&role=navigator">
+                            <fmt:message key="local.sidebar.navigators"/>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="controller?command=all_users&status=active&role=radioman">
+                            <fmt:message key="local.sidebar.radiomans"/>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="controller?command=all_users&status=active&role=stewardess">
+                            <fmt:message key="local.sidebar.stewardesses"/>
                         </a>
                     </li>
                     <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                        <span>Crews</span>
+                        <span><fmt:message key="local.crew.crews"/></span>
                     </h6>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            All crews
+                        <a class="nav-link" href="controller?command=create_crew_page">
+                            <fmt:message key="local.sidebar.createCrew"/>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            Active crews
+                        <a class="nav-link" href="controller?command=all_crews&status=active">
+                            <fmt:message key="local.sidebar.activeCrews"/>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="controller?command=all_crews&status=inactive">
+                            <fmt:message key="local.sidebar.inactiveCrews"/>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="controller?command=all_crews&status=fly">
+                            <fmt:message key="local.sidebar.flyingCrews"/>
                         </a>
                     </li>
                 </c:when>
                 <c:otherwise>
-                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                        <span>Crews</span>
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-2 mb-1 text-muted">
+                        <span><fmt:message key="local.common.flights"/></span>
                     </h6>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            All crews
-                        </a>
-                    </li>
-                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
-                        <span>Flights</span>
-                    </h6>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            All flights
+                        <a class="nav-link" href="controller?command=all_user_flights&status=active">
+                            <fmt:message key="local.sidebar.activeUsersFlight"/>
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            Current flights
+                        <a class="nav-link" href="controller?command=all_user_flights&status=inactive">
+                            <fmt:message key="local.sidebar.inactiveUsersFlight"/>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="controller?command=all_user_flights&status=fly">
+                            <fmt:message key="local.sidebar.flyUsersFlight"/>
+                        </a>
+                    </li>
+                    <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                        <span><fmt:message key="local.crew.crews"/></span>
+                    </h6>
+                    <li class="nav-item">
+                        <a class="nav-link" href="controller?command=all_user_crews&status=active">
+                            <fmt:message key="local.sidebar.activeUsersCrew"/>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="controller?command=all_user_crews&status=inactive">
+                            <fmt:message key="local.sidebar.inactiveUsersCrew"/>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="controller?command=all_user_crews&status=fly">
+                            <fmt:message key="local.sidebar.flyUsersCrew"/>
                         </a>
                     </li>
                 </c:otherwise>

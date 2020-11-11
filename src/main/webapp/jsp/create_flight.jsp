@@ -5,7 +5,6 @@
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="local"/>
 
-<!doctype html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -18,34 +17,30 @@
 </head>
 <body class="login-page">
 <jsp:include page="common/header.jsp"/>
-<section class="h-100">
-    <div class="container h-100">
-        <div class="row justify-content-md-center h-100">
+<main class="content">
+    <div class="container">
+        <div class="row justify-content-md-center">
             <div class="card-wrapper">
                 <div class="card fat">
                     <div class="card-body">
                         <h5 class="card-title text-center"><fmt:message key="local.common.createFlight"/></h5>
                         <c:if test="${errorCreateFlightFlag eq true}">
-                            <h6 class="errorLoginPass text-center"><fmt:message
-                                    key="local.common.errorCreateFlight"/></h6>
+                            <h6 class="errorLoginPass text-center"><fmt:message key="local.common.errorCreateFlight"/></h6>
                         </c:if>
                         <c:if test="${createFlightSuccessfulFlag eq true}">
-                            <h6 class="alert-success text-center"><fmt:message
-                                    key="local.common.createFlightSuccessful"/></h6>
+                            <h6 class="alert-success text-center"><fmt:message key="local.common.createFlightSuccessful"/></h6>
                         </c:if>
                         <c:if test="${errorValidationFlag eq true}">
-                            <h6 class="errorLoginPass text-center"><fmt:message
-                                    key="local.common.errorValidation"/></h6>
+                            <h6 class="errorLoginPass text-center"><fmt:message key="local.common.errorValidation"/></h6>
                         </c:if>
-                        <form method="POST" class="login-validation" name="registrationForm"
-                              action="${pageContext.request.contextPath}/controller">
+                        <form method="POST" name="createFlightForm" action="${pageContext.request.contextPath}/controller">
                             <input type="hidden" name="command" value="create_flight">
                             <div class="form-group">
-                                <label for="departureAirport"><fmt:message key="local.flight.departureAirport"/></label>
+                                <label for="departureAirport"><fmt:message key="local.flight.departureAirport"/>*</label>
                                 <select id="departureAirport" name="departureAirport" class="custom-select" required>
-                                    <c:if test="${errorCreateFlightFlag eq true}">
-                                        <option selected>${airport.airportName}, ${airport.city}, ${airport.country}</option>>
-                                        </c:if>
+                                    <c:if test="${errorCreateFlightFlag eq true ||errorValidationFlag eq true}">
+                                        <option value="${airport.id}" selected>${departureAirport.airportName}, ${departureAirport.city}, ${departureAirport.country}</option>>
+                                    </c:if>
                                     <c:forEach var="airport" items="${airports}">
                                         <option value="${airport.id}">
                                                 ${airport.airportName}, ${airport.city}, ${airport.country}
@@ -56,9 +51,11 @@
                             </div>
                             <div class="form-group">
                                 <label for="destinationAirport"><fmt:message
-                                        key="local.flight.destinationAirport"/></label>
+                                        key="local.flight.destinationAirport"/>*</label>
                                 <select id="destinationAirport" name="destinationAirport" class="custom-select"  required>
-
+                                    <c:if test="${errorCreateFlightFlag eq true ||errorValidationFlag eq true}">
+                                        <option value="${airport.id}" selected>${destinationAirport.airportName}, ${destinationAirport.city}, ${destinationAirport.country}</option>>
+                                    </c:if>
                                     <c:forEach var="airport" items="${airports}">
                                         <option value="${airport.id}">
                                                 ${airport.airportName}, ${airport.city}, ${airport.country}
@@ -67,18 +64,21 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="departTime"><fmt:message key="local.flight.departTime"/></label>
+                                <label for="departTime"><fmt:message key="local.flight.departTime"/>*</label>
                                 <input id="departTime" type="datetime-local" class="form-control" name="departTime"
-                                       placeholder="<fmt:message key="local.flight.departTime"/>" required>
+                                       placeholder="<fmt:message key="local.flight.departTime"/>" value="${requestScope.departTime}" required>
                             </div>
                             <div class="form-group">
-                                <label for="arriveTime"><fmt:message key="local.flight.arriveTime"/></label>
+                                <label for="arriveTime"><fmt:message key="local.flight.arriveTime"/>*</label>
                                 <input id="arriveTime" type="datetime-local" class="form-control" name="arriveTime"
-                                       placeholder="<fmt:message key="local.flight.arriveTime"/>" required>
+                                       placeholder="<fmt:message key="local.flight.arriveTime"/>" value="${requestScope.arriveTime}" required>
                             </div>
                             <div class="form-group">
-                                <label for="crew"><fmt:message key="local.crew.crews"/></label>
+                                <label for="crew"><fmt:message key="local.crew.crews"/>*</label>
                                 <select id="crew" name="crew" class="custom-select" required>
+                                    <c:if test="${errorCreateFlightFlag eq true ||errorValidationFlag eq true}">
+                                        <option value="${crew.id}" selected>${crew.crewName}</option>>
+                                    </c:if>
                                     <c:forEach var="crew" items="${crews}">
                                         <option value="${crew.id}">
                                                 ${crew.crewName}
@@ -87,21 +87,14 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="aircraft"><fmt:message key="local.common.aircraft"/></label>
+                                <label for="aircraft"><fmt:message key="local.common.aircraft"/>*</label>
                                 <select id="aircraft" name="aircraft" class="custom-select" required>
+                                    <c:if test="${errorCreateFlightFlag eq true ||errorValidationFlag eq true}">
+                                        <option value="${aircraft.id}" selected>${aircraft.aircraftName}, <fmt:message key="local.aircraft.tailNumber"/> - ${aircraft.tailNumber}</option>>
+                                    </c:if>
                                     <c:forEach var="aircraft" items="${aircrafts}">
                                         <option value="${aircraft.id}">
                                                 ${aircraft.aircraftName}, <fmt:message key="local.aircraft.tailNumber"/> - ${aircraft.tailNumber}
-                                        </option>
-                                    </c:forEach>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="operator"><fmt:message key="local.common.aircraft"/></label>
-                                <select id="operator" name="operator" class="custom-select" required>
-                                    <c:forEach var="operator" items="${operators}">
-                                        <option value="${operator.id}">
-                                                ${operator.firstName} ${operator.lastName}
                                         </option>
                                     </c:forEach>
                                 </select>
@@ -116,7 +109,7 @@
             </div>
         </div>
     </div>
-</section>
+</main>
 <jsp:include page="common/footer.jsp"/>
 </body>
 </html>

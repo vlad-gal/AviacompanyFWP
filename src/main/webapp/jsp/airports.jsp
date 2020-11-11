@@ -44,6 +44,9 @@
                                 <th scope="col"><fmt:message key="local.airport.name"/></th>
                                 <th scope="col"><fmt:message key="local.airport.country"/></th>
                                 <th scope="col"><fmt:message key="local.airport.city"/></th>
+                                <c:if test="${sessionScope.user.role eq 'ADMIN'}">
+                                    <th scope="col"><fmt:message key="local.common.actions"/></th>
+                                </c:if>
                             </tr>
                             </thead>
                                 <ctg:airportPagination currentPageNumber="${currentPageNumber}"/>

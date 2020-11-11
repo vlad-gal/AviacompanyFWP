@@ -10,4 +10,8 @@ public interface AirportService {
     List<Airport> findAllAirports() throws ServiceException;
 
     Optional<Airport> findAirportById(String airportId) throws ServiceException;
+
+    boolean addAirport(String airportName, String city, String country) throws ServiceException;
+
+    boolean updateAirport(Airport updatingAirport) throws ServiceException;
 }

@@ -46,21 +46,33 @@ public class UserServiceImpl implements UserService {
         } catch (DaoException e) {
             throw new ServiceException("Error while finding all users", e);
         }
-        return users;
+        return users.stream().filter(user -> user.getRole() != User.Role.ADMIN).collect(Collectors.toList());
     }
 
     @Override
     public List<User> findUsersByStatus(String status) throws ServiceException {
-        List<User> users = findAllUsers();
-        return users.stream().filter(user -> user.getStatus() == Status.valueOf(status.toUpperCase()))
-                .filter(user -> user.getRole() != User.Role.ADMIN).collect(Collectors.toList());
+        DaoFactory factory = DaoFactory.getInstance();
+        UserDao dao = factory.getUserDao();
+        List<User> users;
+        try {
+            users = dao.findAllByStatus(Status.valueOf(status.toUpperCase()));
+        } catch (DaoException e) {
+            throw new ServiceException("Error while finding all users by status", e);
+        }
+        return users.stream().filter(user -> user.getRole() != User.Role.ADMIN).collect(Collectors.toList());
     }
 
     @Override
-    public List<User> findUsersByRoleAndStatus(User.Role role, Status status) throws ServiceException {
-        List<User> users = findAllUsers();
-        return users.stream().filter(user -> user.getStatus() == status)
-                .filter(user -> user.getRole() == role).collect(Collectors.toList());
+    public List<User> findUsersByRoleAndStatus(String role, String status) throws ServiceException {
+        DaoFactory factory = DaoFactory.getInstance();
+        UserDao dao = factory.getUserDao();
+        List<User> users;
+        try {
+            users = dao.findUsersByRoleAndStatus(User.Role.valueOf(role.toUpperCase()),Status.valueOf(status.toUpperCase()));
+        } catch (DaoException e) {
+            throw new ServiceException("Error while finding all users by role and status", e);
+        }
+        return users;
     }
 
     @Override

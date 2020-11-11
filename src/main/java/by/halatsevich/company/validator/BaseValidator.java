@@ -10,12 +10,14 @@ public abstract class BaseValidator {
     }
 
     public static boolean isValidStatus(String status) {
-        boolean flag;
-        try {
-            Status.valueOf(status.toUpperCase());
-            flag = true;
-        } catch (IllegalArgumentException e) {
-            flag = false;
+        boolean flag = false;
+        if (status != null){
+            try {
+                Status.valueOf(status.toUpperCase());
+                flag = true;
+            } catch (IllegalArgumentException e) {
+                flag = false;
+            }
         }
         return flag;
     }

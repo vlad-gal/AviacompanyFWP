@@ -38,4 +38,30 @@ public class AirportServiceImpl implements AirportService {
         }
         return airport;
     }
+
+    @Override
+    public boolean addAirport(String airportName, String city, String country) throws ServiceException {
+        DaoFactory factory = DaoFactory.getInstance();
+        AirportDao airportDao = factory.getAirportDao();
+        boolean isAdded;
+        try {
+            isAdded = airportDao.addAirport(new Airport(airportName,city,country));
+        } catch (DaoException e) {
+            throw new ServiceException("Error while adding airport", e);
+        }
+        return isAdded;
+    }
+
+    @Override
+    public boolean updateAirport(Airport updatingAirport) throws ServiceException {
+        DaoFactory factory = DaoFactory.getInstance();
+        AirportDao airportDao = factory.getAirportDao();
+        boolean isUpdated;
+        try {
+            isUpdated = airportDao.update(updatingAirport);
+        } catch (DaoException e) {
+            throw new ServiceException("Error while updating airport", e);
+        }
+        return isUpdated;
+    }
 }

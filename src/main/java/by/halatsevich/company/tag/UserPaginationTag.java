@@ -47,6 +47,12 @@ public class UserPaginationTag extends TagSupport {
                     out.write("\" class=\"btn btn-info\">Edit</a>");
                     out.write("</div></div></td>");
                 }
+                if (mainUser.getRole() == User.Role.DISPATCHER) {
+                    out.write("<td><div class=\"d-inline-flex\"><div class=\"ml-2\">");
+                    out.write("<a href=\"controller?command=add_user_into_crew_page&login=" + user.getLogin());
+                    out.write("\" class=\"btn btn-info\">Add into crew</a>");
+                    out.write("</div></div></td>");
+                }
                 out.write("</tr>");
             }
             out.write("</tbody>");

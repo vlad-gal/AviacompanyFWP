@@ -4,6 +4,7 @@ import by.halatsevich.company.controller.PagePath;
 import by.halatsevich.company.controller.ParameterName;
 import by.halatsevich.company.controller.command.Command;
 import by.halatsevich.company.model.entity.Flight;
+import by.halatsevich.company.model.entity.Status;
 import by.halatsevich.company.model.exception.ServiceException;
 import by.halatsevich.company.model.service.FlightService;
 import by.halatsevich.company.model.service.ServiceFactory;
@@ -24,7 +25,7 @@ public class WelcomePageCommand implements Command {
         List<Flight> flightList;
         String page;
         try {
-            flightList = flightService.findAllActualFlights();
+            flightList = flightService.findFlightsByStatus(Status.ACTIVE.getStatusName());
             request.setAttribute(ParameterName.FLIGHT_LIST, flightList);
             page = PagePath.WELCOME;
         } catch (ServiceException e) {

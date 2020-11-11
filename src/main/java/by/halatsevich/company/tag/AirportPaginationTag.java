@@ -2,6 +2,7 @@ package by.halatsevich.company.tag;
 
 import by.halatsevich.company.controller.ParameterName;
 import by.halatsevich.company.model.entity.Airport;
+import by.halatsevich.company.model.entity.User;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,6 +27,7 @@ public class AirportPaginationTag extends TagSupport {
     public int doStartTag() throws JspException {
         HttpSession session = pageContext.getSession();
         List<Airport> airports = (List<Airport>) session.getAttribute(ParameterName.AIRPORT_LIST);
+        User mainUser = (User) session.getAttribute(ParameterName.USER);
         int firstIndex = currentPageNumber * COUNT_OF_ITEMS - COUNT_OF_ITEMS;
         int lastIndex = Math.min(currentPageNumber * COUNT_OF_ITEMS, airports.size());
         try {
@@ -37,6 +39,12 @@ public class AirportPaginationTag extends TagSupport {
                 out.write("<td>" + airport.getAirportName() + "</td>");
                 out.write("<td>" + airport.getCountry() + "</td>");
                 out.write("<td>" + airport.getCity() + "</td>");
+                if (mainUser != null && mainUser.getRole() == User.Role.ADMIN) {
+                    out.write("<td><div class=\"d-inline-flex\"><div class=\"ml-2\">");
+                    out.write("<a href=\"controller?command=update_airport_page&airportId=" + airport.getId());
+                    out.write("\" class=\"btn btn-info\">Edit</a>");
+                    out.write("</div></div></td>");
+                }
                 out.write("</tr>");
             }
             out.write("</tbody>");

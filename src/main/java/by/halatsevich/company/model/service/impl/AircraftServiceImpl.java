@@ -3,6 +3,7 @@ package by.halatsevich.company.model.service.impl;
 import by.halatsevich.company.model.dao.AircraftDao;
 import by.halatsevich.company.model.dao.DaoFactory;
 import by.halatsevich.company.model.entity.Aircraft;
+import by.halatsevich.company.model.entity.Status;
 import by.halatsevich.company.model.exception.DaoException;
 import by.halatsevich.company.model.exception.ServiceException;
 import by.halatsevich.company.model.service.AircraftService;
@@ -37,5 +38,45 @@ public class AircraftServiceImpl implements AircraftService {
             throw new ServiceException("Error while finding aircraft by id", e);
         }
         return aircraft;
+    }
+
+    @Override
+    public List<Aircraft> findAircraftsByStatus(String status) throws ServiceException {
+        DaoFactory factory = DaoFactory.getInstance();
+        AircraftDao aircraftDao = factory.getAircraftDao();
+        List<Aircraft> aircrafts;
+        try {
+            aircrafts = aircraftDao.findAllByStatus(Status.valueOf(status.toUpperCase()));
+        } catch (DaoException e) {
+            throw new ServiceException("Error while finding all aircrafts by status", e);
+        }
+        return aircrafts;
+    }
+
+    @Override
+    public boolean addAircraft(String tailNumber, String aircraftName, String aircraftType, Status status) throws ServiceException {
+        DaoFactory factory = DaoFactory.getInstance();
+        AircraftDao aircraftDao = factory.getAircraftDao();
+        boolean isAdded;
+        try {
+            Aircraft aircraft = new Aircraft(tailNumber,aircraftName, Aircraft.AircraftType.valueOf(aircraftType.toUpperCase()),status);
+            isAdded = aircraftDao.addAircraft(aircraft);
+        } catch (DaoException e) {
+            throw new ServiceException("Error while adding aircraft", e);
+        }
+        return isAdded;
+    }
+
+    @Override
+    public boolean updateAircraft(Aircraft updatingAircraft) throws ServiceException {
+        DaoFactory factory = DaoFactory.getInstance();
+        AircraftDao aircraftDao = factory.getAircraftDao();
+        boolean isUpdated;
+        try {
+            isUpdated = aircraftDao.update(updatingAircraft);
+        } catch (DaoException e) {
+            throw new ServiceException("Error while updating aircraft", e);
+        }
+        return isUpdated;
     }
 }

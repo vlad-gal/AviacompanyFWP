@@ -44,6 +44,12 @@
                                 <th scope="col"><fmt:message key="local.aircraft.tailNumber"/></th>
                                 <th scope="col"><fmt:message key="local.aircraft.name"/></th>
                                 <th scope="col"><fmt:message key="local.aircraft.type"/></th>
+                                <c:if test="${sessionScope.user.role eq 'OPERATOR' or sessionScope.user.role eq 'ADMIN'}">
+                                    <th scope="col"><fmt:message key="local.common.status"/></th>
+                                </c:if>
+                                    <c:if test="${sessionScope.user.role eq 'ADMIN'}">
+                                        <th scope="col"><fmt:message key="local.common.actions"/></th>
+                                    </c:if>
                             </tr>
                             </thead>
                                 <ctg:aircraftPagination currentPageNumber="${currentPageNumber}"/>

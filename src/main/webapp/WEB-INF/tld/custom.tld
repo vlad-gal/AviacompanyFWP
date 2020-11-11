@@ -46,4 +46,14 @@
             <rtexprvalue>true</rtexprvalue>
         </attribute>
     </tag>
+    <tag>
+        <name>crewPagination</name>
+        <tag-class>by.halatsevich.company.tag.CrewPaginationTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>currentPageNumber</name>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
 </taglib>

@@ -7,9 +7,10 @@ import by.halatsevich.company.controller.command.Command;
 import javax.servlet.http.HttpServletRequest;
 
 public class ResetPasswordPageCommand implements Command {
+
     @Override
     public String execute(HttpServletRequest request) {
-        request.getSession().setAttribute(ParameterName.EMAIL,request.getParameter(ParameterName.EMAIL));
+        request.getSession().setAttribute(ParameterName.EMAIL, request.getParameter(ParameterName.EMAIL));
         return PagePath.RESET_PASSWORD;
     }
 }

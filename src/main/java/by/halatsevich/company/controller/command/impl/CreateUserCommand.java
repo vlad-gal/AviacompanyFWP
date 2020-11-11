@@ -30,7 +30,7 @@ public class CreateUserCommand implements Command {
         String telephoneNumber = request.getParameter(ParameterName.TELEPHONE_NUMBER);
         String role = request.getParameter(ParameterName.ROLE);
         String page;
-        RegistrationData registrationData = new RegistrationData(login, email, password, firstName, lastName, telephoneNumber,role, Status.ACTIVE.getStatusName());
+        RegistrationData registrationData = new RegistrationData(login, email, password, firstName, lastName, telephoneNumber, role, Status.ACTIVE.getStatusName());
         if (UserValidator.isValidRegistrationData(registrationData)) {
             ServiceFactory factory = ServiceFactory.getInstance();
             UserService service = factory.getUserService();
@@ -40,7 +40,7 @@ public class CreateUserCommand implements Command {
                 if (!userByEmail.isPresent() && !userByLogin.isPresent()) {
                     boolean isUserRegistered = service.registration(registrationData);
                     if (isUserRegistered) {
-                        request.setAttribute(ParameterName.REGISTRATION_SUCCESSFUL_FLAG,true);
+                        request.setAttribute(ParameterName.REGISTRATION_SUCCESSFUL_FLAG, true);
                         page = PagePath.CREATE_USER;
                     } else {
                         logger.log(Level.ERROR, "Cannot register user");

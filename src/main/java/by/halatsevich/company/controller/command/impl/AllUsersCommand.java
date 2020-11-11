@@ -7,6 +7,8 @@ import by.halatsevich.company.model.entity.User;
 import by.halatsevich.company.model.exception.ServiceException;
 import by.halatsevich.company.model.service.ServiceFactory;
 import by.halatsevich.company.model.service.UserService;
+import by.halatsevich.company.validator.BaseValidator;
+import by.halatsevich.company.validator.UserValidator;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -21,25 +23,31 @@ public class AllUsersCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         String status = request.getParameter(ParameterName.STATUS);
+        String role = request.getParameter(ParameterName.ROLE);
         HttpSession session = request.getSession();
         String page;
-        ServiceFactory factory = ServiceFactory.getInstance();
-        UserService service = factory.getUserService();
-        try {
-            List<User> userList;
-            if (status != null) {
-                userList = service.findUsersByStatus(status);
-            } else {
-                userList = service.findAllUsers();
+        if (BaseValidator.isValidStatus(status)) {
+            ServiceFactory factory = ServiceFactory.getInstance();
+            UserService service = factory.getUserService();
+            try {
+                List<User> userList;
+                if (role != null && UserValidator.isValidRole(role)) {
+                    userList = service.findUsersByRoleAndStatus(role, status);
+                } else {
+                    userList = service.findUsersByStatus(status);
+                }
+                session.setAttribute(ParameterName.CURRENT_PAGE_NUMBER, 1);
+                session.setAttribute(ParameterName.ALL_USERS_LIST, userList);
+                request.setAttribute(ParameterName.SHOW_USERS_FLAG, true);
+                page = PagePath.USER_ACCOUNT;
+            } catch (ServiceException e) {
+                logger.log(Level.ERROR, "Error while finding all users by status", e);
+                request.setAttribute(ParameterName.ERROR_MESSAGE, e);
+                page = PagePath.ERROR_500;
             }
-            session.setAttribute(ParameterName.CURRENT_PAGE_NUMBER, 1);
-            session.setAttribute(ParameterName.SHOW_USERS_FLAG, true);
-            session.setAttribute(ParameterName.ALL_USERS_LIST, userList);
-            page = PagePath.USER_ACCOUNT;
-        } catch (ServiceException e) {
-            logger.log(Level.ERROR, "Error while finding all users by status", e);
-            request.setAttribute(ParameterName.ERROR_MESSAGE, e);
-            page = PagePath.ERROR_500;
+        } else {
+            logger.log(Level.ERROR, "Invalid role or status");
+            page = PagePath.ERROR_404;
         }
         return page;
     }

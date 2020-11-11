@@ -12,6 +12,8 @@ import java.util.Optional;
 public interface UserService {
     Optional<User> authorization(AuthorizationData authorizationData) throws ServiceException;
 
+    List<User> findUsersByRoleAndStatus(String role, String status) throws ServiceException;
+
     boolean registration(RegistrationData registrationData) throws ServiceException;
 
     List<User> findAllUsers() throws ServiceException;
@@ -27,6 +29,4 @@ public interface UserService {
     boolean updateUser(User user) throws ServiceException;
 
     List<User> findUsersByStatus(String status) throws ServiceException;
-
-    List<User> findUsersByRoleAndStatus(User.Role role, Status status) throws ServiceException;
 }

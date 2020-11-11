@@ -1,5 +1,7 @@
 package by.halatsevich.company.model.dao;
 
+import by.halatsevich.company.model.entity.Status;
+import by.halatsevich.company.model.entity.User;
 import by.halatsevich.company.model.exception.DaoException;
 import by.halatsevich.company.model.entity.CrewDto;
 
@@ -21,4 +23,10 @@ public interface CrewDao extends BaseDao<CrewDto> {
     boolean updateDispatcherIntoCrew(int crewId, int oldDispatcherId, int dispatcherId) throws DaoException;
 
     boolean removeUserFromCrew(int crewId, int userId) throws DaoException;
+
+    Optional<CrewDto> findByCrewName(String crewName) throws DaoException;
+
+    List<User.Role> findUsersRoleByCrewId(int crewId) throws DaoException;
+
+    List<CrewDto> findUsersCrewsByStatus(int userId, Status status) throws DaoException;
 }

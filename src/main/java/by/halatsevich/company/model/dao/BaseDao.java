@@ -1,6 +1,7 @@
 package by.halatsevich.company.model.dao;
 
 import by.halatsevich.company.model.entity.Entity;
+import by.halatsevich.company.model.entity.Status;
 import by.halatsevich.company.model.exception.DaoException;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -16,6 +17,8 @@ public interface BaseDao<E extends Entity> {
     Logger logger = LogManager.getLogger(BaseDao.class);
 
     List<E> findAll() throws DaoException;
+
+    List<E> findAllByStatus(Status status) throws DaoException;
 
     Optional<E> findById(int id) throws DaoException;
 

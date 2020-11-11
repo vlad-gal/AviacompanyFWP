@@ -43,18 +43,18 @@ public class ParameterName {
 
     //aircraft
     public static final String AIRCRAFT_LIST = "aircraftList";
-    public static final String AIRCRAFT_TAIL_NUMBER = "aircraft.tailNumber";
-    public static final String AIRCRAFT_NAME = "aircraft.aircraftName";
-    public static final String AIRCRAFT_TYPE = "aircraft.aircraftType";
+    public static final String AIRCRAFT_TAIL_NUMBER = "tailNumber";
+    public static final String AIRCRAFT_NAME = "aircraftName";
+    public static final String AIRCRAFT_TYPE = "aircraftType";
     public static final String EMPTY_AIRCRAFT_LIST_FLAG = "emptyAircraftListFlag";
     public static final String ERROR_GET_AIRCRAFT_DATA_FROM_DB = "errorGetAircraftDataFromDB";
-    public static final String AIRPORT_COUNTRY = "countryAirport";
+    public static final String AIRPORT_COUNTRY = "country";
 
     //airports
     public static final String AIRPORT_LIST = "airportList";
-    public static final String AIRPORT_NAME = "airport.airportName";
-    public static final String AIRPORT_CITY = "airport.city";
-    public static final String EMPTY_AIRPORT_LIST = "airport.country";
+    public static final String AIRPORT_NAME = "airportName";
+    public static final String AIRPORT_CITY = "city";
+    public static final String EMPTY_AIRPORT_LIST = "country";
     public static final String ERROR_GET_AIRPORT_DATA_FROM_DB = "errorGetAirportDataFromDB";
 
     //user
@@ -135,4 +135,48 @@ public class ParameterName {
     public static final String RESET_LINK_SENT_SUCCESSFUL_FLAG = "resetLinkSentSuccessfulFlag";
     public static final String SHOW_USERS_FLAG = "showUsersFlag";
     public static final String SHOW_FLIGHTS_FLAG = "showFlightsFlag";
+    public static final String ERROR_UPDATE_FLIGHT_FLAG = "errorUpdateFlightFlag";
+    public static final String CREW_LIST = "crewList";
+    public static final String ALL_CREW_LIST = "allCrewList";
+    public static final String SHOW_CREWS_FLAG = "showCrewsFlag";
+    public static final String CREW_NAME = "crewName";
+    public static final String NUMBER_OF_PILOTS = "numberOfPilots";
+    public static final String NUMBER_OF_NAVIGATORS = "numberOfNavigators";
+    public static final String NUMBER_OF_RADIOMAN = "numberOfRadioman";
+    public static final String NUMBER_OF_STEWARDESSES = "numberOfStewardesses";
+
+
+    public static final String CREATE_CREW_SUCCESSFUL_FLAG = "createCrewSuccessfulFlag";
+    public static final String ERROR_CREATE_CREW_FLAG = "errorCreateCrewFlag";
+    public static final String CREW_NOT_FOUND_FLAG = "crewNotFoundFlag";
+    public static final String CREW_DTO = "crewDto";
+    public static final String ADDING_USER = "addingUser";
+    public static final String CREW_ID = "crewId";
+    public static final String ADD_USER_INTO_CREW_SUCCESSFUL_FLAG = "addUserIntoCrewSuccessfulFlag";
+    public static final String AVAILABLE_PLACES_IN_CREW = "availablePlacesInCrew";
+    public static final String AVAILABLE_PLACES_IN_CREW_FLAG = "availablePlacesInCrewFlag";
+    public static final String ERROR_ADD_USER_INTO_CREW_FLAG = "errorAddUserIntoCrewFlag";
+    public static final String PILOTS = "pilots";
+
+    public static final String NAVIGATORS = "navigators";
+    public static final String RADIOMANS = "radiomans";
+    public static final String STEWARDESSES = "stewardesses";
+    public static final String DISPATCHER = "dispatcher";
+    public static final String SHOW_CREW_FLAG = "showCrewFlag";
+    public static final String UPDATING_CREW = "updatingCrew";
+    public static final String ERROR_UPDATE_CREW_FLAG = "errorUpdateCrewFlag";
+    public static final String CREATE_AIRPORT_SUCCESSFUL_FLAG = "createAirportSuccessfulFlag";
+    public static final String ERROR_CREATE_AIRPORT_FLAG = "errorCreateAirportFlag";
+    public static final String ALL_AIRPORT_LIST = "allAirportList";
+    public static final String SHOW_AIRPORTS_FLAG = "showAirportsFlag";
+    public static final String UPDATING_AIRPORT = "updatingAirport";
+    public static final String UPDATE_AIRPORT_SUCCESSFUL_FLAG = "updateAirportSuccessfulFlag";
+    public static final String ERROR_UPDATE_AIRPORT_FLAG = "errorUpdateAirportFlag";
+    public static final String SHOW_AIRCRAFTS_FLAG = "showAircraftsFlag";
+    public static final String AIRCRAFT_TYPES = "aircraftTypes";
+    public static final String CREATE_AIRCRAFT_SUCCESSFUL_FLAG = "createAircraftSuccessfulFlag";
+    public static final String ERROR_CREATE_AIRCRAFT_FLAG = "errorCreateAircraftFlag";
+    public static final String UPDATING_AIRCRAFT = "updatingAircraft";
+    public static final String UPDATE_AIRCRAFT_SUCCESSFUL_FLAG = "updateAircraftSuccessfulFlag";
+    public static final String ERROR_UPDATE_AIRCRAFT_FLAG = "errorUpdateAircraftFlag";
 }

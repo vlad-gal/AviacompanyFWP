@@ -11,6 +11,26 @@ public class SqlQuery {
                     "JOIN roles ON roles.roleId = users.roleId " +
                     "JOIN statuses ON statuses.statusId = users.statusId " +
                     "JOIN personalData ON personalData.userId = users.userId";
+    public static final String SELECT_ALL_USERS_BY_STATUS =
+            "SELECT users.userId, users.email, users.login, " +
+                    "statuses.statusName, " +
+                    "roles.roleName, " +
+                    "personalData.firstName, personalData.lastName, personalData.telephoneNumber " +
+                    "FROM users " +
+                    "JOIN roles ON roles.roleId = users.roleId " +
+                    "JOIN statuses ON statuses.statusId = users.statusId " +
+                    "JOIN personalData ON personalData.userId = users.userId " +
+                    "WHERE users.statusId = ?";
+    public static final String SELECT_ALL_USERS_BY_ROLE_AND_STATUS =
+            "SELECT users.userId, users.email, users.login, " +
+                    "statuses.statusName, " +
+                    "roles.roleName, " +
+                    "personalData.firstName, personalData.lastName, personalData.telephoneNumber " +
+                    "FROM users " +
+                    "JOIN roles ON roles.roleId = users.roleId " +
+                    "JOIN statuses ON statuses.statusId = users.statusId " +
+                    "JOIN personalData ON personalData.userId = users.userId " +
+                    "WHERE (users.statusId = ? AND users.roleId = ?)";
     public static final String SELECT_USER_BY_LOGIN =
             "SELECT users.userId, users.email, users.login, " +
                     "statuses.statusName, " +
@@ -69,11 +89,26 @@ public class SqlQuery {
                     "flights.arriveTime, flights.aircraftId, flights.operatorId, flights.crewId, statuses.statusName " +
                     "FROM flights " +
                     "JOIN statuses ON statuses.statusId = flights.statusId";
+    public static final String SELECT_ALL_FLIGHTS_BY_STATUS =
+            "SELECT flights.flightId, flights.departureAirportId, flights.destinationAirportId, flights.departTime, " +
+                    "flights.arriveTime, flights.aircraftId, flights.operatorId, flights.crewId, statuses.statusName " +
+                    "FROM flights " +
+                    "JOIN statuses ON statuses.statusId = flights.statusId " +
+                    "WHERE flights.statusId = ?";
+    public static final String SELECT_ALL_USERS_FLIGHTS_BY_STATUS =
+            "SELECT flights.flightId, flights.departureAirportId, flights.destinationAirportId, flights.departTime, " +
+                    "flights.arriveTime, flights.aircraftId, flights.operatorId, flights.crewId, statuses.statusName " +
+                    "FROM flights " +
+                    "JOIN crews ON crews.crewId = flights.crewId " +
+                    "JOIN crews_has_users ON crews.crewId = crews_has_users.crewId " +
+                    "JOIN users ON users.userId = crews_has_users.userId " +
+                    "JOIN statuses ON statuses.statusId = flights.statusId " +
+                    "WHERE (flights.statusId = ? AND users.userId = ?)";
     public static final String SELECT_FLIGHT_BY_DEPARTURE_AIRPORT_ID =
             "SELECT flights.flightId, flights.departureAirportId, flights.destinationAirportId, flights.departTime, " +
                     "flights.arriveTime, flights.aircraftId, flights.operatorId, flights.crewId, statuses.statusName " +
                     "FROM flights " +
-                    "JOIN statuses ON statuses.statusId = flights.flightId " +
+                    "JOIN statuses ON statuses.statusId = flights.statusId " +
                     "WHERE flights.departureAirportId = ?";
     public static final String SELECT_FLIGHT_BY_ID =
             "SELECT flights.flightId, flights.departureAirportId, flights.destinationAirportId, flights.departTime, " +
@@ -121,12 +156,18 @@ public class SqlQuery {
     public static final String REMOVE_FLIGHT_BY_ID =
             "UPDATE flights SET statusId = ? WHERE flightId = ?";
     //crew
-// TODO: 03.11.2020 проверить все запросы крю и дао
     public static final String SELECT_ALL_CREWS =
             "SELECT crews.crewId, crews.dispatcherId, crews.numberOfPilots, crews.numberOfNavigators, crews.numberOfRadioman, " +
                     "crews.numberOfStewardesses, statuses.statusName, crews.crewName " +
                     "FROM crews " +
                     "JOIN statuses ON statuses.statusId = crews.statusId";
+    // TODO: 03.11.2020 проверить все запросы крю и дао
+    public static final String SELECT_ALL_CREWS_BY_STATUS =
+            "SELECT crews.crewId, crews.dispatcherId, crews.numberOfPilots, crews.numberOfNavigators, crews.numberOfRadioman, " +
+                    "crews.numberOfStewardesses, statuses.statusName, crews.crewName " +
+                    "FROM crews " +
+                    "JOIN statuses ON statuses.statusId = crews.statusId " +
+                    "WHERE crews.statusId = ?";
     public static final String SELECT_CREW_BY_ID =
             "SELECT crews.crewId, crews.dispatcherId, crews.numberOfPilots, crews.numberOfNavigators, crews.numberOfRadioman, " +
                     "crews.numberOfStewardesses, statuses.statusName, crews.crewName " +
@@ -139,8 +180,28 @@ public class SqlQuery {
                     "FROM crews " +
                     "JOIN statuses ON statuses.statusId = crews.statusId " +
                     "WHERE crews.dispatcherId = ?";
+    public static final String SELECT_CREW_BY_CREW_NAME =
+            "SELECT crews.crewId, crews.dispatcherId, crews.numberOfPilots, crews.numberOfNavigators, crews.numberOfRadioman, " +
+                    "crews.numberOfStewardesses, statuses.statusName, crews.crewName " +
+                    "FROM crews " +
+                    "JOIN statuses ON statuses.statusId = crews.statusId " +
+                    "WHERE crews.crewName = ?";
+    public static final String SELECT_USERS_ROLE_BY_CREW_ID =
+            "SELECT roles.roleName " +
+                    "FROM crews_has_users " +
+                    "JOIN users ON users.userId = crews_has_users.userId " +
+                    "JOIN roles ON users.roleId = roles.roleId " +
+                    "WHERE crewId = ?";
     public static final String SELECT_USERS_ID_BY_CREW_ID =
             "SELECT userId FROM crews_has_users WHERE crewId = ?";
+    public static final String SELECT_USERS_CREWS_BY_STATUS =
+            "SELECT crews.crewId, crews.dispatcherId, crews.numberOfPilots, crews.numberOfNavigators, crews.numberOfRadioman, " +
+                    "crews.numberOfStewardesses, statuses.statusName, crews.crewName " +
+                    "FROM crews " +
+                    "JOIN crews_has_users ON crews.crewId = crews_has_users.crewId " +
+                    "JOIN users ON users.userId = crews_has_users.userId " +
+                    "JOIN statuses ON statuses.statusId = crews.statusId " +
+                    "WHERE (crews.statusId = ? AND users.userId = ?)";
     public static final String INSERT_CREW =
             "INSERT INTO crews (dispatcherId, numberOfPilots, numberOfNavigators, numberOfRadioman, numberOfStewardesses, statusId, crewName) " +
                     "VALUES (?,?,?,?,?,?,?)";
@@ -151,8 +212,8 @@ public class SqlQuery {
     public static final String UPDATE_DISPATCHER_INTO_CREW =
             "UPDATE crews SET dispatcherId = ? WHERE (dispatcherId = ? AND crewId = ?)";
     public static final String UPDATE_CREW =
-            "UPDATE crews SET dispatcherId = ?, numberOfPilots = ?, numberOfNavigators = ?, numberOfRadioman = ?, " +
-                    "numberOfStewardesses = ?, statusId = ?, crewNae = ? WHERE crewId = ?";
+            "UPDATE crews SET numberOfPilots = ?, numberOfNavigators = ?, numberOfRadioman = ?, " +
+                    "numberOfStewardesses = ?, statusId = ? WHERE crewId = ?";
     public static final String REMOVE_CREW_BY_ID =
             "UPDATE crews SET statusId = ? WHERE crewId = ?";
     public static final String REMOVE_USER_FROM_CREW_BY_ID =
@@ -176,12 +237,18 @@ public class SqlQuery {
     public static final String REMOVE_AIRPORT_BY_ID =
             "DELETE FROM airports WHERE airportId = ?";
     //todo check all aircraft
-    //aircraft
     public static final String SELECT_ALL_AIRCRAFT =
             "SELECT aircrafts.aircraftId, aircrafts.tailNumber, aircrafts.aircraftName, aircrafttypes.aircraftType, statuses.statusName " +
                     "FROM aircrafts " +
-                    "JOIN statuses ON statuses.statusId = aircrafts.statusId "+
+                    "JOIN statuses ON statuses.statusId = aircrafts.statusId " +
                     "JOIN aircrafttypes ON aircrafttypes.aircraftTypeId = aircrafts.aircraftTypeId";
+    //aircraft
+    public static final String SELECT_ALL_AIRCRAFT_BY_STATUS =
+            "SELECT aircrafts.aircraftId, aircrafts.tailNumber, aircrafts.aircraftName, aircrafttypes.aircraftType, statuses.statusName " +
+                    "FROM aircrafts " +
+                    "JOIN aircrafttypes ON aircrafttypes.aircraftTypeId = aircrafts.aircraftTypeId " +
+                    "JOIN statuses ON statuses.statusId = aircrafts.statusId " +
+                    "WHERE aircrafts.statusId = ?";
     public static final String SELECT_AIRCRAFT_BY_ID =
             "SELECT aircrafts.aircraftId, aircrafts.tailNumber, aircrafts.aircraftName, aircrafttypes.aircraftType, statuses.statusName " +
                     "FROM aircrafts " +

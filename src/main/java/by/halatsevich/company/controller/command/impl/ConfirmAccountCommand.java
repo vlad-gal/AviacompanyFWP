@@ -29,9 +29,9 @@ public class ConfirmAccountCommand implements Command {
             try {
                 Optional<User> optionalUser = service.findUserByEmail(email);
                 if (optionalUser.isPresent()) {
-                    User user =  optionalUser.get();
+                    User user = optionalUser.get();
                     user.setStatus(Status.ACTIVE);
-                    if (service.updateUser(user)){
+                    if (service.updateUser(user)) {
                         request.setAttribute(ParameterName.ACTIVATION_SUCCESSFUL_FLAG, true);
                         page = PagePath.SUCCESSFUL_MESSAGE;
                     } else {
