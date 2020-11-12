@@ -17,18 +17,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class CrewServiceImpl implements CrewService {
-    @Override
-    public List<CrewDto> findAllCrews() throws ServiceException {
-        DaoFactory factory = DaoFactory.getInstance();
-        CrewDao dao = factory.getCrewDao();
-        List<CrewDto> allCrewDto;
-        try {
-            allCrewDto = dao.findAll();
-        } catch (DaoException e) {
-            throw new ServiceException("Error while finding all crews");
-        }
-        return allCrewDto;
-    }
 
     @Override
     public List<Crew> findCrewsByStatus(String status) throws ServiceException {
@@ -49,7 +37,7 @@ public class CrewServiceImpl implements CrewService {
 
     private Crew createCrew(CrewDto crewDto, DaoFactory factory, CrewDao crewDao) throws DaoException {
         UserDao userDao = factory.getUserDao();
-        User dispatcher = userDao.findById(crewDto.getDispatcherId()).get();
+        User dispatcher = userDao.findById(crewDto.getDispatcherId()).orElse(null);
         List<Integer> usersIdByCrewId = crewDao.findUsersIdByCrewId(crewDto.getId());
         List<User> staff = new ArrayList<>();
         for (int userId : usersIdByCrewId) {
@@ -62,7 +50,7 @@ public class CrewServiceImpl implements CrewService {
         int numberOfStewardesses = crewDto.getNumberOfStewardesses();
         Status crewStatus = crewDto.getStatus();
         String crewName = crewDto.getCrewName();
-        return new Crew(id,dispatcher, crewName, staff, numberOfPilots, numberOfNavigators, numberOfRadioman, numberOfStewardesses, crewStatus);
+        return new Crew(id, dispatcher, crewName, staff, numberOfPilots, numberOfNavigators, numberOfRadioman, numberOfStewardesses, crewStatus);
     }
 
 
@@ -72,8 +60,8 @@ public class CrewServiceImpl implements CrewService {
         CrewDao dao = factory.getCrewDao();
         try {
             Optional<CrewDto> crewDto = dao.findById(crewId);
-            if (crewDto.isPresent()){
-                return createCrew(crewDto.get(),factory,dao);
+            if (crewDto.isPresent()) {
+                return createCrew(crewDto.get(), factory, dao);
             } else {
                 throw new ServiceException("Error while finding crew by id");
             }
@@ -114,16 +102,15 @@ public class CrewServiceImpl implements CrewService {
     @Override
     public boolean addUserIntoCrew(User user, String crewId) throws ServiceException {
         DaoFactory factory = DaoFactory.getInstance();
-        CrewDao dao = factory.getCrewDao();
-        boolean isAdded;
+        CrewDao crewDao = factory.getCrewDao();
+        UserDao userDao = factory.getUserDao();
+        boolean isAdded = false;
         try {
             int id = Integer.parseInt(crewId);
-            Optional<CrewDto> optionalCrew = dao.findById(id);
-            if (optionalCrew.isPresent()) {
+            Optional<CrewDto> optionalCrew = crewDao.findById(id);
+            if (optionalCrew.isPresent() && crewDao.addUserIntoCrew(id, user.getId())) {
                 user.setStatus(Status.BUSY);
-                isAdded = dao.addUserIntoCrew(id, user.getId());
-            } else {
-                isAdded = false;
+                isAdded = userDao.update(user);
             }
         } catch (DaoException e) {
             throw new ServiceException("Error while adding user into crew", e);
@@ -137,7 +124,7 @@ public class CrewServiceImpl implements CrewService {
         CrewDao crewDao = factory.getCrewDao();
         List<Crew> allUsersCrews = new ArrayList<>();
         try {
-            List<CrewDto> crewDtos = crewDao.findUsersCrewsByStatus(user.getId(),Status.valueOf(status.toUpperCase()));
+            List<CrewDto> crewDtos = crewDao.findUsersCrewsByStatus(user.getId(), Status.valueOf(status.toUpperCase()));
             for (CrewDto crewDto : crewDtos) {
                 allUsersCrews.add(createCrew(crewDto, factory, crewDao));
             }
@@ -146,40 +133,6 @@ public class CrewServiceImpl implements CrewService {
         }
         return allUsersCrews;
     }
-//    @Override
-//    public boolean checkAvailablePlacesInCrew(CrewDto crew, User user) throws ServiceException {
-//        DaoFactory factory = DaoFactory.getInstance();
-//        CrewDao crewDao = factory.getCrewDao();
-//        int maxPlaces = 0;
-//        int occupiedPlaces;
-//        switch (user.getRole()) {
-//            case PILOT: {
-//                maxPlaces = crew.getNumberOfPilots();
-//                break;
-//            }
-//            case NAVIGATOR: {
-//                maxPlaces = crew.getNumberOfNavigators();
-//                break;
-//            }
-//            case RADIOMAN: {
-//                maxPlaces = crew.getNumberOfRadioman();
-//                break;
-//            }
-//            case STEWARDESS: {
-//                maxPlaces = crew.getNumberOfStewardesses();
-//                break;
-//            }
-//        }
-//        List<User.Role> roles;
-//        try {
-//            roles = crewDao.findUsersRoleByCrewId(crew.getId())
-//                    .stream().filter(role -> user.getRole() == role).collect(Collectors.toList());
-//            occupiedPlaces = roles.size();
-//        } catch (DaoException e) {
-//            throw new ServiceException("Error while checking available places into crew", e);
-//        }
-//        return occupiedPlaces < maxPlaces;
-//    }
 
     @Override
     public int countAvailablePlacesInCrew(Crew crew, User user) throws ServiceException {
@@ -188,22 +141,18 @@ public class CrewServiceImpl implements CrewService {
         int maxPlaces = 0;
         int occupiedPlaces;
         switch (user.getRole()) {
-            case PILOT: {
+            case PILOT:
                 maxPlaces = crew.getNumberOfPilots();
                 break;
-            }
-            case NAVIGATOR: {
+            case NAVIGATOR:
                 maxPlaces = crew.getNumberOfNavigators();
                 break;
-            }
-            case RADIOMAN: {
+            case RADIOMAN:
                 maxPlaces = crew.getNumberOfRadioman();
                 break;
-            }
-            case STEWARDESS: {
+            case STEWARDESS:
                 maxPlaces = crew.getNumberOfStewardesses();
                 break;
-            }
         }
         List<User.Role> roles;
         try {
@@ -222,12 +171,31 @@ public class CrewServiceImpl implements CrewService {
         int parsedNumberOfNavigators = Integer.parseInt(numberOfNavigators);
         int parsedNumberOfRadioman = Integer.parseInt(numberOfRadioman);
         int parsedNumberOfStewardesses = Integer.parseInt(numberOfStewardesses);
-        CrewDto crewDto = new CrewDto(crew.getId(),crew.getCrewName(), crew.getDispatcher().getId(), parsedNumberOfPilots, parsedNumberOfNavigators, parsedNumberOfRadioman, parsedNumberOfStewardesses, Status.valueOf(status.toUpperCase()));
+        Status parsedStatus = Status.valueOf(status.toUpperCase());
+        CrewDto crewDto = new CrewDto(crew.getId(), crew.getCrewName(), crew.getDispatcher().getId(), parsedNumberOfPilots, parsedNumberOfNavigators, parsedNumberOfRadioman, parsedNumberOfStewardesses, parsedStatus);
         DaoFactory factory = DaoFactory.getInstance();
-        CrewDao dao = factory.getCrewDao();
+        CrewDao crewDao = factory.getCrewDao();
+        UserDao userDao = factory.getUserDao();
         boolean isUpdated;
         try {
-            isUpdated = dao.update(crewDto);
+            isUpdated = crewDao.update(crewDto);
+            List<User> staff = crew.getStaff();
+            if (parsedStatus == Status.ACTIVE || parsedStatus == Status.BUSY){
+                for (User user: staff) {
+                    user.setStatus(Status.BUSY);
+                    userDao.update(user);
+                }
+            } else if (parsedStatus == Status.FLY){
+                for (User user: staff) {
+                    user.setStatus(Status.FLY);
+                    userDao.update(user);
+                }
+            } else {
+                for (User user: staff) {
+                    user.setStatus(Status.ACTIVE);
+                    userDao.update(user);
+                }
+            }
         } catch (DaoException e) {
             throw new ServiceException("Error while updating crew", e);
         }

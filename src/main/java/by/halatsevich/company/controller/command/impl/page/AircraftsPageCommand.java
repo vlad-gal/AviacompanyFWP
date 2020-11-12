@@ -32,7 +32,7 @@ public class AircraftsPageCommand implements Command {
             page = PagePath.AIRCRAFTS;
         } catch (ServiceException e) {
             logger.log(Level.ERROR, "Error while finding all aircrafts", e);
-            request.setAttribute(ParameterName.ERROR_MESSAGE, e);
+            request.setAttribute(ParameterName.ERROR, e);
             page = PagePath.ERROR_500;
         }
         return page;

@@ -14,43 +14,43 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 
-    <title><fmt:message key="local.common.flights"/></title>
+    <title><fmt:message key="local.flights"/></title>
 </head>
 <body>
-<jsp:include page="common/header.jsp"/>
+<c:import url="common/header.jsp"/>
 <main class="content">
     <div class="container">
         <div class="row">
             <div class="align-self-center mr-auto col-3">
-                <h5><fmt:message key="local.flight.title"/></h5>
-                <p class="card-text"><fmt:message key="local.flight.description"/></p>
+                <h5><fmt:message key="local.currentFlights"/></h5>
+                <p class="card-text"><fmt:message key="local.descriptionFlights"/></p>
             </div>
             <div class="col-9 ml-auto">
                 <div class="card">
                     <div class="card-header text-center">
-                        <h5><fmt:message key="local.common.flights"/></h5>
+                        <h5><fmt:message key="local.flights"/></h5>
                     </div>
                     <div class="card-body">
                         <c:choose>
                         <c:when test="${empty flightList}">
                             <div class="text-center">
-                                <h5 class="card-title"><fmt:message key="local.flight.emptyFlightList"/></h5>
+                                <h5 class="card-title"><fmt:message key="local.emptyFlightList"/></h5>
                             </div>
                         </c:when>
                         <c:otherwise>
                         <table class="table table-hover">
                             <thead class="thead-light">
                             <tr>
-                                <th scope="col"><fmt:message key="local.flight.departureAirport"/></th>
-                                <th scope="col"><fmt:message key="local.flight.destinationAirport"/></th>
-                                <th scope="col"><fmt:message key="local.flight.departTime"/></th>
-                                <th scope="col"><fmt:message key="local.flight.arriveTime"/></th>
+                                <th scope="col"><fmt:message key="local.departureAirport"/></th>
+                                <th scope="col"><fmt:message key="local.destinationAirport"/></th>
+                                <th scope="col"><fmt:message key="local.departTime"/></th>
+                                <th scope="col"><fmt:message key="local.arriveTime"/></th>
                                 <c:if test="${not empty sessionScope.user}">
-                                    <th scope="col"><fmt:message key="local.crew.crewName"/></th>
-                                    <th scope="col"><fmt:message key="local.common.status"/></th>
-                                    <th scope="col"><fmt:message key="local.common.operator"/></th>
+                                    <th scope="col"><fmt:message key="local.crewName"/></th>
+                                    <th scope="col"><fmt:message key="local.status"/></th>
+                                    <th scope="col"><fmt:message key="local.operator"/></th>
                                     <c:if test="${sessionScope.user.role eq 'ADMIN' || sessionScope.user.role eq 'OPERATOR'}">
-                                        <th scope="col"><fmt:message key="local.common.actions"/></th>
+                                        <th scope="col"><fmt:message key="local.actions"/></th>
                                     </c:if>
                                 </c:if>
                             </tr>
@@ -64,9 +64,10 @@
         </div>
     </div>
 </main>
-<jsp:include page="common/footer.jsp"/>
+<c:import url="common/footer.jsp"/>
 </body>
 </html>
 <script src="${pageContext.request.contextPath}/js/jquery-3.5.1.slim.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/popper.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/security.js"></script>

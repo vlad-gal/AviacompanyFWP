@@ -57,7 +57,7 @@ public class UpdateFlightCommand implements Command {
                 }
             } catch (ServiceException e) {
                 logger.log(Level.ERROR, "Cannot updating flight", e);
-                session.setAttribute(ParameterName.ERROR_MESSAGE, e);
+                session.setAttribute(ParameterName.ERROR, e);
                 page = PagePath.ERROR_500;
             }
         } else {

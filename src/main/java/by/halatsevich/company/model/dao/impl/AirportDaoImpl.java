@@ -54,49 +54,6 @@ public class AirportDaoImpl implements AirportDao {
     }
 
     @Override
-    public Optional<Airport> findAirportByName(String airportName) throws DaoException {
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_AIRPORT_BY_NAME)) {
-            statement.setString(1, airportName);
-            ResultSet resultSet = statement.executeQuery();
-            Airport airport = null;
-            EntityFactory factory = EntityFactory.getInstance();
-            while (resultSet.next()) {
-                Map<String, Object> airportData = createAirportData(resultSet);
-                airport = factory.getAirportCreator().create(airportData);
-                logger.log(Level.DEBUG, "Airport found: {}", airport);
-            }
-            return Optional.ofNullable(airport);
-        } catch (SQLException e) {
-            throw new DaoException("Error while finding airport by name", e);
-        }
-    }
-
-    @Override
-    public List<Airport> findAirportsByCity(String cityName) throws DaoException {
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_AIRPORTS_BY_CITY)) {
-            statement.setString(1, cityName);
-            ResultSet resultSet = statement.executeQuery();
-            return createAirports(resultSet);
-        } catch (SQLException e) {
-            throw new DaoException("Error while finding airports by city", e);
-        }
-    }
-
-    @Override
-    public List<Airport> findAirportsByCountry(String countryName) throws DaoException {
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_AIRPORTS_BY_COUNTRY)) {
-            statement.setString(1, countryName);
-            ResultSet resultSet = statement.executeQuery();
-            return createAirports(resultSet);
-        } catch (SQLException e) {
-            throw new DaoException("Error while finding airports by country", e);
-        }
-    }
-
-    @Override
     public boolean addAirport(Airport airport) throws DaoException {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.INSERT_AIRPORT)) {

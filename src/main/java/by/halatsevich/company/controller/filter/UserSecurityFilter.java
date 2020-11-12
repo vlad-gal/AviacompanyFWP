@@ -1,7 +1,6 @@
 package by.halatsevich.company.controller.filter;
 
 import by.halatsevich.company.controller.CommandProvider;
-import by.halatsevich.company.controller.PagePath;
 import by.halatsevich.company.controller.ParameterName;
 import by.halatsevich.company.controller.command.AllowedCommand;
 import by.halatsevich.company.controller.command.Command;
@@ -51,7 +50,7 @@ public class UserSecurityFilter implements Filter {
                     }
                 }
                 if (commandTypeSet != null && !commandTypeSet.contains(CommandType.valueOf(commandName.toUpperCase()))) {
-                    response.sendError(403, PagePath.ERROR_404);
+                    response.sendError(HttpServletResponse.SC_FORBIDDEN);
                     return;
                 }
             } else {
@@ -60,7 +59,7 @@ public class UserSecurityFilter implements Filter {
                     commandTypeSet = AllowedCommand.GUEST.getCommands();
                 }
                 if (commandTypeSet != null && !commandTypeSet.contains(CommandType.valueOf(commandName.toUpperCase()))) {
-                    response.sendError(403, PagePath.ERROR_404);
+                    response.sendError(HttpServletResponse.SC_FORBIDDEN);
                     return;
                 }
             }
@@ -70,7 +69,7 @@ public class UserSecurityFilter implements Filter {
                 commandTypeSet = AllowedCommand.GUEST.getCommands();
             }
             if (commandTypeSet != null && !commandTypeSet.contains(CommandType.valueOf(commandName.toUpperCase()))) {
-                response.sendError(403, PagePath.ERROR_404);
+                response.sendError(HttpServletResponse.SC_FORBIDDEN);
                 return;
             }
         }

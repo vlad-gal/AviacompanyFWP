@@ -41,7 +41,7 @@ public class ShowCrewPageCommand implements Command {
                 page = PagePath.SHOW_CREW;
             } catch (ServiceException e) {
                 logger.log(Level.ERROR, "Error while finding crew by id", e);
-                request.setAttribute(ParameterName.ERROR_MESSAGE, e);
+                request.setAttribute(ParameterName.ERROR, e);
                 page = PagePath.ERROR_500;
             }
         } else {

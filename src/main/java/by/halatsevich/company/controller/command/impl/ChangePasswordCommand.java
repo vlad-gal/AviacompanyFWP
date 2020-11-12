@@ -40,7 +40,7 @@ public class ChangePasswordCommand implements Command {
                 }
             } catch (ServiceException e) {
                 logger.log(Level.ERROR, "Error while updating password", e);
-                request.setAttribute(ParameterName.ERROR_MESSAGE, e);
+                request.setAttribute(ParameterName.ERROR, e);
                 page = PagePath.ERROR_500;
             }
         } else {

@@ -13,42 +13,42 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/login.css">
 
-    <title><fmt:message key="local.common.createAircraft"/></title>
+    <title><fmt:message key="local.updateAircraft"/></title>
 </head>
 <body class="login-page">
-<jsp:include page="common/header.jsp"/>
+<c:import url="common/header.jsp"/>
 <main class="content">
     <div class="container">
         <div class="row justify-content-md-center">
             <div class="card-wrapper">
                 <div class="card fat">
                     <div class="card-body">
-                        <h5 class="card-title text-center"><fmt:message key="local.common.updateAircraft"/></h5>
+                        <h5 class="card-title text-center"><fmt:message key="local.updateAircraft"/></h5>
                         <c:if test="${errorUpdateAircraftFlag eq true}">
-                            <h6 class="errorLoginPass text-center"><fmt:message key="local.common.errorUpdateAircraft"/></h6>
+                            <h6 class="errorLoginPass text-center"><fmt:message key="local.errorUpdating"/></h6>
                         </c:if>
                         <c:if test="${updateAircraftSuccessfulFlag eq true}">
-                            <h6 class="alert-success text-center"><fmt:message key="local.common.updatingSuccessful"/></h6>
+                            <h6 class="alert-success text-center"><fmt:message key="local.updatingSuccessful"/></h6>
                         </c:if>
                         <c:if test="${errorValidationFlag eq true}">
-                            <h6 class="errorLoginPass text-center"><fmt:message key="local.common.errorValidation"/></h6>
+                            <h6 class="errorLoginPass text-center"><fmt:message key="local.errorValidation"/></h6>
                         </c:if>
                         <form method="POST" name="updateAircraftForm" action="${pageContext.request.contextPath}/controller">
                             <input type="hidden" name="command" value="update_aircraft">
                             <div class="form-group">
-                                <label for="tailNumber"><fmt:message key="local.aircraft.tailNumber"/>*</label>
+                                <label for="tailNumber"><fmt:message key="local.tailNumber"/>*</label>
                                 <input id="tailNumber" type="text" class="form-control" name="tailNumber"
-                                       placeholder="<fmt:message key="local.aircraft.tailNumber"/>"
+                                       placeholder="<fmt:message key="local.tailNumber"/>"
                                        value="${updatingAircraft.tailNumber}" disabled>
                             </div>
                             <div class="form-group">
-                                <label for="aircraftName"><fmt:message key="local.aircraft.name"/>*</label>
+                                <label for="aircraftName"><fmt:message key="local.aircraftName"/>*</label>
                                 <input id="aircraftName" type="text" class="form-control" name="aircraftName"
-                                       placeholder="<fmt:message key="local.aircraft.name"/>"
+                                       placeholder="<fmt:message key="local.aircraftName"/>"
                                        value="${updatingAircraft.aircraftName}" disabled>
                             </div>
                             <div class="form-group">
-                                <label for="aircraftType"><fmt:message key="local.aircraft.type"/>*</label>
+                                <label for="aircraftType"><fmt:message key="local.aircraftType"/>*</label>
                                 <select id="aircraftType" name="aircraftType" class="custom-select" required>
                                     <c:forEach var="aircraftType" items="${sessionScope.aircraftTypes}">
                                         <c:choose>
@@ -65,7 +65,7 @@
                                 </select>
                             </div>
                             <div class="form-group">
-                                <label for="status"><fmt:message key="local.common.status"/>*</label>
+                                <label for="status"><fmt:message key="local.status"/>*</label>
                                 <select id="status" name="status" class="custom-select">
                                     <c:forEach var="status" items="${sessionScope.statuses}">
                                         <c:choose>
@@ -84,7 +84,7 @@
 
                             <div class="form-group m-0">
                                 <input type="submit" class="btn btn-primary btn-block"
-                                       value="<fmt:message key="local.common.change"/>">
+                                       value="<fmt:message key="local.change"/>">
                             </div>
                         </form>
                     </div>
@@ -93,9 +93,10 @@
         </div>
     </div>
 </main>
-<jsp:include page="common/footer.jsp"/>
+<c:import url="common/footer.jsp"/>
 </body>
 </html>
 <script src="${pageContext.request.contextPath}/js/jquery-3.5.1.slim.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/popper.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/security.js"></script>

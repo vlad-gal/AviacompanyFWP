@@ -32,7 +32,7 @@ public class AirportsPageCommand implements Command {
             page = PagePath.AIRPORTS;
         } catch (ServiceException e) {
             logger.log(Level.ERROR, "Error while finding all airports", e);
-            request.setAttribute(ParameterName.ERROR_MESSAGE, e);
+            request.setAttribute(ParameterName.ERROR, e);
             page = PagePath.ERROR_500;
         }
         return page;

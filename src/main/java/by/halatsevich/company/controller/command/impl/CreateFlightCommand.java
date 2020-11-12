@@ -49,6 +49,7 @@ public class CreateFlightCommand implements Command {
                 } else {
                     logger.log(Level.ERROR, "Error while creating flight");
                     request.setAttribute(ParameterName.ERROR_CREATE_FLIGHT_FLAG, true);
+                    // TODO: 12.11.2020  
                     request.setAttribute(ParameterName.DEPARTURE_AIRPORT, airportService.findAirportById(departureAirportId).get());
                     request.setAttribute(ParameterName.DESTINATION_AIRPORT, airportService.findAirportById(destinationAirportId).get());
                     request.setAttribute(ParameterName.AIRCRAFT, aircraftService.findAircraftById(aircraftId).get());
@@ -59,7 +60,7 @@ public class CreateFlightCommand implements Command {
                 }
             } catch (ServiceException e) {
                 logger.log(Level.ERROR, "Cannot create flight", e);
-                request.setAttribute(ParameterName.ERROR_MESSAGE, e);
+                request.setAttribute(ParameterName.ERROR, e);
                 page = PagePath.ERROR_500;
             }
         } else {

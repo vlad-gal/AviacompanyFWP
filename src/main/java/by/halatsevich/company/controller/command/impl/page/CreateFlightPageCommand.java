@@ -44,7 +44,7 @@ public class CreateFlightPageCommand implements Command {
             page = PagePath.CREATE_FLIGHT;
         } catch (ServiceException e) {
             logger.log(Level.ERROR, "Error while finding all parts of crews", e);
-            request.setAttribute(ParameterName.ERROR_MESSAGE, e);
+            request.setAttribute(ParameterName.ERROR, e);
             page = PagePath.ERROR_500;
         }
         return page;

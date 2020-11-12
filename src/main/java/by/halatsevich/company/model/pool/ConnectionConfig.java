@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 class ConnectionConfig {
-    private final Logger logger = LogManager.getLogger(ConnectionConfig.class);
+    private static final Logger logger = LogManager.getLogger(ConnectionConfig.class);
     private static final ConnectionConfig instance = new ConnectionConfig();
     private static final String PROPERTIES_PATH = "db.properties";
     private static final String DB_URL = "url";

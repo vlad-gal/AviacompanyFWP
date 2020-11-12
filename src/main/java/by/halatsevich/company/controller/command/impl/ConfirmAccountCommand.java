@@ -44,7 +44,7 @@ public class ConfirmAccountCommand implements Command {
                 }
             } catch (ServiceException e) {
                 logger.log(Level.ERROR, "Error while updating users status", e);
-                request.setAttribute(ParameterName.ERROR_MESSAGE, e);
+                request.setAttribute(ParameterName.ERROR, e);
                 page = PagePath.ERROR_500;
             }
         } else {

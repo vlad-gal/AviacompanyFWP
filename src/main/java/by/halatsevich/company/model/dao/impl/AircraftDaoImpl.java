@@ -61,49 +61,6 @@ public class AircraftDaoImpl implements AircraftDao {
     }
 
     @Override
-    public Optional<Aircraft> findAircraftByTailNumber(String tailNumber) throws DaoException {
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_AIRCRAFT_BY_TAIL_NUMBER)) {
-            statement.setString(1, tailNumber);
-            ResultSet resultSet = statement.executeQuery();
-            Aircraft aircraft = null;
-            EntityFactory factory = EntityFactory.getInstance();
-            while (resultSet.next()) {
-                Map<String, Object> aircraftData = createAircraftData(resultSet);
-                aircraft = factory.getAircraftCreator().create(aircraftData);
-                logger.log(Level.DEBUG, "Aircraft found: {}", aircraft);
-            }
-            return Optional.ofNullable(aircraft);
-        } catch (SQLException e) {
-            throw new DaoException("Error while finding aircraft by tail number", e);
-        }
-    }
-
-    @Override
-    public List<Aircraft> findAircraftsByName(String aircraftName) throws DaoException {
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_AIRCRAFTS_BY_NAME)) {
-            statement.setString(1, aircraftName);
-            ResultSet resultSet = statement.executeQuery();
-            return createAircrafts(resultSet);
-        } catch (SQLException e) {
-            throw new DaoException("Error while finding aircrafts by name", e);
-        }
-    }
-
-    @Override
-    public List<Aircraft> findAircraftsByType(Aircraft.AircraftType aircraftType) throws DaoException {
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_AIRCRAFTS_BY_TYPE)) {
-            statement.setInt(1, aircraftType.ordinal());
-            ResultSet resultSet = statement.executeQuery();
-            return createAircrafts(resultSet);
-        } catch (SQLException e) {
-            throw new DaoException("Error while finding aircrafts by type", e);
-        }
-    }
-
-    @Override
     public boolean addAircraft(Aircraft aircraft) throws DaoException {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.INSERT_AIRCRAFT)) {

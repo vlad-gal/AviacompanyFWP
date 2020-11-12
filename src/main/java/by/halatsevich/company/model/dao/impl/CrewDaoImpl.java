@@ -55,18 +55,6 @@ public class CrewDaoImpl implements CrewDao {
     }
 
     @Override
-    public Optional<CrewDto> findCrewByDispatcherId(int dispatcherId) throws DaoException {
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_CREW_BY_DISPATCHER_ID)) {
-            statement.setInt(1, dispatcherId);
-            ResultSet resultSet = statement.executeQuery();
-            return createCrewDto(resultSet);
-        } catch (SQLException e) {
-            throw new DaoException("Error while finding crewDto by dispatcher id", e);
-        }
-    }
-
-    @Override
     public List<Integer> findUsersIdByCrewId(int crewId) throws DaoException {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_USERS_ID_BY_CREW_ID)) {
@@ -125,31 +113,6 @@ public class CrewDaoImpl implements CrewDao {
         }
     }
 
-    @Override
-    public boolean updateUserIntoCrew(int crewId, int oldUserId, int userId) throws DaoException {
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_USER_INTO_CREW)) {
-            statement.setInt(1, userId);
-            statement.setInt(2, oldUserId);
-            statement.setInt(3, crewId);
-            return statement.executeUpdate() > 0;
-        } catch (SQLException e) {
-            throw new DaoException("Error while updating user into crew", e);
-        }
-    }
-
-    @Override
-    public boolean updateDispatcherIntoCrew(int crewId, int oldDispatcherId, int dispatcherId) throws DaoException {
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_DISPATCHER_INTO_CREW)) {
-            statement.setInt(1, dispatcherId);
-            statement.setInt(2, oldDispatcherId);
-            statement.setInt(3, crewId);
-            return statement.executeUpdate() > 0;
-        } catch (SQLException e) {
-            throw new DaoException("Error while updating dispatcher into crew", e);
-        }
-    }
 
     @Override
     public boolean update(CrewDto crewDto) throws DaoException {
@@ -179,17 +142,6 @@ public class CrewDaoImpl implements CrewDao {
         }
     }
 
-    @Override
-    public boolean removeUserFromCrew(int crewId, int userId) throws DaoException {
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.REMOVE_USER_FROM_CREW_BY_ID)) {
-            statement.setInt(1, userId);
-            statement.setInt(2, crewId);
-            return statement.executeUpdate() > 0;
-        } catch (SQLException e) {
-            throw new DaoException("Error while removing user from crew", e);
-        }
-    }
 
     private Map<String, Object> createCrewData(ResultSet resultSet) throws SQLException {
         Map<String, Object> crewData = new HashMap<>();

@@ -9,5 +9,4 @@ function validatePassword(){
         document.getElementById("confirmPassword").setCustomValidity("Passwords don't match");
     else
         document.getElementById("confirmPassword").setCustomValidity('');
-//empty string means no validation error
 }

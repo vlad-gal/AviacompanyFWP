@@ -9,19 +9,7 @@ import java.util.Optional;
 
 public interface FlightDao extends BaseDao<FlightDto> {
 
-    Optional<FlightDto> findFlightByDepartureAirportId(int departureAirportId) throws DaoException;
-
-    Optional<FlightDto> findFlightByDestinationAirportId(int destinationAirportId) throws DaoException;
-
-    Optional<FlightDto> findFlightByDepartPeriodOfTime(long departTimeFrom, long departTimeTo) throws DaoException;
-
-    Optional<FlightDto> findFlightByArrivePeriodOfTime(long arriveTimeFrom, long arriveTimeTo) throws DaoException;
-
-    Optional<FlightDto> findFlightByCrewId(int crewId) throws DaoException;
-
-    Optional<FlightDto> findFlightByOperatorId(int operatorId) throws DaoException;
-
-    boolean addFlight(FlightDto flightDto) throws DaoException;
+  boolean addFlight(FlightDto flightDto) throws DaoException;
 
     List<FlightDto> findUsersFlightsByStatus(int userId, Status status) throws DaoException;
 }

@@ -35,7 +35,7 @@ public class UpdateFlightPageCommand implements Command {
             List<Aircraft> aircrafts;
             List<User> operators;
             try {
-                Flight flight = flightService.findFlightById(flightId);
+                Flight flight = flightService.findFlightById(Integer.parseInt(flightId));
                 crews = crewService.findCrewsByStatus(Status.ACTIVE.getStatusName());
                 airports = airportService.findAllAirports();
                 aircrafts = aircraftService.findAircraftsByStatus(Status.ACTIVE.getStatusName());
@@ -48,7 +48,7 @@ public class UpdateFlightPageCommand implements Command {
                 page = PagePath.UPDATE_FLIGHT;
             } catch (ServiceException e) {
                 logger.log(Level.ERROR, "Error while finding flight by id", e);
-                request.setAttribute(ParameterName.ERROR_MESSAGE, e);
+                request.setAttribute(ParameterName.ERROR, e);
                 page = PagePath.ERROR_500;
             }
         } else {

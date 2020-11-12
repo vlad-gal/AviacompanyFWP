@@ -42,7 +42,7 @@ public class ForgotPasswordCommand implements Command {
                 }
             } catch (ServiceException e) {
                 logger.log(Level.ERROR, "Error while checking email", e);
-                request.setAttribute(ParameterName.ERROR_MESSAGE, e);
+                request.setAttribute(ParameterName.ERROR, e);
                 page = PagePath.ERROR_500;
             }
         } else {

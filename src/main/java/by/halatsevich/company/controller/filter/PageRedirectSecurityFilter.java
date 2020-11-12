@@ -1,6 +1,5 @@
 package by.halatsevich.company.controller.filter;
 
-import by.halatsevich.company.controller.PagePath;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,6 +17,6 @@ public class PageRedirectSecurityFilter implements Filter {
         HttpServletResponse httpResponse = (HttpServletResponse) servletResponse;
         HttpServletRequest httpRequest = (HttpServletRequest) servletRequest;
         logger.log(Level.ERROR, "Invalid action from {}", httpRequest.getRequestURL());
-        httpResponse.sendError(404, PagePath.ERROR_404);
+        httpResponse.sendError(HttpServletResponse.SC_FORBIDDEN);
     }
 }

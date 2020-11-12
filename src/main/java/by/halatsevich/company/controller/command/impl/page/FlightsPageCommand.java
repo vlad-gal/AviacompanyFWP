@@ -33,7 +33,7 @@ public class FlightsPageCommand implements Command {
             page = PagePath.FLIGHTS;
         } catch (ServiceException e) {
             logger.log(Level.ERROR, "Error while finding all actual flights", e);
-            request.setAttribute(ParameterName.ERROR_MESSAGE, e);
+            request.setAttribute(ParameterName.ERROR, e);
             page = PagePath.ERROR_500;
         }
         return page;

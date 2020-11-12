@@ -37,7 +37,7 @@ public class AllUserCrewsCommand implements Command {
                 page = PagePath.USER_ACCOUNT;
             } catch (ServiceException e) {
                 logger.log(Level.ERROR, "Error while finding all users crews by status", e);
-                request.setAttribute(ParameterName.ERROR_MESSAGE, e);
+                request.setAttribute(ParameterName.ERROR, e);
                 page = PagePath.ERROR_500;
             }
         } else {

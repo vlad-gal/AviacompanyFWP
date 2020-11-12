@@ -13,6 +13,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 public class WelcomePageCommand implements Command {
@@ -20,17 +21,18 @@ public class WelcomePageCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
+        HttpSession session = request.getSession();
         ServiceFactory factory = ServiceFactory.getInstance();
         FlightService flightService = factory.getFlightService();
         List<Flight> flightList;
         String page;
         try {
             flightList = flightService.findFlightsByStatus(Status.ACTIVE.getStatusName());
-            request.setAttribute(ParameterName.FLIGHT_LIST, flightList);
+            session.setAttribute(ParameterName.FLIGHT_LIST, flightList);
             page = PagePath.WELCOME;
         } catch (ServiceException e) {
             logger.log(Level.ERROR, "Error while finding all actual flights", e);
-            request.setAttribute(ParameterName.ERROR_MESSAGE, e);
+            request.setAttribute(ParameterName.ERROR, e);
             page = PagePath.ERROR_500;
         }
         return page;

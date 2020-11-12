@@ -76,7 +76,7 @@ public class ParameterName {
     public static final String ERROR_LOGIN_PASSWORD_FLAG = "errorLoginPasswordFlag";
     public static final String INACTIVE_USER_FLAG = "inactiveUserFlag";
     public static final String USER_ALREADY_EXIST_FLAG = "userAlreadyExistFlag";
-    public static final String ERROR_MESSAGE = "errorMessage";
+    public static final String ERROR = "error";
     public static final String ERROR_VALIDATION_FLAG = "errorValidationFlag";
     public static final String ERROR_REGISTER_USER_FLAG = "errorRegisterUserFlag";
     public static final String REGISTRATION_DATA = "registrationData";

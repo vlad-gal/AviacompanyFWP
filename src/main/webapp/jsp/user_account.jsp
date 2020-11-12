@@ -14,10 +14,10 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/sidebar.css">
 
-    <title><fmt:message key="local.common.account"/></title>
+    <title><fmt:message key="local.userAccount"/></title>
 </head>
 <body>
-<jsp:include page="common/header.jsp"/>
+<c:import url="common/header.jsp"/>
 <main class="content">
     <div class="container-fluid">
         <div class="row">
@@ -27,25 +27,26 @@
             <div class="col-9">
                 <c:choose>
                     <c:when test="${user.role eq 'ADMIN'}">
-                        <jsp:include page="common/admin_content.jsp"/>
+                        <c:import url="common/admin_content.jsp"/>
                     </c:when>
                     <c:when test="${user.role eq 'OPERATOR'}">
-                        <jsp:include page="common/operator_content.jsp"/>
+                        <c:import url="common/operator_content.jsp"/>
                     </c:when>
                     <c:when test="${user.role eq 'DISPATCHER'}">
-                        <jsp:include page="common/dispatcher_content.jsp"/>
+                        <c:import url="common/dispatcher_content.jsp"/>
                     </c:when>
                     <c:otherwise>
-                        <jsp:include page="common/staff_content.jsp"/>
+                        <c:import url="common/staff_content.jsp"/>
                     </c:otherwise>
                 </c:choose>
             </div>
         </div>
     </div>
 </main>
-<jsp:include page="common/footer.jsp"/>
+<c:import url="common/footer.jsp"/>
 </body>
 </html>
 <script src="${pageContext.request.contextPath}/js/jquery-3.5.1.slim.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/popper.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/security.js"></script>

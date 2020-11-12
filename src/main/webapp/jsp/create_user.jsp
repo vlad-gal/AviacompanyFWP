@@ -13,121 +13,121 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/login.css">
 
-    <title><fmt:message key="local.common.registrationUserTitle"/></title>
+    <title><fmt:message key="local.registrationUserTitle"/></title>
 </head>
 <body class="login-page">
-<jsp:include page="common/header.jsp"/>
+<c:import url="common/header.jsp"/>
 <main class="content">
     <div class="container">
         <div class="row justify-content-md-center">
             <div class="card-wrapper">
                 <div class="card fat">
                     <div class="card-body">
-                        <h5 class="card-title text-center"><fmt:message key="local.common.registrationUserTitle"/></h5>
+                        <h5 class="card-title text-center"><fmt:message key="local.registrationUserTitle"/></h5>
                         <c:if test="${errorRegisterUserFlag eq true}">
-                            <h6 class="errorLoginPass text-center"><fmt:message key="local.common.errorRegisterUser"/></h6>
+                            <h6 class="errorLoginPass text-center"><fmt:message key="local.errorRegisterUser"/></h6>
                         </c:if>
                         <c:if test="${userAlreadyExistFlag eq true}">
-                            <h6 class="errorLoginPass text-center"><fmt:message key="local.common.userAlreadyExist"/></h6>
+                            <h6 class="errorLoginPass text-center"><fmt:message key="local.userAlreadyExist"/></h6>
                         </c:if>
                         <c:if test="${registrationSuccessfulFlag eq true}">
-                            <h6 class="alert-success text-center"><fmt:message key="local.common.registrationUserSuccessful"/></h6>
+                            <h6 class="alert-success text-center"><fmt:message key="local.registrationUserSuccessful"/></h6>
                         </c:if>
                         <c:if test="${errorValidationFlag eq true}">
-                            <h6 class="errorLoginPass text-center"><fmt:message key="local.common.errorValidation"/></h6>
+                            <h6 class="errorLoginPass text-center"><fmt:message key="local.errorValidation"/></h6>
                         </c:if>
                         <form method="POST" name="registrationForm"
                               action="${pageContext.request.contextPath}/controller">
                             <input type="hidden" name="command" value="create_user">
                             <div class="form-group">
-                                <label for="login"><fmt:message key="local.common.login"/>*</label>
+                                <label for="login"><fmt:message key="local.login"/>*</label>
                                 <input id="login" type="text" class="form-control" name="login"
-                                       placeholder="<fmt:message key="local.common.login"/>" pattern="[\w-]{3,40}"
-                                       title="<fmt:message key="local.common.incorrectLoginMessage"/>"
+                                       placeholder="<fmt:message key="local.login"/>" pattern="[\w-]{3,40}"
+                                       title="<fmt:message key="local.incorrectLoginMessage"/>"
                                        value="${registrationData.login}" autofocus required>
                             </div>
                             <c:if test="${errorValidationFlag eq true}">
                                 <c:if test="${registrationData.login eq null}">
                                     <div class="errorLoginPass">
-                                        <p class="errorLoginPass text-center"><fmt:message key="local.common.incorrectLoginMessage"/></p>
+                                        <p class="errorLoginPass text-center"><fmt:message key="local.incorrectLoginMessage"/></p>
                                     </div>
                                 </c:if>
                             </c:if>
                             <div class="form-group">
-                                <label for="email"><fmt:message key="local.common.email"/>*</label>
+                                <label for="email"><fmt:message key="local.email"/>*</label>
                                 <input id="email" type="email" class="form-control" name="email"
-                                       placeholder="<fmt:message key="local.common.email"/>"
-                                       pattern="[\w-.]+@[a-zA-Z]+\.[a-z]{2,6}"
-                                       title="<fmt:message key="local.common.incorrectEmailMessage"/>"
+                                       placeholder="<fmt:message key="local.email"/>"
+                                       pattern="[\w-.]{3,20}@[a-zA-Zа-яА-Я]{2,14}\.[a-zа-я]{2,6}"
+                                       title="<fmt:message key="local.incorrectEmailMessage"/>"
                                        value="${registrationData.email}" required>
                             </div>
                             <c:if test="${errorValidationFlag eq true}">
                                 <c:if test="${registrationData.email eq null}">
                                     <div class="errorLoginPass">
-                                        <p class="errorLoginPass text-center"><fmt:message key="local.common.incorrectEmailMessage"/></p>
+                                        <p class="errorLoginPass text-center"><fmt:message key="local.incorrectEmailMessage"/></p>
                                     </div>
                                 </c:if>
                             </c:if>
                             <div class="form-group">
-                                <label for="password"><fmt:message key="local.common.password"/>*</label>
+                                <label for="password"><fmt:message key="local.password"/>*</label>
                                 <input id="password" type="password" class="form-control" name="password"
-                                       placeholder="<fmt:message key="local.common.password"/>" pattern="[^\s]{8,25}"
-                                       title="<fmt:message key="local.common.incorrectPasswordMessage"/>"
+                                       placeholder="<fmt:message key="local.password"/>" pattern="[^\s]{8,25}"
+                                       title="<fmt:message key="local.incorrectPasswordMessage"/>"
                                        value="" required>
                             </div>
                             <c:if test="${errorValidationFlag eq true}">
                                 <c:if test="${registrationData.password eq null}">
                                     <div class="errorLoginPass">
-                                        <p class="errorLoginPass text-center"><fmt:message key="local.common.incorrectPasswordMessage"/></p>
+                                        <p class="errorLoginPass text-center"><fmt:message key="local.incorrectPasswordMessage"/></p>
                                     </div>
                                 </c:if>
                             </c:if>
                             <div class="form-group">
-                                <label for="firstName"><fmt:message key="local.common.firstName"/>*</label>
+                                <label for="firstName"><fmt:message key="local.firstName"/>*</label>
                                 <input id="firstName" type="text" class="form-control" name="firstName"
-                                       placeholder="<fmt:message key="local.common.firstName"/>"
-                                       pattern="[A-ZА-Я][a-zа-я]+"
-                                       title="<fmt:message key="local.common.incorrectNameMessage"/>"
+                                       placeholder="<fmt:message key="local.firstName"/>"
+                                       pattern="[A-ZА-Я][a-zа-я]{1,14}"
+                                       title="<fmt:message key="local.incorrectNameMessage"/>"
                                        value="${registrationData.firstName}" required>
                             </div>
                             <c:if test="${errorValidationFlag eq true}">
                                 <c:if test="${registrationData.firstName eq null}">
                                     <div class="errorLoginPass">
-                                        <p class="errorLoginPass text-center"><fmt:message key="local.common.incorrectNameMessage"/></p>
+                                        <p class="errorLoginPass text-center"><fmt:message key="local.incorrectNameMessage"/></p>
                                     </div>
                                 </c:if>
                             </c:if>
                             <div class="form-group">
-                                <label for="lastName"><fmt:message key="local.common.lastName"/>*</label>
+                                <label for="lastName"><fmt:message key="local.lastName"/>*</label>
                                 <input id="lastName" type="text" class="form-control" name="lastName"
-                                       placeholder="<fmt:message key="local.common.lastName"/>"
-                                       pattern="[A-ZА-Я][a-zа-я]+"
-                                       title="<fmt:message key="local.common.incorrectNameMessage"/>"
+                                       placeholder="<fmt:message key="local.lastName"/>"
+                                       pattern="[A-ZА-Я][a-zа-я]{1,14}"
+                                       title="<fmt:message key="local.incorrectNameMessage"/>"
                                        value="${registrationData.lastName}" required>
                             </div>
                             <c:if test="${errorValidationFlag eq true}">
                                 <c:if test="${registrationData.lastName eq null}">
                                     <div class="errorLoginPass">
-                                        <p class="errorLoginPass text-center"><fmt:message key="local.common.incorrectNameMessage"/></p>
+                                        <p class="errorLoginPass text-center"><fmt:message key="local.incorrectNameMessage"/></p>
                                     </div>
                                 </c:if>
                             </c:if>
                             <div class="form-group">
-                                <label for="telephoneNumber"><fmt:message key="local.common.telephoneNumber"/>*</label>
+                                <label for="telephoneNumber"><fmt:message key="local.telephoneNumber"/>*</label>
                                 <input id="telephoneNumber" type="tel" class="form-control" name="telephoneNumber"
-                                       placeholder="<fmt:message key="local.common.telephoneNumber"/>" pattern="\d{12}"
-                                       title="<fmt:message key="local.common.incorrectTelephoneMessage"/>"
+                                       placeholder="<fmt:message key="local.telephoneNumber"/>" pattern="\d{12}"
+                                       title="<fmt:message key="local.incorrectTelephoneMessage"/>"
                                        value="${registrationData.telephoneNumber}" required>
                             </div>
                             <c:if test="${errorValidationFlag eq true}">
                                 <c:if test="${registrationData.telephoneNumber eq null}">
                                     <div class="errorLoginPass">
-                                        <p class="errorLoginPass text-center"><fmt:message key="local.common.incorrectTelephoneMessage"/></p>
+                                        <p class="errorLoginPass text-center"><fmt:message key="local.incorrectTelephoneMessage"/></p>
                                     </div>
                                 </c:if>
                             </c:if>
                             <div class="form-group">
-                                <label for="role"><fmt:message key="local.common.role"/>*</label>
+                                <label for="role"><fmt:message key="local.role"/>*</label>
                                 <select id="role" name="role" class="custom-select">
                                     <c:if test="${errorValidationFlag eq true || errorRegisterUserFlag eq true || userAlreadyExistFlag eq true}">
                                         <option selected>${registrationData.role}</option>
@@ -150,10 +150,10 @@
         </div>
     </div>
 </main>
-<jsp:include page="common/footer.jsp"/>
+<c:import url="common/footer.jsp"/>
 </body>
 </html>
 <script src="${pageContext.request.contextPath}/js/jquery-3.5.1.slim.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/popper.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
-
+<script src="${pageContext.request.contextPath}/js/security.js"></script>

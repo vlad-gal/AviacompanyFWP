@@ -16,24 +16,6 @@ import java.util.stream.Collectors;
 public class FlightServiceImpl implements FlightService {
 
     @Override
-    public List<Flight> findAllFlights() throws ServiceException {
-        DaoFactory factory = DaoFactory.getInstance();
-        FlightDao flightDao = factory.getFlightDao();
-        List<FlightDto> flightDtos;
-        List<Flight> flights = new ArrayList<>();
-        try {
-            flightDtos = flightDao.findAll();
-            for (FlightDto flightDto : flightDtos) {
-                Flight flight = createFlight(factory, flightDto);
-                flights.add(flight);
-            }
-        } catch (DaoException e) {
-            throw new ServiceException("Error while finding all flights", e);
-        }
-        return flights;
-    }
-
-    @Override
     public List<Flight> findFlightsByStatus(String status) throws ServiceException {
         DaoFactory factory = DaoFactory.getInstance();
         FlightDao flightDao = factory.getFlightDao();
@@ -52,20 +34,6 @@ public class FlightServiceImpl implements FlightService {
                 .collect(Collectors.toList());
     }
 
-    private boolean checkFlightStatus() {
-        return false;
-    }
-
-    @Override
-    public Flight findFlightById(String flightId) throws ServiceException {
-        int id = Integer.parseInt(flightId);
-        try {
-            return createFlight(id);
-        } catch (DaoException e) {
-            throw new ServiceException("Error while finding flight by id");
-        }
-    }
-
     @Override
     public Flight findFlightById(int flightId) throws ServiceException {
         try {
@@ -82,7 +50,7 @@ public class FlightServiceImpl implements FlightService {
         List<FlightDto> flightDtos;
         List<Flight> flights = new ArrayList<>();
         try {
-            flightDtos = flightDao.findUsersFlightsByStatus(user.getId(),Status.valueOf(status.toUpperCase()));
+            flightDtos = flightDao.findUsersFlightsByStatus(user.getId(), Status.valueOf(status.toUpperCase()));
             for (FlightDto flightDto : flightDtos) {
                 Flight flight = createFlight(factory, flightDto);
                 flights.add(flight);
@@ -106,7 +74,8 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public boolean addFlight(String departureAirportId, String destinationAirportId, String departTime, String arriveTime, String crewId, String aircraftId, int operatorId) throws ServiceException {
+    public boolean addFlight(String departureAirportId, String destinationAirportId, String departTime,
+                             String arriveTime, String crewId, String aircraftId, int operatorId) throws ServiceException {
         boolean isAdded;
         int departureAirport = Integer.parseInt(departureAirportId);
         int destinationAirport = Integer.parseInt(destinationAirportId);
@@ -114,11 +83,23 @@ public class FlightServiceImpl implements FlightService {
         long arrive = DateParser.parseDate(arriveTime).getTime();
         int crew = Integer.parseInt(crewId);
         int aircraft = Integer.parseInt(aircraftId);
-        FlightDto flightDto = new FlightDto(departureAirport, destinationAirport, depart, arrive, aircraft, crew, operatorId, Status.ACTIVE);
+        FlightDto flightDto = new FlightDto(departureAirport, destinationAirport, depart, arrive, aircraft, crew,
+                operatorId, Status.ACTIVE);
         DaoFactory factory = DaoFactory.getInstance();
         FlightDao flightDao = factory.getFlightDao();
+        CrewDao crewDao = factory.getCrewDao();
+        UserDao userDao = factory.getUserDao();
         try {
             isAdded = flightDao.addFlight(flightDto);
+            List<Integer> usersId = crewDao.findUsersIdByCrewId(crew);
+            for (int id : usersId) {
+                Optional<User> optionalUser = userDao.findById(id);
+                if (optionalUser.isPresent()) {
+                    User user = optionalUser.get();
+                    user.setStatus(Status.BUSY);
+                    userDao.update(user);
+                }
+            } // TODO: 12.11.2020 +aircraft
         } catch (DaoException e) {
             throw new ServiceException("Error while adding flight", e);
         }
@@ -126,47 +107,9 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public Optional<Flight> findFlightByDepartureAirportId(int departureAirportId) throws ServiceException {
-        return null;
-    }
-
-    @Override
-    public Optional<Flight> findFlightByDestinationAirportId(int destinationAirportId) throws ServiceException {
-        return null;
-    }
-
-    @Override
-    public Optional<Flight> findFlightByDepartPeriodOfTime(long departTimeFrom, long departTimeTo) throws ServiceException {
-        return null;
-    }
-
-    @Override
-    public Optional<Flight> findFlightByArrivePeriodOfTime(long arriveTimeFrom, long arriveTimeTo) throws ServiceException {
-        return null;
-    }
-
-    @Override
-    public Optional<Flight> findFlightByCrewId(int crewId) throws ServiceException {
-        return null;
-    }
-
-    @Override
-    public Optional<Flight> findFlightByOperatorId(int operatorId) throws ServiceException {
-        return null;
-    }
-
-    @Override
-    public boolean addFlight(Flight flightDto) throws ServiceException {
-        return false;
-    }
-
-    @Override
-    public boolean updateFlight(Flight flightDto) throws ServiceException {
-        return false;
-    }
-
-    @Override
-    public boolean updateFlight(int flightId, String departureAirportId, String destinationAirportId, String departTime, String arriveTime, String crewId, String aircraftId, String operatorId, String status) throws ServiceException {
+    public boolean updateFlight(int flightId, String departureAirportId, String destinationAirportId, String departTime,
+                                String arriveTime, String crewId, String aircraftId,
+                                String operatorId, String status) throws ServiceException {
         boolean isUpdated;
         int departureAirport = Integer.parseInt(departureAirportId);
         int destinationAirport = Integer.parseInt(destinationAirportId);
@@ -175,46 +118,82 @@ public class FlightServiceImpl implements FlightService {
         int crew = Integer.parseInt(crewId);
         int aircraft = Integer.parseInt(aircraftId);
         int operator = Integer.parseInt(operatorId);
-        FlightDto flightDto = new FlightDto(flightId, departureAirport, destinationAirport, depart, arrive, aircraft, crew, operator, Status.valueOf(status.toUpperCase()));
+        Status parsedStatus = Status.valueOf(status.toUpperCase());
+        FlightDto flightDto = new FlightDto(flightId, departureAirport, destinationAirport, depart, arrive, aircraft,
+                crew, operator, parsedStatus);
         DaoFactory factory = DaoFactory.getInstance();
         FlightDao flightDao = factory.getFlightDao();
+        CrewDao crewDao = factory.getCrewDao();
+        UserDao userDao = factory.getUserDao();
         try {
             isUpdated = flightDao.update(flightDto);
+            Optional<CrewDto> optionalCrewDto = crewDao.findById(crew);
+            if (optionalCrewDto.isPresent()) {
+                CrewDto crewDto = optionalCrewDto.get();
+                switch (parsedStatus) {
+                    case FLY:
+                        crewDto.setStatus(Status.FLY);
+                        crewDao.update(crewDto);
+                        break;
+                    case INACTIVE:
+                        crewDto.setStatus(Status.ACTIVE);
+                        crewDao.update(crewDto);
+                        break;
+                }
+                List<Integer> usersId = crewDao.findUsersIdByCrewId(crew);
+                for (int id : usersId) {
+                    Optional<User> optionalUser = userDao.findById(id);
+                    if (optionalUser.isPresent()) {
+                        User user = optionalUser.get();
+                        switch (parsedStatus) {
+                            case ACTIVE:
+                                user.setStatus(Status.BUSY);
+                                userDao.update(user);
+                                break;
+                            case INACTIVE:
+                                user.setStatus(Status.ACTIVE);
+                                userDao.update(user);
+                                break;
+                            case FLY:
+                                user.setStatus(Status.FLY);
+                                userDao.update(user);
+                                break;
+                        }
+                    }
+                }
+            }// TODO: 12.11.2020  aircraft
         } catch (DaoException e) {
             throw new ServiceException("Error while adding flight", e);
         }
         return isUpdated;
     }
 
-    @Override
-    public boolean removeFlight(int flightId) throws ServiceException {
-        return false;
-    }
 
     private Flight createFlight(DaoFactory factory, FlightDto flightDto) throws DaoException {
         UserDao userDao = factory.getUserDao();
         AircraftDao aircraftDao = factory.getAircraftDao();
         AirportDao airportDao = factory.getAirportDao();
         CrewDao crewDao = factory.getCrewDao();
-        Airport departureAirport = airportDao.findById(flightDto.getDepartureAirportId()).get();
-        Airport destinationAirport = airportDao.findById(flightDto.getDestinationAirportId()).get();
+        Airport departureAirport = airportDao.findById(flightDto.getDepartureAirportId()).orElse(null);
+        Airport destinationAirport = airportDao.findById(flightDto.getDestinationAirportId()).orElse(null);
         Date arriveTime = new Date(flightDto.getArriveTime());
         Date departTime = new Date(flightDto.getDepartTime());
-        Aircraft aircraft = aircraftDao.findById(flightDto.getAircraftId()).get();
-        User operator = userDao.findById(flightDto.getOperatorId()).get();
+        Aircraft aircraft = aircraftDao.findById(flightDto.getAircraftId()).orElse(null);
+        User operator = userDao.findById(flightDto.getOperatorId()).orElse(null);
         Status flightStatus = flightDto.getStatus();
         Optional<CrewDto> optionalCrewDto = crewDao.findById(flightDto.getCrewId());
-        CrewDto crewDto = optionalCrewDto.get();
+        CrewDto crewDto = optionalCrewDto.orElse(null);
         Crew crew = createCrew(userDao, crewDao, crewDto);
-        return new Flight(flightDto.getId(), departureAirport, destinationAirport, departTime, arriveTime, aircraft, crew, operator, flightStatus);
+        return new Flight(flightDto.getId(), departureAirport, destinationAirport, departTime, arriveTime, aircraft,
+                crew, operator, flightStatus);
     }
 
     private Crew createCrew(UserDao userDao, CrewDao crewDao, CrewDto crewDto) throws DaoException {
-        User dispatcher = userDao.findById(crewDto.getDispatcherId()).get();
+        User dispatcher = userDao.findById(crewDto.getDispatcherId()).orElse(null);
         List<Integer> usersIdByCrewId = crewDao.findUsersIdByCrewId(crewDto.getId());
         List<User> staff = new ArrayList<>();
         for (int userId : usersIdByCrewId) {
-            staff.add(userDao.findById(userId).get());
+            staff.add(userDao.findById(userId).orElse(null));
         }
         int numberOfPilots = crewDto.getNumberOfPilots();
         int numberOfNavigators = crewDto.getNumberOfNavigators();
@@ -222,6 +201,7 @@ public class FlightServiceImpl implements FlightService {
         int numberOfStewardesses = crewDto.getNumberOfStewardesses();
         Status crewStatus = crewDto.getStatus();
         String crewName = crewDto.getCrewName();
-        return new Crew(dispatcher, crewName, staff, numberOfPilots, numberOfNavigators, numberOfRadioman, numberOfStewardesses, crewStatus);
+        return new Crew(dispatcher, crewName, staff, numberOfPilots, numberOfNavigators, numberOfRadioman,
+                numberOfStewardesses, crewStatus);
     }
 }

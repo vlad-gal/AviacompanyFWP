@@ -60,7 +60,7 @@ public class CreateCrewCommand implements Command {
                 }
             } catch (ServiceException e) {
                 logger.log(Level.ERROR, "Cannot create crew", e);
-                request.setAttribute(ParameterName.ERROR_MESSAGE, e);
+                request.setAttribute(ParameterName.ERROR, e);
                 page = PagePath.ERROR_500;
             }
         } else {

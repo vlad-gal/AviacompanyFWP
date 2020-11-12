@@ -46,7 +46,7 @@ public class UpdateUserCommand implements Command {
                 }
             } catch (ServiceException e) {
                 logger.log(Level.ERROR, "Cannot updating user", e);
-                request.setAttribute(ParameterName.ERROR_MESSAGE, e);
+                request.setAttribute(ParameterName.ERROR, e);
                 page = PagePath.ERROR_500;
             }
         } else {

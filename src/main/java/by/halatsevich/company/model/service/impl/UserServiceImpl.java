@@ -16,6 +16,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class UserServiceImpl implements UserService {
+
     @Override
     public Optional<User> authorization(AuthorizationData authorizationData) throws ServiceException {
         String login = authorizationData.getLogin();
@@ -36,18 +37,6 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-    @Override
-    public List<User> findAllUsers() throws ServiceException {
-        DaoFactory factory = DaoFactory.getInstance();
-        UserDao dao = factory.getUserDao();
-        List<User> users;
-        try {
-            users = dao.findAll();
-        } catch (DaoException e) {
-            throw new ServiceException("Error while finding all users", e);
-        }
-        return users.stream().filter(user -> user.getRole() != User.Role.ADMIN).collect(Collectors.toList());
-    }
 
     @Override
     public List<User> findUsersByStatus(String status) throws ServiceException {
@@ -89,20 +78,6 @@ public class UserServiceImpl implements UserService {
         }
         return isUserRegistered;
     }
-
-//    @Override
-//    public boolean updateUserStatus(User user, Status status) throws ServiceException {
-//        DaoFactory factory = DaoFactory.getInstance();
-//        UserDao userDao = factory.getUserDao();
-//        boolean isUserUpdated;
-//        try {
-//            user.setStatus(status);
-//            isUserUpdated = userDao.update(user);
-//        } catch (DaoException e) {
-//            throw new ServiceException("Error while updating user status", e);
-//        }
-//        return isUserUpdated;
-//    }
 
     @Override
     public Optional<User> findUserByEmail(String email) throws ServiceException {

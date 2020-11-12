@@ -34,7 +34,7 @@ public class AuthorizationCommand implements Command {
             try {
                 Optional<User> optionalUser = service.authorization(authorizationData);
                 if (optionalUser.isPresent()) {
-                    if (optionalUser.get().getStatus() == Status.ACTIVE) {
+                    if (optionalUser.get().getStatus() != Status.INACTIVE) {
                         session.setAttribute(ParameterName.USER, optionalUser.get());
                         session.setAttribute(ParameterName.ROLES, User.Role.values());
                         session.setAttribute(ParameterName.STATUSES, Status.values());

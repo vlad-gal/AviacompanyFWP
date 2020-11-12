@@ -11,8 +11,6 @@ import java.util.Optional;
 
 public interface CrewService {
 
-    List<CrewDto> findAllCrews() throws ServiceException;
-
     List<Crew> findCrewsByStatus(String status) throws ServiceException;
 
     Crew findCrewById(int crewId) throws ServiceException;
@@ -23,7 +21,6 @@ public interface CrewService {
 
     boolean addUserIntoCrew(User user, String crewId) throws ServiceException;
 
-//    boolean checkAvailablePlacesInCrew(CrewDto crew, User user) throws ServiceException;
     int countAvailablePlacesInCrew(Crew crew, User user) throws ServiceException;
 
     boolean updateCrew(Crew crew, String numberOfPilots, String numberOfNavigators, String numberOfRadioman, String numberOfStewardesses, String status) throws ServiceException;

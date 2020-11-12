@@ -14,38 +14,38 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 
-    <title><fmt:message key="local.common.airports"/></title>
+    <title><fmt:message key="local.airports"/></title>
 </head>
 <body>
-<jsp:include page="common/header.jsp"/>
+<c:import url="common/header.jsp"/>
 <main class="content">
     <div class="container">
         <div class="row">
             <div class="align-self-center mr-auto col-4">
-                <h5><fmt:message key="local.airport.title"/></h5>
-                <p class="card-text"><fmt:message key="local.airport.description"/></p>
+                <h5><fmt:message key="local.airportsTitle"/></h5>
+                <p class="card-text"><fmt:message key="local.airportsDescription"/></p>
             </div>
             <div class="col-8 ml-auto">
                 <div class="card">
                     <div class="card-header text-center">
-                        <h5><fmt:message key="local.common.airports"/></h5>
+                        <h5><fmt:message key="local.airports"/></h5>
                     </div>
                     <div class="card-body">
                         <c:choose>
                         <c:when test="${empty airportList}">
                             <div class="text-center">
-                                <h5 class="card-title"><fmt:message key="local.airport.emptyAirportList"/></h5>
+                                <h5 class="card-title"><fmt:message key="local.emptyAirportList"/></h5>
                             </div>
                         </c:when>
                         <c:otherwise>
                         <table class="table table-hover">
                             <thead class="thead-light">
                             <tr>
-                                <th scope="col"><fmt:message key="local.airport.name"/></th>
-                                <th scope="col"><fmt:message key="local.airport.country"/></th>
-                                <th scope="col"><fmt:message key="local.airport.city"/></th>
+                                <th scope="col"><fmt:message key="local.airportName"/></th>
+                                <th scope="col"><fmt:message key="local.airportCountry"/></th>
+                                <th scope="col"><fmt:message key="local.airportCity"/></th>
                                 <c:if test="${sessionScope.user.role eq 'ADMIN'}">
-                                    <th scope="col"><fmt:message key="local.common.actions"/></th>
+                                    <th scope="col"><fmt:message key="local.actions"/></th>
                                 </c:if>
                             </tr>
                             </thead>
@@ -58,9 +58,10 @@
         </div>
     </div>
 </main>
-<jsp:include page="common/footer.jsp"/>
+<c:import url="common/footer.jsp"/>
 </body>
 </html>
 <script src="${pageContext.request.contextPath}/js/jquery-3.5.1.slim.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/popper.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/security.js"></script>

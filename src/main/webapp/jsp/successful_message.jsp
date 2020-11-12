@@ -12,36 +12,34 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 
-    <title><fmt:message key="local.common.messageTitle"/></title>
+    <title><fmt:message key="local.messagesTitle"/></title>
 </head>
 <body>
 <div class="container text-center">
     <div class="container">
         <div class="mt-5">
             <c:if test="${registrationSuccessfulFlag eq true}">
-                <h2><fmt:message key="local.common.successfulRegistrationTitle"/></h2>
+                <h2><fmt:message key="local.successfulRegistrationTitle"/></h2>
                 <h6>
-                    <fmt:message key="local.common.successfulRegistrationText"/>
+                    <fmt:message key="local.successfulRegistrationText"/>
                 </h6>
-                <a href="${pageContext.request.contextPath}/controller?command=welcome_page"><fmt:message
-                        key="local.common.goToWelcome"/></a>
+                <a href="${pageContext.request.contextPath}/controller?command=welcome_page"><fmt:message key="local.goToWelcome"/></a>
             </c:if>
             <c:if test="${activationSuccessfulFlag eq true}">
-                <h2><fmt:message key="local.common.successfulActivationTitle"/></h2>
-                <a href="${pageContext.request.contextPath}/controller?command=authorization_page"><fmt:message
-                        key="local.common.authorizationTitle"/></a>
+                <h2><fmt:message key="local.successfulActivationTitle"/></h2>
+                <a href="${pageContext.request.contextPath}/controller?command=authorization_page"><fmt:message key="local.authorizationTitle"/></a>
             </c:if>
             <c:if test="${updatingSuccessfulFlag eq true}">
-                <h2><fmt:message key="local.common.successfulChangePasswordTitle"/></h2>
-                <a href="${pageContext.request.contextPath}/controller?command=authorization_page"><fmt:message
-                        key="local.common.authorizationTitle"/></a>
+                <h2><fmt:message key="local.successfulChangePasswordTitle"/></h2>
+                <a href="${pageContext.request.contextPath}/controller?command=authorization_page"><fmt:message key="local.authorizationTitle"/></a>
             </c:if>
             <c:if test="${resetLinkSentSuccessfulFlag eq true}">
-                <h2><fmt:message key="local.common.resetLinkSentText"/></h2>
-                <a href="${pageContext.request.contextPath}/controller?command=welcome_page"><fmt:message key="local.common.goToWelcome"/></a>
+                <h2><fmt:message key="local.resetLinkSentText"/></h2>
+                <a href="${pageContext.request.contextPath}/controller?command=welcome_page"><fmt:message key="local.goToWelcome"/></a>
             </c:if>
         </div>
     </div>
 </div>
 </body>
 </html>
+<script src="${pageContext.request.contextPath}/js/security.js"></script>

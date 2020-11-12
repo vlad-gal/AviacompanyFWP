@@ -8,11 +8,5 @@ import java.util.Optional;
 
 public interface AircraftDao extends BaseDao<Aircraft> {
 
-    Optional<Aircraft> findAircraftByTailNumber(String tailNumber) throws DaoException;
-
-    List<Aircraft> findAircraftsByName(String aircraftName) throws DaoException;
-
-    List<Aircraft> findAircraftsByType(Aircraft.AircraftType aircraftType) throws DaoException;
-
     boolean addAircraft(Aircraft aircraft) throws DaoException;
 }

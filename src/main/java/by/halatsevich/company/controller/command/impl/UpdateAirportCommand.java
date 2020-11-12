@@ -47,7 +47,7 @@ public class UpdateAirportCommand implements Command {
                 }
             } catch (ServiceException e) {
                 logger.log(Level.ERROR, "Cannot update airport", e);
-                request.setAttribute(ParameterName.ERROR_MESSAGE, e);
+                request.setAttribute(ParameterName.ERROR, e);
                 page = PagePath.ERROR_500;
             }
         } else {

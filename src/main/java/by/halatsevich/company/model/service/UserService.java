@@ -16,13 +16,9 @@ public interface UserService {
 
     boolean registration(RegistrationData registrationData) throws ServiceException;
 
-    List<User> findAllUsers() throws ServiceException;
-
     Optional<User> findUserByEmail(String email) throws ServiceException;
 
     Optional<User> findUserByLogin(String login) throws ServiceException;
-
-//    boolean updateUserStatus(User user, Status active) throws ServiceException;
 
     boolean updatePassword(User user, String password) throws ServiceException;
 

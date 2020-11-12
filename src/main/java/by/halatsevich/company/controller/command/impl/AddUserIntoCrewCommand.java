@@ -30,7 +30,6 @@ public class AddUserIntoCrewCommand implements Command {
             CrewService crewService = factory.getCrewService();
             try {
                 Crew crew = crewService.findCrewById(Integer.parseInt(crewId));
-
                 int availablePlacesInCrew = crewService.countAvailablePlacesInCrew(crew, addingUser);
                 if (availablePlacesInCrew > 0) {
                     crewService.addUserIntoCrew(addingUser, crewId);
@@ -44,10 +43,9 @@ public class AddUserIntoCrewCommand implements Command {
                     request.setAttribute(ParameterName.CREW, crew);
                     page = PagePath.ADD_USER_INTO_CREW;
                 }
-
             } catch (ServiceException e) {
                 logger.log(Level.ERROR, "Error while adding user into crew", e);
-                request.setAttribute(ParameterName.ERROR_MESSAGE, e);
+                request.setAttribute(ParameterName.ERROR, e);
                 page = PagePath.ERROR_500;
             }
         } else {

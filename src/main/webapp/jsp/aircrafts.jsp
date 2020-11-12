@@ -14,42 +14,42 @@
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/bootstrap.min.css">
     <link rel="stylesheet" href="${pageContext.request.contextPath}/css/styles.css">
 
-    <title><fmt:message key="local.common.aircrafts"/></title>
+    <title><fmt:message key="local.aircrafts"/></title>
 </head>
 <body>
-<jsp:include page="common/header.jsp"/>
+<c:import url="common/header.jsp"/>
 <main class="content">
     <div class="container">
         <div class="row">
             <div class="align-self-center mr-auto col-6">
-                <h5><fmt:message key="local.aircraft.title"/></h5>
-                <p class="card-text"><fmt:message key="local.aircraft.description"/></p>
+                <h5><fmt:message key="local.aircraftsTitle"/></h5>
+                <p class="card-text"><fmt:message key="local.aircraftsDescription"/></p>
             </div>
             <div class="col-6 ml-auto">
                 <div class="card ">
                     <div class="card-header text-center">
-                        <h5><fmt:message key="local.common.aircrafts"/></h5>
+                        <h5><fmt:message key="local.aircrafts"/></h5>
                     </div>
                     <div class="card-body">
                         <c:choose>
                         <c:when test="${empty aircraftList}">
                             <div class="text-center">
-                                <h5 class="card-title"><fmt:message key="local.aircraft.emptyAircraftList"/></h5>
+                                <h5 class="card-title"><fmt:message key="local.emptyAircraftList"/></h5>
                             </div>
                         </c:when>
                         <c:otherwise>
                         <table class="table table-hover">
                             <thead class="thead-light">
                             <tr>
-                                <th scope="col"><fmt:message key="local.aircraft.tailNumber"/></th>
-                                <th scope="col"><fmt:message key="local.aircraft.name"/></th>
-                                <th scope="col"><fmt:message key="local.aircraft.type"/></th>
+                                <th scope="col"><fmt:message key="local.tailNumber"/></th>
+                                <th scope="col"><fmt:message key="local.aircraftName"/></th>
+                                <th scope="col"><fmt:message key="local.aircraftType"/></th>
                                 <c:if test="${sessionScope.user.role eq 'OPERATOR' or sessionScope.user.role eq 'ADMIN'}">
-                                    <th scope="col"><fmt:message key="local.common.status"/></th>
+                                    <th scope="col"><fmt:message key="local.status"/></th>
                                 </c:if>
-                                    <c:if test="${sessionScope.user.role eq 'ADMIN'}">
-                                        <th scope="col"><fmt:message key="local.common.actions"/></th>
-                                    </c:if>
+                                <c:if test="${sessionScope.user.role eq 'ADMIN'}">
+                                    <th scope="col"><fmt:message key="local.actions"/></th>
+                                </c:if>
                             </tr>
                             </thead>
                                 <ctg:aircraftPagination currentPageNumber="${currentPageNumber}"/>
@@ -61,9 +61,10 @@
         </div>
     </div>
 </main>
-<jsp:include page="common/footer.jsp"/>
+<c:import url="common/footer.jsp"/>
 </body>
 </html>
 <script src="${pageContext.request.contextPath}/js/jquery-3.5.1.slim.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/popper.min.js"></script>
 <script src="${pageContext.request.contextPath}/js/bootstrap.min.js"></script>
+<script src="${pageContext.request.contextPath}/js/security.js"></script>
