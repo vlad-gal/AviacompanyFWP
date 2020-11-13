@@ -9,6 +9,12 @@ import java.io.IOException;
 import java.util.Properties;
 import java.util.StringJoiner;
 
+/**
+ * The class represents mail service for sending email notification.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class MailUtil {
     private static final Logger logger = LogManager.getLogger(MailUtil.class);
     private static final MailUtil instance = new MailUtil();
@@ -24,14 +30,37 @@ public class MailUtil {
     private MailUtil() {
     }
 
+    /**
+     * The enum Mail type.
+     */
     public enum MailType {
-        ACTIVATION, RESET
+        /**
+         * Activation mail type.
+         */
+        ACTIVATION,
+        /**
+         * Reset password mail type.
+         */
+        RESET
     }
 
+    /**
+     * Gets mail util instance.
+     *
+     * @return the instance
+     */
     public static MailUtil getInstance() {
         return instance;
     }
 
+    /**
+     * Send message.
+     *
+     * @param lang      the lang
+     * @param userEmail the user email
+     * @param link      the link
+     * @param mailType  the mail type
+     */
     public void sendMessage(String lang, String userEmail, String link, MailType mailType) {
         MessageManager messageManager = new MessageManager(lang);
         StringJoiner message = new StringJoiner(REGEX_DELIMITER);

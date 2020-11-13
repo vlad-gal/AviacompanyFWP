@@ -10,6 +10,12 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
+/**
+ * The class represents mail sender for initialization message and sending email.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 class MailSender {
     private static final Logger logger = LogManager.getLogger(MailSender.class);
     private static final String MIME_TYPE_TEXT_HTML = "text/plain; charset=utf-8";
@@ -21,6 +27,14 @@ class MailSender {
     private String mailText;
     private Properties properties;
 
+    /**
+     * Instantiates a new Mail sender.
+     *
+     * @param sendToEmail the send to email
+     * @param mailSubject the mail subject
+     * @param mailText    the mail text
+     * @param properties  the properties
+     */
     MailSender(String sendToEmail, String mailSubject, String mailText, Properties properties) {
         this.sendToEmail = sendToEmail;
         this.mailSubject = mailSubject;
@@ -28,6 +42,9 @@ class MailSender {
         this.properties = properties;
     }
 
+    /**
+     * Initialization message and sending email.
+     */
     void sent() {
         try {
             initMessage();
@@ -53,6 +70,7 @@ class MailSender {
         String userPassword = configProperties.getProperty(PASSWORD);
         return Session.getDefaultInstance(configProperties,
                 new Authenticator() {
+                    @Override
                     protected PasswordAuthentication getPasswordAuthentication() {
                         return new PasswordAuthentication(userName, userPassword);
                     }
