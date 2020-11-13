@@ -13,11 +13,22 @@ import javax.servlet.jsp.tagext.TagSupport;
 import java.io.IOException;
 import java.util.List;
 
+/**
+ * The class represents custom user pagination tag.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class UserPaginationTag extends TagSupport {
     private static final Logger logger = LogManager.getLogger(UserPaginationTag.class);
     private static final int COUNT_OF_ITEMS = 10;
     private int currentPageNumber;
 
+    /**
+     * Sets current page number.
+     *
+     * @param currentPageNumber the current page number
+     */
     public void setCurrentPageNumber(int currentPageNumber) {
         this.currentPageNumber = currentPageNumber;
     }
@@ -75,7 +86,7 @@ public class UserPaginationTag extends TagSupport {
                         "</a>\n" +
                         "</li>");
             }
-            out.write(" </ul></div>");
+            out.write("</ul></div>");
         } catch (IOException e) {
             logger.log(Level.ERROR, "Error while writing into out stream", e);
             throw new JspException(e);
