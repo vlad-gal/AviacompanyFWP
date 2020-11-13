@@ -16,17 +16,24 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Set;
 
+/**
+ * The class represents security filter which redirect to 403 error page
+ * when user using /controller pattern with various commands.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class UserSecurityFilter implements Filter {
 
     @Override
-    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain) throws IOException, ServletException {
+    public void doFilter(ServletRequest servletRequest, ServletResponse servletResponse, FilterChain filterChain)
+            throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) servletRequest;
         HttpServletResponse response = (HttpServletResponse) servletResponse;
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(ParameterName.USER);
         String commandName = request.getParameter(ParameterName.COMMAND);
         Set<CommandType> commandTypeSet = null;
-
         if (user != null) {
             if (user.getStatus() != Status.INACTIVE) {
                 Command command = CommandProvider.getInstance().defineCommand(commandName);

@@ -16,6 +16,12 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
+/**
+ * The class represents confirming user's account by email.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class ConfirmAccountCommand implements Command {
     private static final Logger logger = LogManager.getLogger(ConfirmAccountCommand.class);
 

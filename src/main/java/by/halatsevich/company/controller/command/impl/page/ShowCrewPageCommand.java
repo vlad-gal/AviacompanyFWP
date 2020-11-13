@@ -17,6 +17,12 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * The class represents preparation for showing crew on page.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class ShowCrewPageCommand implements Command {
     private static final Logger logger = LogManager.getLogger(ShowCrewPageCommand.class);
 
@@ -29,10 +35,14 @@ public class ShowCrewPageCommand implements Command {
             CrewService crewService = factory.getCrewService();
             try {
                 Crew crew = crewService.findCrewById(Integer.parseInt(crewId));
-                List<User> pilots = crew.getStaff().stream().filter(user -> user.getRole() == User.Role.PILOT).collect(Collectors.toList());
-                List<User> navigators = crew.getStaff().stream().filter(user -> user.getRole() == User.Role.NAVIGATOR).collect(Collectors.toList());
-                List<User> radioman = crew.getStaff().stream().filter(user -> user.getRole() == User.Role.RADIOMAN).collect(Collectors.toList());
-                List<User> stewardesses = crew.getStaff().stream().filter(user -> user.getRole() == User.Role.STEWARDESS).collect(Collectors.toList());
+                List<User> pilots = crew.getStaff()
+                        .stream().filter(user -> user.getRole() == User.Role.PILOT).collect(Collectors.toList());
+                List<User> navigators = crew.getStaff()
+                        .stream().filter(user -> user.getRole() == User.Role.NAVIGATOR).collect(Collectors.toList());
+                List<User> radioman = crew.getStaff()
+                        .stream().filter(user -> user.getRole() == User.Role.RADIOMAN).collect(Collectors.toList());
+                List<User> stewardesses = crew.getStaff()
+                        .stream().filter(user -> user.getRole() == User.Role.STEWARDESS).collect(Collectors.toList());
                 request.setAttribute(ParameterName.DISPATCHER, crew.getDispatcher());
                 request.setAttribute(ParameterName.PILOTS, pilots);
                 request.setAttribute(ParameterName.NAVIGATORS, navigators);

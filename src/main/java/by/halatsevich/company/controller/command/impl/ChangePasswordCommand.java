@@ -15,6 +15,12 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * The class represents changing user's password.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class ChangePasswordCommand implements Command {
     private static final Logger logger = LogManager.getLogger(ChangePasswordCommand.class);
 

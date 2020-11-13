@@ -15,6 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+/**
+ * The class represents preparation for showing aircrafts on page.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class AircraftsPageCommand implements Command {
     private static final Logger logger = LogManager.getLogger(AircraftsPageCommand.class);
 

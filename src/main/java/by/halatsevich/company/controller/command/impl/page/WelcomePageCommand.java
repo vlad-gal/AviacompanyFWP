@@ -16,6 +16,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+/**
+ * The class represents preparation for showing welcome page.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class WelcomePageCommand implements Command {
     private static final Logger logger = LogManager.getLogger(WelcomePageCommand.class);
 

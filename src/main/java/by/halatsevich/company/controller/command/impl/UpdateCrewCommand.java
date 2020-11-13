@@ -16,6 +16,12 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * The class represents update crew command.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class UpdateCrewCommand implements Command {
     private static final Logger logger = LogManager.getLogger(UpdateCrewCommand.class);
 
@@ -38,7 +44,8 @@ public class UpdateCrewCommand implements Command {
             ServiceFactory factory = ServiceFactory.getInstance();
             CrewService crewService = factory.getCrewService();
             try {
-                boolean isCrewUpdate = crewService.updateCrew(updatingCrew, numberOfPilots, numberOfNavigators, numberOfRadioman, numberOfStewardesses, status);
+                boolean isCrewUpdate = crewService.updateCrew(updatingCrew, numberOfPilots,
+                        numberOfNavigators, numberOfRadioman, numberOfStewardesses, status);
                 if (isCrewUpdate) {
                     request.setAttribute(ParameterName.UPDATING_SUCCESSFUL_FLAG, true);
                     request.setAttribute(ParameterName.UPDATING_CREW, crewService.findCrewById(updatingCrew.getId()));

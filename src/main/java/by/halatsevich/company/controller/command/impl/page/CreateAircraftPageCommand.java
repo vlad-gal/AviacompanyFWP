@@ -7,6 +7,12 @@ import by.halatsevich.company.model.entity.Aircraft;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * The class represents preparation for creating aircraft.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class CreateAircraftPageCommand implements Command {
 
     @Override

@@ -19,6 +19,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
+/**
+ * The class represents registration command.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class RegistrationCommand implements Command {
     private static final Logger logger = LogManager.getLogger(RegistrationCommand.class);
 

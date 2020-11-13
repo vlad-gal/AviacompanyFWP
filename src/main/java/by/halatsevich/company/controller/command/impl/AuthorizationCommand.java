@@ -18,6 +18,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
+/**
+ * The class represents user's authorization command.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class AuthorizationCommand implements Command {
     private static final Logger logger = LogManager.getLogger(AuthorizationCommand.class);
 

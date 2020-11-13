@@ -13,6 +13,12 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * The main controller in project.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class Controller extends HttpServlet {
     private static final Logger logger = LogManager.getLogger(Controller.class);
 
@@ -26,6 +32,14 @@ public class Controller extends HttpServlet {
         processRequest(req, resp);
     }
 
+    /**
+     * Process request. Define actions which application can do.
+     *
+     * @param req  the request
+     * @param resp the response
+     * @throws ServletException the servlet exception
+     * @throws IOException      the io exception
+     */
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String commandName = req.getParameter(ParameterName.COMMAND);
         Command command = CommandProvider.getInstance().defineCommand(commandName);

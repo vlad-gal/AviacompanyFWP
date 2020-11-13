@@ -7,6 +7,12 @@ import by.halatsevich.company.model.entity.User;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * The class represents preparation for registration.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class RegistrationPageCommand implements Command {
 
     @Override

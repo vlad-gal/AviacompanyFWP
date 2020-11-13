@@ -16,6 +16,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+/**
+ * The class represents showing all aircrafts command.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class AllAircraftsCommand implements Command {
     private static final Logger logger = LogManager.getLogger(AllAircraftsCommand.class);
 

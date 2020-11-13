@@ -15,6 +15,12 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * The class represents update airport command.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class UpdateAirportCommand implements Command {
     private static final Logger logger = LogManager.getLogger(UpdateAirportCommand.class);
 

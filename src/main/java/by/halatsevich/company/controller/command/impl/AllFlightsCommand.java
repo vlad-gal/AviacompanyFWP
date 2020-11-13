@@ -16,6 +16,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+/**
+ * The class represents showing all flights command.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class AllFlightsCommand implements Command {
     private static final Logger logger = LogManager.getLogger(AllFlightsCommand.class);
 

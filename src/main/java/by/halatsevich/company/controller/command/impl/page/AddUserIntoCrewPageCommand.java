@@ -20,6 +20,12 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The class represents preparation for adding a user to a crew.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class AddUserIntoCrewPageCommand implements Command {
     private static final Logger logger = LogManager.getLogger(AddUserIntoCrewPageCommand.class);
 

@@ -20,6 +20,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+/**
+ * The class represents preparation for creating flight.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class CreateFlightPageCommand implements Command {
     private static final Logger logger = LogManager.getLogger(CreateFlightPageCommand.class);
 

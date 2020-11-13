@@ -16,19 +16,25 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
+/**
+ * The class represents preparation for updating aircraft.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class UpdateAircraftPageCommand implements Command {
     private static final Logger logger = LogManager.getLogger(UpdateAircraftPageCommand.class);
 
     @Override
     public String execute(HttpServletRequest request) {
-        String aicraftId = request.getParameter(ParameterName.AIRCRAFT_ID);
+        String aircraftId = request.getParameter(ParameterName.AIRCRAFT_ID);
         HttpSession session = request.getSession();
         String page;
-        if (BaseValidator.isValidId(aicraftId)) {
+        if (BaseValidator.isValidId(aircraftId)) {
             ServiceFactory factory = ServiceFactory.getInstance();
             AircraftService aircraftService = factory.getAircraftService();
             try {
-                Optional<Aircraft> aircraft = aircraftService.findAircraftById(aicraftId);
+                Optional<Aircraft> aircraft = aircraftService.findAircraftById(aircraftId);
                 if (aircraft.isPresent()) {
                     session.setAttribute(ParameterName.UPDATING_AIRCRAFT, aircraft.get());
                     session.setAttribute(ParameterName.AIRCRAFT_TYPES, Aircraft.AircraftType.values());

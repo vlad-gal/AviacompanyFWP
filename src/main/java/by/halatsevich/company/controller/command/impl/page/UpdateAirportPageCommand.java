@@ -16,6 +16,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
+/**
+ * The class represents preparation for updating airport.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class UpdateAirportPageCommand implements Command {
     private static final Logger logger = LogManager.getLogger(UpdateAirportPageCommand.class);
 

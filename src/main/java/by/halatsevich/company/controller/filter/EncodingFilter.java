@@ -5,6 +5,12 @@ import by.halatsevich.company.controller.ParameterName;
 import javax.servlet.*;
 import java.io.IOException;
 
+/**
+ * The class represents encoding filter.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class EncodingFilter implements Filter {
     private String code;
 

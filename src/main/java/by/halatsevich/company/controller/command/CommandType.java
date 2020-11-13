@@ -4,6 +4,12 @@ import by.halatsevich.company.controller.PagePath;
 import by.halatsevich.company.controller.command.impl.*;
 import by.halatsevich.company.controller.command.impl.page.*;
 
+/**
+ * The enum which define all commands in project.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public enum CommandType {
     ADD_USER_INTO_CREW(new AddUserIntoCrewCommand()),
     ADD_USER_INTO_CREW_PAGE(new AddUserIntoCrewPageCommand()),
@@ -64,6 +70,11 @@ public enum CommandType {
         this.command = command;
     }
 
+    /**
+     * Gets command.
+     *
+     * @return the command
+     */
     public Command getCommand() {
         return command;
     }

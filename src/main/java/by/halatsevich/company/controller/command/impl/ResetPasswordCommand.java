@@ -15,6 +15,12 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
+/**
+ * The class represents reset password command.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class ResetPasswordCommand implements Command {
     private static final Logger logger = LogManager.getLogger(ResetPasswordCommand.class);
 

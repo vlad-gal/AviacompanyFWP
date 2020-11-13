@@ -15,6 +15,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+/**
+ * The class represents preparation for updating flight.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class UpdateFlightPageCommand implements Command {
     private static final Logger logger = LogManager.getLogger(UpdateFlightPageCommand.class);
 
@@ -39,7 +45,8 @@ public class UpdateFlightPageCommand implements Command {
                 crews = crewService.findCrewsByStatus(Status.ACTIVE.getStatusName());
                 airports = airportService.findAllAirports();
                 aircrafts = aircraftService.findAircraftsByStatus(Status.ACTIVE.getStatusName());
-                operators = userService.findUsersByRoleAndStatus(User.Role.OPERATOR.getRoleName(), Status.ACTIVE.getStatusName());
+                operators = userService
+                        .findUsersByRoleAndStatus(User.Role.OPERATOR.getRoleName(), Status.ACTIVE.getStatusName());
                 session.setAttribute(ParameterName.UPDATING_FLIGHT, flight);
                 session.setAttribute(ParameterName.CREWS, crews);
                 session.setAttribute(ParameterName.AIRPORTS, airports);

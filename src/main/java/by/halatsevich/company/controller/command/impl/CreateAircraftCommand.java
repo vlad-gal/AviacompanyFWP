@@ -15,6 +15,12 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * The class represents creating aircraft command.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class CreateAircraftCommand implements Command {
     private static final Logger logger = LogManager.getLogger(CreateAircraftCommand.class);
 

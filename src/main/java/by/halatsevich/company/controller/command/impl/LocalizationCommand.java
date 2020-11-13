@@ -6,6 +6,12 @@ import by.halatsevich.company.controller.command.Command;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * The class represents localization command.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class LocalizationCommand implements Command {
 
     @Override

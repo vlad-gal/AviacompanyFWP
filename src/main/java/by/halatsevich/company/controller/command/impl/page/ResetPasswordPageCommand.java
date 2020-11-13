@@ -6,6 +6,12 @@ import by.halatsevich.company.controller.command.Command;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * The class represents preparation for reset password.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class ResetPasswordPageCommand implements Command {
 
     @Override

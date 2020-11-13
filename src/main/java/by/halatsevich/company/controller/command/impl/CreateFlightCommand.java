@@ -15,6 +15,12 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * The class represents creating flight command.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class CreateFlightCommand implements Command {
     private static final Logger logger = LogManager.getLogger(CreateFlightCommand.class);
 
@@ -49,10 +55,9 @@ public class CreateFlightCommand implements Command {
                 } else {
                     logger.log(Level.ERROR, "Error while creating flight");
                     request.setAttribute(ParameterName.ERROR_CREATE_FLIGHT_FLAG, true);
-                    // TODO: 12.11.2020  
-                    request.setAttribute(ParameterName.DEPARTURE_AIRPORT, airportService.findAirportById(departureAirportId).get());
-                    request.setAttribute(ParameterName.DESTINATION_AIRPORT, airportService.findAirportById(destinationAirportId).get());
-                    request.setAttribute(ParameterName.AIRCRAFT, aircraftService.findAircraftById(aircraftId).get());
+                    request.setAttribute(ParameterName.DEPARTURE_AIRPORT, airportService.findAirportById(departureAirportId).orElse(null));
+                    request.setAttribute(ParameterName.DESTINATION_AIRPORT, airportService.findAirportById(destinationAirportId).orElse(null));
+                    request.setAttribute(ParameterName.AIRCRAFT, aircraftService.findAircraftById(aircraftId).orElse(null));
                     request.setAttribute(ParameterName.CREW, crewService.findCrewById(Integer.parseInt(crewId)));
                     request.setAttribute(ParameterName.DEPART_TIME, departTime);
                     request.setAttribute(ParameterName.ARRIVE_TIME, arriveTime);
