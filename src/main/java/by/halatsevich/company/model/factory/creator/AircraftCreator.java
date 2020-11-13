@@ -7,6 +7,12 @@ import by.halatsevich.company.model.factory.EntityCreator;
 
 import java.util.Map;
 
+/**
+ * The class represents aircraft creator implementation.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class AircraftCreator implements EntityCreator<Aircraft> {
 
     @Override

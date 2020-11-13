@@ -5,10 +5,21 @@ import java.util.Map;
 import java.util.Properties;
 import java.util.concurrent.Executor;
 
+/**
+ * The class represents proxy connection which uses instead connection for more protection.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class ProxyConnection implements Connection {
 
     private Connection connection;
 
+    /**
+     * Instantiates a new Proxy connection.
+     *
+     * @param connection the connection
+     */
     ProxyConnection(Connection connection) {
         this.connection = connection;
     }
@@ -58,6 +69,11 @@ public class ProxyConnection implements Connection {
         ConnectionPool.INSTANCE.releaseConnection(this);
     }
 
+    /**
+     * Really closing connection.
+     *
+     * @throws SQLException the sql exception
+     */
     void reallyClose() throws SQLException {
         connection.close();
     }

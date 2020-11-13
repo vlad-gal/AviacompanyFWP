@@ -1,12 +1,18 @@
 package by.halatsevich.company.model.factory.creator;
 
 import by.halatsevich.company.model.dao.ColumnName;
-import by.halatsevich.company.model.factory.EntityCreator;
 import by.halatsevich.company.model.entity.FlightDto;
 import by.halatsevich.company.model.entity.Status;
+import by.halatsevich.company.model.factory.EntityCreator;
 
 import java.util.Map;
 
+/**
+ * The class represents flight dto creator implementation.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class FlightDtoCreator implements EntityCreator<FlightDto> {
 
     @Override

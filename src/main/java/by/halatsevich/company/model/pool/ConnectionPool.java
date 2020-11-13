@@ -13,8 +13,17 @@ import java.util.Queue;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingDeque;
 
+/**
+ * The class represents connection poll.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public enum ConnectionPool {
 
+    /**
+     * Instance connection pool.
+     */
     INSTANCE;
 
     private final Logger logger = LogManager.getLogger(ConnectionPool.class);
@@ -58,6 +67,11 @@ public enum ConnectionPool {
         }
     }
 
+    /**
+     * Gets connection.
+     *
+     * @return the connection
+     */
     public Connection getConnection() {
         ProxyConnection connection = null;
         try {
@@ -69,6 +83,11 @@ public enum ConnectionPool {
         return connection;
     }
 
+    /**
+     * Release connection.
+     *
+     * @param connection the connection
+     */
     public void releaseConnection(Connection connection) {
         if (connection instanceof ProxyConnection && givenConnections.remove(connection)) {
             freeConnections.offer((ProxyConnection) connection);
@@ -77,6 +96,9 @@ public enum ConnectionPool {
         }
     }
 
+    /**
+     * Destroy pool.
+     */
     public void destroyPool() {
         try {
             for (int i = 0; i < poolSize; i++) {

@@ -16,6 +16,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
+/**
+ * The class represents airport dao implementation.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class AirportDaoImpl implements AirportDao {
 
     @Override
@@ -27,11 +33,6 @@ public class AirportDaoImpl implements AirportDao {
         } catch (SQLException e) {
             throw new DaoException("Error while finding all airports", e);
         }
-    }
-
-    @Override
-    public List<Airport> findAllByStatus(Status status) throws DaoException {
-        throw new UnsupportedOperationException("Operation find all by status not allowed with airport");
     }
 
     @Override
@@ -51,6 +52,11 @@ public class AirportDaoImpl implements AirportDao {
         } catch (SQLException e) {
             throw new DaoException("Error while finding airport by id", e);
         }
+    }
+
+    @Override
+    public List<Airport> findAllByStatus(Status status) throws DaoException {
+        throw new UnsupportedOperationException("Operation find all by status not allowed with airport");
     }
 
     @Override

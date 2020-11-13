@@ -7,6 +7,12 @@ import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 import java.util.Properties;
 
+/**
+ * The class represents connection config. Loads properties, define pool size and driver name.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 class ConnectionConfig {
     private static final Logger logger = LogManager.getLogger(ConnectionConfig.class);
     private static final ConnectionConfig instance = new ConnectionConfig();
@@ -42,6 +48,11 @@ class ConnectionConfig {
         driverName = properties.getProperty(DB_DRIVER_NAME);
     }
 
+    /**
+     * Gets connection config instance.
+     *
+     * @return the instance
+     */
     public static ConnectionConfig getInstance() {
         return instance;
     }

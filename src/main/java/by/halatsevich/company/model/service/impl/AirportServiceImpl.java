@@ -10,7 +10,26 @@ import by.halatsevich.company.model.service.AirportService;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The class represents airport service implementation.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class AirportServiceImpl implements AirportService {
+
+    @Override
+    public boolean addAirport(String airportName, String city, String country) throws ServiceException {
+        DaoFactory factory = DaoFactory.getInstance();
+        AirportDao airportDao = factory.getAirportDao();
+        boolean isAdded;
+        try {
+            isAdded = airportDao.addAirport(new Airport(airportName, city, country));
+        } catch (DaoException e) {
+            throw new ServiceException("Error while adding airport", e);
+        }
+        return isAdded;
+    }
 
     @Override
     public List<Airport> findAllAirports() throws ServiceException {
@@ -37,19 +56,6 @@ public class AirportServiceImpl implements AirportService {
             throw new ServiceException("Error while finding airport by id", e);
         }
         return airport;
-    }
-
-    @Override
-    public boolean addAirport(String airportName, String city, String country) throws ServiceException {
-        DaoFactory factory = DaoFactory.getInstance();
-        AirportDao airportDao = factory.getAirportDao();
-        boolean isAdded;
-        try {
-            isAdded = airportDao.addAirport(new Airport(airportName,city,country));
-        } catch (DaoException e) {
-            throw new ServiceException("Error while adding airport", e);
-        }
-        return isAdded;
     }
 
     @Override

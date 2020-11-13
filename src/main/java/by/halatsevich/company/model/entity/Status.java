@@ -1,9 +1,27 @@
 package by.halatsevich.company.model.entity;
 
+/**
+ * The enum represents status.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public enum Status {
+    /**
+     * Active status.
+     */
     ACTIVE("Active"),
+    /**
+     * Inactive status.
+     */
     INACTIVE("Inactive"),
+    /**
+     * Fly status.
+     */
     FLY("Fly"),
+    /**
+     * Busy status.
+     */
     BUSY("Busy");
 
     private String statusName;
@@ -12,6 +30,11 @@ public enum Status {
         this.statusName = statusName;
     }
 
+    /**
+     * Gets status name.
+     *
+     * @return the status name
+     */
     public String getStatusName() {
         return statusName;
     }

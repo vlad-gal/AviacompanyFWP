@@ -17,6 +17,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
+/**
+ * The class represents user dao implementation.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class UserDaoImpl implements UserDao {
 
     @Override
@@ -177,18 +183,6 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean remove(int userId) throws DaoException {
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.REMOVE_USER_BY_ID)) {
-            statement.setInt(1, Status.INACTIVE.ordinal());
-            statement.setInt(2, userId);
-            return statement.executeUpdate() > 0;
-        } catch (SQLException e) {
-            throw new DaoException("Error while deleting user", e);
-        }
-    }
-
-    @Override
     public boolean update(User user) throws DaoException {
         Connection connection = ConnectionPool.INSTANCE.getConnection();
         PreparedStatement statement = null;
@@ -221,6 +215,18 @@ public class UserDaoImpl implements UserDao {
             closeConnection(connection);
         }
         return isUpdated;
+    }
+
+    @Override
+    public boolean remove(int userId) throws DaoException {
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.REMOVE_USER_BY_ID)) {
+            statement.setInt(1, Status.INACTIVE.ordinal());
+            statement.setInt(2, userId);
+            return statement.executeUpdate() > 0;
+        } catch (SQLException e) {
+            throw new DaoException("Error while deleting user", e);
+        }
     }
 
     @Override

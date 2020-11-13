@@ -1,11 +1,17 @@
 package by.halatsevich.company.model.factory.creator;
 
 import by.halatsevich.company.model.dao.ColumnName;
-import by.halatsevich.company.model.factory.EntityCreator;
 import by.halatsevich.company.model.entity.Airport;
+import by.halatsevich.company.model.factory.EntityCreator;
 
 import java.util.Map;
 
+/**
+ * The class represents airport creator implementation.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class AirportCreator implements EntityCreator<Airport> {
 
     @Override

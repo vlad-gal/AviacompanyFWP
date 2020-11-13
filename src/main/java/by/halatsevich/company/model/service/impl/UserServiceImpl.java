@@ -15,6 +15,12 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+/**
+ * The class represents user service implementation.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class UserServiceImpl implements UserService {
 
     @Override
@@ -37,7 +43,6 @@ public class UserServiceImpl implements UserService {
         return user;
     }
 
-
     @Override
     public List<User> findUsersByStatus(String status) throws ServiceException {
         DaoFactory factory = DaoFactory.getInstance();
@@ -57,11 +62,35 @@ public class UserServiceImpl implements UserService {
         UserDao dao = factory.getUserDao();
         List<User> users;
         try {
-            users = dao.findUsersByRoleAndStatus(User.Role.valueOf(role.toUpperCase()),Status.valueOf(status.toUpperCase()));
+            users = dao.findUsersByRoleAndStatus(User.Role.valueOf(role.toUpperCase()), Status.valueOf(status.toUpperCase()));
         } catch (DaoException e) {
             throw new ServiceException("Error while finding all users by role and status", e);
         }
         return users;
+    }
+
+    @Override
+    public Optional<User> findUserByEmail(String email) throws ServiceException {
+        UserDao userDao = DaoFactory.getInstance().getUserDao();
+        Optional<User> user;
+        try {
+            user = userDao.findUserByEmail(email);
+        } catch (DaoException e) {
+            throw new ServiceException("Error while finding user by email", e);
+        }
+        return user;
+    }
+
+    @Override
+    public Optional<User> findUserByLogin(String login) throws ServiceException {
+        UserDao userDao = DaoFactory.getInstance().getUserDao();
+        Optional<User> user;
+        try {
+            user = userDao.findUserByLogin(login);
+        } catch (DaoException e) {
+            throw new ServiceException("Error while finding user by login", e);
+        }
+        return user;
     }
 
     @Override
@@ -77,18 +106,6 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException("Error while registering user", e);
         }
         return isUserRegistered;
-    }
-
-    @Override
-    public Optional<User> findUserByEmail(String email) throws ServiceException {
-        UserDao userDao = DaoFactory.getInstance().getUserDao();
-        Optional<User> user;
-        try {
-            user = userDao.findUserByEmail(email);
-        } catch (DaoException e) {
-            throw new ServiceException("Error while finding user by email", e);
-        }
-        return user;
     }
 
     @Override
@@ -115,17 +132,5 @@ public class UserServiceImpl implements UserService {
             throw new ServiceException("Error while updating user", e);
         }
         return isUserUpdated;
-    }
-
-    @Override
-    public Optional<User> findUserByLogin(String login) throws ServiceException {
-        UserDao userDao = DaoFactory.getInstance().getUserDao();
-        Optional<User> user;
-        try {
-            user = userDao.findUserByLogin(login);
-        } catch (DaoException e) {
-            throw new ServiceException("Error while finding user by login", e);
-        }
-        return user;
     }
 }

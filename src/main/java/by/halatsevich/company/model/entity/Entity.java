@@ -2,20 +2,44 @@ package by.halatsevich.company.model.entity;
 
 import java.io.Serializable;
 
+/**
+ * The abstract class represents basic entity.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public abstract class Entity implements Serializable {
     private int id;
 
+    /**
+     * Instantiates a new Entity.
+     */
     public Entity() {
     }
 
+    /**
+     * Instantiates a new Entity.
+     *
+     * @param id the id
+     */
     public Entity(int id) {
         this.id = id;
     }
 
+    /**
+     * Gets id.
+     *
+     * @return the id
+     */
     public int getId() {
         return id;
     }
 
+    /**
+     * Sets id.
+     *
+     * @param id the id
+     */
     public void setId(int id) {
         this.id = id;
     }

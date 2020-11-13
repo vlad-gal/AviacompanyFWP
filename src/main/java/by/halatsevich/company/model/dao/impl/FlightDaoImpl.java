@@ -16,6 +16,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
+/**
+ * The class represents flight dao implementation.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class FlightDaoImpl implements FlightDao {
 
     @Override
@@ -25,7 +31,7 @@ public class FlightDaoImpl implements FlightDao {
             ResultSet resultSet = statement.executeQuery();
             return createFlightDtos(resultSet);
         } catch (SQLException e) {
-            throw new DaoException("Error while finding all flight", e);
+            throw new DaoException("Error while finding all flights", e);
         }
     }
 
@@ -37,7 +43,20 @@ public class FlightDaoImpl implements FlightDao {
             ResultSet resultSet = statement.executeQuery();
             return createFlightDtos(resultSet);
         } catch (SQLException e) {
-            throw new DaoException("Error while finding all flight", e);
+            throw new DaoException("Error while finding all flights by status", e);
+        }
+    }
+
+    @Override
+    public List<FlightDto> findUserFlightsByStatus(int userId, Status status) throws DaoException {
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_ALL_USERS_FLIGHTS_BY_STATUS)) {
+            statement.setInt(1, status.ordinal());
+            statement.setInt(2, userId);
+            ResultSet resultSet = statement.executeQuery();
+            return createFlightDtos(resultSet);
+        } catch (SQLException e) {
+            throw new DaoException("Error while finding all flights by status", e);
         }
     }
 
@@ -49,7 +68,7 @@ public class FlightDaoImpl implements FlightDao {
             ResultSet resultSet = statement.executeQuery();
             return createFlightDto(resultSet);
         } catch (SQLException e) {
-            throw new DaoException("Error while finding flightDto by id", e);
+            throw new DaoException("Error while finding flight by id", e);
         }
     }
 
@@ -64,10 +83,10 @@ public class FlightDaoImpl implements FlightDao {
             statement.setLong(5, flightDto.getAircraftId());
             statement.setInt(6, flightDto.getOperatorId());
             statement.setInt(7, flightDto.getCrewId());
-            statement.setInt(8,  flightDto.getStatus().ordinal());
+            statement.setInt(8, flightDto.getStatus().ordinal());
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
-            throw new DaoException("Error while inserting flightDto", e);
+            throw new DaoException("Error while inserting flight", e);
         }
     }
 
@@ -86,7 +105,7 @@ public class FlightDaoImpl implements FlightDao {
             statement.setInt(9, flightDto.getId());
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
-            throw new DaoException("Error while updating flightDto", e);
+            throw new DaoException("Error while updating flight", e);
         }
     }
 
@@ -122,7 +141,7 @@ public class FlightDaoImpl implements FlightDao {
         while (resultSet.next()) {
             Map<String, Object> flightData = createFlightData(resultSet);
             flightDto = factory.getFlightDtoCreator().create(flightData);
-            logger.log(Level.DEBUG, "FlightDto found: {}", flightDto);
+            logger.log(Level.DEBUG, "Flight found: {}", flightDto);
         }
         return Optional.ofNullable(flightDto);
     }
@@ -137,19 +156,6 @@ public class FlightDaoImpl implements FlightDao {
             flightDtos.add(flightDto);
         }
         return flightDtos;
-    }
-
-    @Override
-    public List<FlightDto> findUsersFlightsByStatus(int userId, Status status) throws DaoException {
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_ALL_USERS_FLIGHTS_BY_STATUS)) {
-            statement.setInt(1, status.ordinal());
-            statement.setInt(2, userId);
-            ResultSet resultSet = statement.executeQuery();
-            return createFlightDtos(resultSet);
-        } catch (SQLException e) {
-            throw new DaoException("Error while finding all flight", e);
-        }
     }
 }
 

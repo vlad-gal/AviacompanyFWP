@@ -11,7 +11,29 @@ import by.halatsevich.company.model.service.AircraftService;
 import java.util.List;
 import java.util.Optional;
 
+/**
+ * The class represents aircraft service implementation.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class AircraftServiceImpl implements AircraftService {
+
+    @Override
+    public boolean addAircraft(String tailNumber, String aircraftName, String aircraftType, Status status)
+            throws ServiceException {
+        DaoFactory factory = DaoFactory.getInstance();
+        AircraftDao aircraftDao = factory.getAircraftDao();
+        boolean isAdded;
+        try {
+            Aircraft aircraft =
+                    new Aircraft(tailNumber, aircraftName, Aircraft.AircraftType.valueOf(aircraftType.toUpperCase()), status);
+            isAdded = aircraftDao.addAircraft(aircraft);
+        } catch (DaoException e) {
+            throw new ServiceException("Error while adding aircraft", e);
+        }
+        return isAdded;
+    }
 
     @Override
     public List<Aircraft> findAllAircrafts() throws ServiceException {
@@ -51,20 +73,6 @@ public class AircraftServiceImpl implements AircraftService {
             throw new ServiceException("Error while finding all aircrafts by status", e);
         }
         return aircrafts;
-    }
-
-    @Override
-    public boolean addAircraft(String tailNumber, String aircraftName, String aircraftType, Status status) throws ServiceException {
-        DaoFactory factory = DaoFactory.getInstance();
-        AircraftDao aircraftDao = factory.getAircraftDao();
-        boolean isAdded;
-        try {
-            Aircraft aircraft = new Aircraft(tailNumber,aircraftName, Aircraft.AircraftType.valueOf(aircraftType.toUpperCase()),status);
-            isAdded = aircraftDao.addAircraft(aircraft);
-        } catch (DaoException e) {
-            throw new ServiceException("Error while adding aircraft", e);
-        }
-        return isAdded;
     }
 
     @Override

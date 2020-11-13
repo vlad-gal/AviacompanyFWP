@@ -1,7 +1,15 @@
 package by.halatsevich.company.model.dao;
 
+/**
+ * The class represents sql queries.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class SqlQuery {
-    //users
+    /**
+     * Sql queries for users table
+     */
     public static final String SELECT_ALL_USERS =
             "SELECT users.userId, users.email, users.login, " +
                     "statuses.statusName, " +
@@ -61,11 +69,6 @@ public class SqlQuery {
                     "JOIN statuses ON statuses.statusId = users.statusId " +
                     "JOIN personalData ON personalData.userId = users.userId " +
                     "WHERE users.email = ?";
-    public static final String SELECT_USER_LOGIN =
-            "SELECT login FROM users WHERE login = ?";
-    public static final String SELECT_USER_EMAIL =
-            "SELECT email FROM users WHERE email = ?";
-
     public static final String SELECT_USER_PASSWORD_BY_LOGIN =
             "SELECT password FROM users WHERE login = ?";
     public static final String INSERT_USER =
@@ -78,12 +81,14 @@ public class SqlQuery {
             "UPDATE users SET statusId = '?' WHERE userId = ?";
     public static final String UPDATE_USER =
             "UPDATE users SET email = ?, login = ?, roleId = ?, statusId = ? WHERE login = ?";
-    public static final String UPDATE_PASSWORD = // TODO: 20.10.2020 check
+    public static final String UPDATE_PASSWORD =
             "UPDATE users SET password = ? WHERE email = ?";
     public static final String UPDATE_PERSONAL_DATA =
             "UPDATE personalData SET firstName = ?, lastName = ?, telephoneNumber = ? WHERE userId = ?";
-    //flights
 
+    /**
+     * Sql queries for flights table
+     */
     public static final String SELECT_ALL_FLIGHTS =
             "SELECT flights.flightId, flights.departureAirportId, flights.destinationAirportId, flights.departTime, " +
                     "flights.arriveTime, flights.aircraftId, flights.operatorId, flights.crewId, statuses.statusName " +
@@ -104,48 +109,12 @@ public class SqlQuery {
                     "JOIN users ON users.userId = crews_has_users.userId " +
                     "JOIN statuses ON statuses.statusId = flights.statusId " +
                     "WHERE (flights.statusId = ? AND users.userId = ?)";
-    public static final String SELECT_FLIGHT_BY_DEPARTURE_AIRPORT_ID =
-            "SELECT flights.flightId, flights.departureAirportId, flights.destinationAirportId, flights.departTime, " +
-                    "flights.arriveTime, flights.aircraftId, flights.operatorId, flights.crewId, statuses.statusName " +
-                    "FROM flights " +
-                    "JOIN statuses ON statuses.statusId = flights.statusId " +
-                    "WHERE flights.departureAirportId = ?";
     public static final String SELECT_FLIGHT_BY_ID =
             "SELECT flights.flightId, flights.departureAirportId, flights.destinationAirportId, flights.departTime, " +
                     "flights.arriveTime, flights.aircraftId, flights.operatorId, flights.crewId, statuses.statusName " +
                     "FROM flights " +
                     "JOIN statuses ON statuses.statusId = flights.statusId " +
-                    "WHERE flights.flightId = ?"; // TODO: 20.10.2020 check
-    public static final String SELECT_FLIGHT_BY_DESTINATION_AIRPORT_ID =
-            "SELECT flights.flightId, flights.departureAirportId, flights.destinationAirportId, flights.departTime, " +
-                    "flights.arriveTime, flights.aircraftId, flights.operatorId, flights.crewId, statuses.statusName " +
-                    "FROM flights " +
-                    "JOIN statuses ON statuses.statusId = flights.statusId " +
-                    "WHERE flights.destinationAirportId = ?";
-    public static final String SELECT_FLIGHT_BY_DEPART_PERIOD_OF_TIME =
-            "SELECT flights.flightId, flights.departureAirportId, flights.destinationAirportId, flights.departTime, " +
-                    "flights.arriveTime, flights.aircraftId, flights.operatorId, flights.crewId, statuses.statusName " +
-                    "FROM flights " +
-                    "JOIN statuses ON statuses.statusId = flights.statusId " +
-                    "WHERE (flights.departTime >= ? AND flights.departTime <= ?)";
-    public static final String SELECT_FLIGHT_BY_ARRIVE_PERIOD_OF_TIME =
-            "SELECT flights.flightId, flights.departureAirportId, flights.destinationAirportId, flights.departTime, " +
-                    "flights.arriveTime, flights.aircraftId, flights.operatorId, flights.crewId, statuses.statusName " +
-                    "FROM flights " +
-                    "JOIN statuses ON statuses.statusId = flights.statusId " +
-                    "WHERE (flights.arriveTime >= ? AND flights.arriveTime <= ?)";
-    public static final String SELECT_FLIGHT_BY_CREW_ID =
-            "SELECT flights.flightId, flights.departureAirportId, flights.destinationAirportId, flights.departTime, " +
-                    "flights.arriveTime, flights.aircraftId, flights.operatorId, flights.crewId, statuses.statusName " +
-                    "FROM flights " +
-                    "JOIN statuses ON statuses.statusId = flights.statusId " +
-                    "WHERE flights.crewId = ?";
-    public static final String SELECT_FLIGHT_BY_OPERATOR_ID =
-            "SELECT flights.flightId, flights.departureAirportId, flights.destinationAirportId, flights.departTime, " +
-                    "flights.arriveTime, flights.aircraftId, flights.operatorId, flights.crewId, statuses.statusName " +
-                    "FROM flights " +
-                    "JOIN statuses ON statuses.statusId = flights.statusId " +
-                    "WHERE flights.operatorId = ?";
+                    "WHERE flights.flightId = ?";
     public static final String INSERT_FLIGHT =
             "INSERT INTO flights (departureAirportId, destinationAirportId, departTime, arriveTime, aircraftId, " +
                     "operatorId, crewId, statusId) " +
@@ -155,13 +124,15 @@ public class SqlQuery {
                     "aircraftId = ?, operatorId = ?, crewId = ?, statusId = ? WHERE flightId = ?";
     public static final String REMOVE_FLIGHT_BY_ID =
             "UPDATE flights SET statusId = ? WHERE flightId = ?";
-    //crew
+
+    /**
+     * Sql queries for crews and crews_has_users table
+     */
     public static final String SELECT_ALL_CREWS =
             "SELECT crews.crewId, crews.dispatcherId, crews.numberOfPilots, crews.numberOfNavigators, crews.numberOfRadioman, " +
                     "crews.numberOfStewardesses, statuses.statusName, crews.crewName " +
                     "FROM crews " +
                     "JOIN statuses ON statuses.statusId = crews.statusId";
-    // TODO: 03.11.2020 проверить все запросы крю и дао
     public static final String SELECT_ALL_CREWS_BY_STATUS =
             "SELECT crews.crewId, crews.dispatcherId, crews.numberOfPilots, crews.numberOfNavigators, crews.numberOfRadioman, " +
                     "crews.numberOfStewardesses, statuses.statusName, crews.crewName " +
@@ -174,12 +145,6 @@ public class SqlQuery {
                     "FROM crews " +
                     "JOIN statuses ON statuses.statusId = crews.statusId " +
                     "WHERE crews.crewId = ?";
-    public static final String SELECT_CREW_BY_DISPATCHER_ID =
-            "SELECT crews.crewId, crews.dispatcherId, crews.numberOfPilots, crews.numberOfNavigators, crews.numberOfRadioman, " +
-                    "crews.numberOfStewardesses, statuses.statusName, crews.crewName " +
-                    "FROM crews " +
-                    "JOIN statuses ON statuses.statusId = crews.statusId " +
-                    "WHERE crews.dispatcherId = ?";
     public static final String SELECT_CREW_BY_CREW_NAME =
             "SELECT crews.crewId, crews.dispatcherId, crews.numberOfPilots, crews.numberOfNavigators, crews.numberOfRadioman, " +
                     "crews.numberOfStewardesses, statuses.statusName, crews.crewName " +
@@ -207,42 +172,32 @@ public class SqlQuery {
                     "VALUES (?,?,?,?,?,?,?)";
     public static final String INSERT_USER_INTO_CREW =
             "INSERT INTO crews_has_users (crewId, userId) VALUES (?,?)";
-    public static final String UPDATE_USER_INTO_CREW =
-            "UPDATE crews_has_users SET userId = ? WHERE (userId = ? AND crewId = ?)";
-    public static final String UPDATE_DISPATCHER_INTO_CREW =
-            "UPDATE crews SET dispatcherId = ? WHERE (dispatcherId = ? AND crewId = ?)";
     public static final String UPDATE_CREW =
             "UPDATE crews SET numberOfPilots = ?, numberOfNavigators = ?, numberOfRadioman = ?, " +
                     "numberOfStewardesses = ?, statusId = ? WHERE crewId = ?";
     public static final String REMOVE_CREW_BY_ID =
             "UPDATE crews SET statusId = ? WHERE crewId = ?";
-    public static final String REMOVE_USER_FROM_CREW_BY_ID =
-            "DELETE FROM crews_has_users WHERE (userId = ? AND crewId = ?)";
-    //airport
 
+    /**
+     * Sql queries for airports table
+     */
     public static final String SELECT_ALL_AIRPORTS =
             "SELECT airportId, airportName, country, city FROM airports";
     public static final String SELECT_AIRPORT_BY_ID =
             "SELECT airportId, airportName, country, city FROM airports WHERE airportId = ?";
-    public static final String SELECT_AIRPORT_BY_NAME =
-            "SELECT airportId, airportName, country, city FROM airports WHERE airportName = ?";
-    public static final String SELECT_AIRPORTS_BY_CITY =
-            "SELECT airportId, airportName, country, city FROM airports WHERE city = ?";
-    public static final String SELECT_AIRPORTS_BY_COUNTRY =
-            "SELECT airportId, airportName, country, city FROM airports WHERE country = ?";
     public static final String INSERT_AIRPORT =
             "INSERT INTO airports (airportName, country, city) VALUES (?,?,?)";
     public static final String UPDATE_AIRPORT =
             "UPDATE airports SET airportName = ?, country = ?, city = ? WHERE airportId = ?";
-    public static final String REMOVE_AIRPORT_BY_ID =
-            "DELETE FROM airports WHERE airportId = ?";
-    //todo check all aircraft
+
+    /**
+     * Sql queries for aircrafts table
+     */
     public static final String SELECT_ALL_AIRCRAFT =
             "SELECT aircrafts.aircraftId, aircrafts.tailNumber, aircrafts.aircraftName, aircrafttypes.aircraftType, statuses.statusName " +
                     "FROM aircrafts " +
                     "JOIN statuses ON statuses.statusId = aircrafts.statusId " +
                     "JOIN aircrafttypes ON aircrafttypes.aircraftTypeId = aircrafts.aircraftTypeId";
-    //aircraft
     public static final String SELECT_ALL_AIRCRAFT_BY_STATUS =
             "SELECT aircrafts.aircraftId, aircrafts.tailNumber, aircrafts.aircraftName, aircrafttypes.aircraftType, statuses.statusName " +
                     "FROM aircrafts " +
@@ -255,24 +210,6 @@ public class SqlQuery {
                     "JOIN aircrafttypes ON aircrafttypes.aircraftTypeId = aircrafts.aircraftTypeId " +
                     "JOIN statuses ON statuses.statusId = aircrafts.statusId " +
                     "WHERE aircrafts.aircraftId = ?";
-    public static final String SELECT_AIRCRAFT_BY_TAIL_NUMBER =
-            "SELECT aircrafts.aircraftId, aircrafts.tailNumber, aircrafts.aircraftName, aircrafttypes.aircraftType, statuses.statusName " +
-                    "FROM aircrafts " +
-                    "JOIN aircrafttypes ON aircrafttypes.aircraftTypeId = aircrafts.aircraftTypeId " +
-                    "JOIN statuses ON statuses.statusId = aircrafts.statusId " +
-                    "WHERE aircrafts.tailNumber = ?";
-    public static final String SELECT_AIRCRAFTS_BY_NAME =
-            "SELECT aircrafts.aircraftId, aircrafts.tailNumber, aircrafts.aircraftName, aircrafttypes.aircraftType, statuses.statusName " +
-                    "FROM aircrafts " +
-                    "JOIN aircrafttypes ON aircrafttypes.aircraftTypeId = aircrafts.aircraftTypeId " +
-                    "JOIN statuses ON statuses.statusId = aircrafts.statusId " +
-                    "WHERE aircrafts.aircraftName = ?";
-    public static final String SELECT_AIRCRAFTS_BY_TYPE =
-            "SELECT aircrafts.aircraftId, aircrafts.tailNumber, aircrafts.aircraftName, aircrafttypes.aircraftType, statuses.statusName " +
-                    "FROM aircrafts " +
-                    "JOIN aircrafttypes ON aircrafttypes.aircraftTypeId = aircrafts.aircraftTypeId " +
-                    "JOIN statuses ON statuses.statusId = aircrafts.statusId " +
-                    "WHERE aircrafts.aircraftTypeId = ?";
     public static final String INSERT_AIRCRAFT =
             "INSERT INTO aircrafts (tailNumber, aircraftName, aircraftTypeId, statusId) VALUES (?,?,?,?)";
     public static final String UPDATE_AIRCRAFT =

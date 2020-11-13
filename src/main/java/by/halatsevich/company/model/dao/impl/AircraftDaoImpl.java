@@ -16,6 +16,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
+/**
+ * The class represents aircraft dao implementation.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class AircraftDaoImpl implements AircraftDao {
 
     @Override
@@ -37,7 +43,7 @@ public class AircraftDaoImpl implements AircraftDao {
             ResultSet resultSet = statement.executeQuery();
             return createAircrafts(resultSet);
         } catch (SQLException e) {
-            throw new DaoException("Error while finding all aircrafts", e);
+            throw new DaoException("Error while finding all aircrafts by status", e);
         }
     }
 

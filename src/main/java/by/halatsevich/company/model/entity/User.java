@@ -1,5 +1,11 @@
 package by.halatsevich.company.model.entity;
 
+/**
+ * The class represents user entity.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class User extends Entity {
     private String email;
     private String login;
@@ -9,13 +15,37 @@ public class User extends Entity {
     private Role role;
     private Status status;
 
+    /**
+     * The enum Role.
+     */
     public enum Role {
+        /**
+         * Admin role.
+         */
         ADMIN("Administrator"),
+        /**
+         * Operator role.
+         */
         OPERATOR("Operator"),
+        /**
+         * Dispatcher role.
+         */
         DISPATCHER("Dispatcher"),
+        /**
+         * Pilot role.
+         */
         PILOT("Pilot"),
+        /**
+         * Radioman role.
+         */
         RADIOMAN("Radioman"),
+        /**
+         * Navigator role.
+         */
         NAVIGATOR("Navigator"),
+        /**
+         * Stewardess role.
+         */
         STEWARDESS("Stewardess");
 
         private String roleName;
@@ -24,15 +54,35 @@ public class User extends Entity {
             this.roleName = roleName;
         }
 
+        /**
+         * Gets role name.
+         *
+         * @return the role name
+         */
         public String getRoleName() {
             return roleName;
         }
     }
 
+    /**
+     * Instantiates a new User.
+     */
     public User() {
     }
 
-    public User(String email, String login, String firstName, String lastName, long telephoneNumber, Role role, Status status) {
+    /**
+     * Instantiates a new User.
+     *
+     * @param email           the email
+     * @param login           the login
+     * @param firstName       the first name
+     * @param lastName        the last name
+     * @param telephoneNumber the telephone number
+     * @param role            the role
+     * @param status          the status
+     */
+    public User(String email, String login, String firstName, String lastName, long telephoneNumber,
+                Role role, Status status) {
         this.email = email;
         this.login = login;
         this.firstName = firstName;
@@ -42,7 +92,20 @@ public class User extends Entity {
         this.status = status;
     }
 
-    public User(int id, String email, String login, String firstName, String lastName, long telephoneNumber, Role role, Status status) {
+    /**
+     * Instantiates a new User.
+     *
+     * @param id              the id
+     * @param email           the email
+     * @param login           the login
+     * @param firstName       the first name
+     * @param lastName        the last name
+     * @param telephoneNumber the telephone number
+     * @param role            the role
+     * @param status          the status
+     */
+    public User(int id, String email, String login, String firstName, String lastName, long telephoneNumber,
+                Role role, Status status) {
         super(id);
         this.email = email;
         this.login = login;
@@ -53,58 +116,128 @@ public class User extends Entity {
         this.status = status;
     }
 
+    /**
+     * Gets email.
+     *
+     * @return the email
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * Sets email.
+     *
+     * @param email the email
+     */
     public void setEmail(String email) {
         this.email = email;
     }
 
+    /**
+     * Gets login.
+     *
+     * @return the login
+     */
     public String getLogin() {
         return login;
     }
 
+    /**
+     * Sets login.
+     *
+     * @param login the login
+     */
     public void setLogin(String login) {
         this.login = login;
     }
 
+    /**
+     * Gets first name.
+     *
+     * @return the first name
+     */
     public String getFirstName() {
         return firstName;
     }
 
+    /**
+     * Sets first name.
+     *
+     * @param firstName the first name
+     */
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
 
+    /**
+     * Gets last name.
+     *
+     * @return the last name
+     */
     public String getLastName() {
         return lastName;
     }
 
+    /**
+     * Sets last name.
+     *
+     * @param lastName the last name
+     */
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
 
+    /**
+     * Gets telephone number.
+     *
+     * @return the telephone number
+     */
     public long getTelephoneNumber() {
         return telephoneNumber;
     }
 
+    /**
+     * Sets telephone number.
+     *
+     * @param telephoneNumber the telephone number
+     */
     public void setTelephoneNumber(long telephoneNumber) {
         this.telephoneNumber = telephoneNumber;
     }
 
+    /**
+     * Gets role.
+     *
+     * @return the role
+     */
     public Role getRole() {
         return role;
     }
 
+    /**
+     * Sets role.
+     *
+     * @param role the role
+     */
     public void setRole(Role role) {
         this.role = role;
     }
 
+    /**
+     * Gets status.
+     *
+     * @return the status
+     */
     public Status getStatus() {
         return status;
     }
 
+    /**
+     * Sets status.
+     *
+     * @param status the status
+     */
     public void setStatus(Status status) {
         this.status = status;
     }
@@ -134,8 +267,8 @@ public class User extends Entity {
         result = 31 * result + (firstName != null ? firstName.hashCode() : 0);
         result = 31 * result + (lastName != null ? lastName.hashCode() : 0);
         result = 31 * result + (int) (telephoneNumber ^ (telephoneNumber >>> 32));
-        result = 31 * result + role.hashCode();
-        result = 31 * result + status.hashCode();
+        result = 31 * result + (role != null ? role.hashCode() : 0);
+        result = 31 * result + (status != null ? status.hashCode() : 0);
         return result;
     }
 

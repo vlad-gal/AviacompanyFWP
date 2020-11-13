@@ -17,6 +17,12 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
 
+/**
+ * The class represents crew dao implementation.
+ *
+ * @author Vladislav Halatsevich
+ * @version 1.0
+ */
 public class CrewDaoImpl implements CrewDao {
 
     @Override
@@ -26,7 +32,7 @@ public class CrewDaoImpl implements CrewDao {
             ResultSet resultSet = statement.executeQuery();
             return createCrewDtos(resultSet);
         } catch (SQLException e) {
-            throw new DaoException("Error while finding all crewDtos", e);
+            throw new DaoException("Error while finding all crews", e);
         }
     }
 
@@ -38,7 +44,37 @@ public class CrewDaoImpl implements CrewDao {
             ResultSet resultSet = statement.executeQuery();
             return createCrewDtos(resultSet);
         } catch (SQLException e) {
-            throw new DaoException("Error while finding all crewDtos", e);
+            throw new DaoException("Error while finding all crews by status", e);
+        }
+    }
+
+    @Override
+    public List<User.Role> findUserRolesByCrewId(int crewId) throws DaoException {
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_USERS_ROLE_BY_CREW_ID)) {
+            statement.setInt(1, crewId);
+            ResultSet resultSet = statement.executeQuery();
+            List<User.Role> roles = new ArrayList<>();
+            while (resultSet.next()) {
+                String roleName = resultSet.getString(1);
+                roles.add(User.Role.valueOf(roleName.toUpperCase()));
+            }
+            return roles;
+        } catch (SQLException e) {
+            throw new DaoException("Error while finding user roles by crew id", e);
+        }
+    }
+
+    @Override
+    public List<CrewDto> findUsersCrewsByStatus(int userId, Status status) throws DaoException {
+        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
+             PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_USERS_CREWS_BY_STATUS)) {
+            statement.setInt(1, status.ordinal());
+            statement.setInt(2, userId);
+            ResultSet resultSet = statement.executeQuery();
+            return createCrewDtos(resultSet);
+        } catch (SQLException e) {
+            throw new DaoException("Error while finding user's crews by status", e);
         }
     }
 
@@ -50,12 +86,12 @@ public class CrewDaoImpl implements CrewDao {
             ResultSet resultSet = statement.executeQuery();
             return createCrewDto(resultSet);
         } catch (SQLException e) {
-            throw new DaoException("Error while finding crewDto by id", e);
+            throw new DaoException("Error while finding crew by id", e);
         }
     }
 
     @Override
-    public List<Integer> findUsersIdByCrewId(int crewId) throws DaoException {
+    public List<Integer> findUserIdsByCrewId(int crewId) throws DaoException {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_USERS_ID_BY_CREW_ID)) {
             statement.setInt(1, crewId);
@@ -68,7 +104,7 @@ public class CrewDaoImpl implements CrewDao {
             }
             return usersId;
         } catch (SQLException e) {
-            throw new DaoException("Error while finding users id in crew", e);
+            throw new DaoException("Error while finding user ids in crew", e);
         }
     }
 
@@ -80,7 +116,7 @@ public class CrewDaoImpl implements CrewDao {
             ResultSet resultSet = statement.executeQuery();
             return createCrewDto(resultSet);
         } catch (SQLException e) {
-            throw new DaoException("Error while finding crewDto by crew name", e);
+            throw new DaoException("Error while finding crew by name", e);
         }
     }
 
@@ -97,7 +133,7 @@ public class CrewDaoImpl implements CrewDao {
             statement.setString(7, crewDto.getCrewName());
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
-            throw new DaoException("Error while adding crewDto", e);
+            throw new DaoException("Error while adding crew", e);
         }
     }
 
@@ -113,7 +149,6 @@ public class CrewDaoImpl implements CrewDao {
         }
     }
 
-
     @Override
     public boolean update(CrewDto crewDto) throws DaoException {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
@@ -126,7 +161,7 @@ public class CrewDaoImpl implements CrewDao {
             statement.setInt(6, crewDto.getId());
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
-            throw new DaoException("Error while updating crewDto", e);
+            throw new DaoException("Error while updating crew", e);
         }
     }
 
@@ -141,7 +176,6 @@ public class CrewDaoImpl implements CrewDao {
             throw new DaoException("Error while removing crew", e);
         }
     }
-
 
     private Map<String, Object> createCrewData(ResultSet resultSet) throws SQLException {
         Map<String, Object> crewData = new HashMap<>();
@@ -161,7 +195,7 @@ public class CrewDaoImpl implements CrewDao {
         while (resultSet.next()) {
             Map<String, Object> crewData = createCrewData(resultSet);
             crewDto = EntityFactory.getInstance().getCrewDtoCreator().create(crewData);
-            logger.log(Level.DEBUG, "CrewDto found: {}", crewDto);
+            logger.log(Level.DEBUG, "Crew found: {}", crewDto);
         }
         return Optional.ofNullable(crewDto);
     }
@@ -172,39 +206,9 @@ public class CrewDaoImpl implements CrewDao {
         while (resultSet.next()) {
             Map<String, Object> crewData = createCrewData(resultSet);
             CrewDto crewDto = factory.getCrewDtoCreator().create(crewData);
-            logger.log(Level.DEBUG, "CrewDto found: {}", crewDto);
+            logger.log(Level.DEBUG, "Crew found: {}", crewDto);
             crewDtos.add(crewDto);
         }
         return crewDtos;
-    }
-
-    @Override
-    public List<User.Role> findUsersRoleByCrewId(int crewId) throws DaoException {
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_USERS_ROLE_BY_CREW_ID)) {
-            statement.setInt(1, crewId);
-            ResultSet resultSet = statement.executeQuery();
-            List<User.Role> roles = new ArrayList<>();
-            while (resultSet.next()){
-                String roleName = resultSet.getString(1);
-                roles.add(User.Role.valueOf(roleName.toUpperCase()));
-            }
-            return roles;
-        } catch (SQLException e) {
-            throw new DaoException("Error while finding users roles by crew id", e);
-        }
-    }
-
-    @Override
-    public List<CrewDto> findUsersCrewsByStatus(int userId, Status status) throws DaoException {
-        try (Connection connection = ConnectionPool.INSTANCE.getConnection();
-             PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_USERS_CREWS_BY_STATUS)) {
-            statement.setInt(1, status.ordinal());
-            statement.setInt(2, userId);
-            ResultSet resultSet = statement.executeQuery();
-            return createCrewDtos(resultSet);
-        } catch (SQLException e) {
-            throw new DaoException("Error while finding users id in crew", e);
-        }
     }
 }
