@@ -36,7 +36,7 @@ public class AllUserCrewsCommand implements Command {
             ServiceFactory factory = ServiceFactory.getInstance();
             CrewService service = factory.getCrewService();
             try {
-                List<Crew> crews = service.findUsersCrewsByStatus(user, status);
+                List<Crew> crews = service.findUserCrewsByStatus(user, status);
                 session.setAttribute(ParameterName.CURRENT_PAGE_NUMBER, 1);
                 session.setAttribute(ParameterName.ALL_CREW_LIST, crews);
                 request.setAttribute(ParameterName.SHOW_CREWS_FLAG, true);

@@ -36,7 +36,7 @@ public class AllUserFlightsCommand implements Command {
             ServiceFactory factory = ServiceFactory.getInstance();
             FlightService service = factory.getFlightService();
             try {
-                List<Flight> crews = service.findUsersFlightsByStatus(user, status);
+                List<Flight> crews = service.findUserFlightsByStatus(user, status);
                 logger.log(Level.ERROR, crews);
                 session.setAttribute(ParameterName.CURRENT_PAGE_NUMBER, 1);
                 session.setAttribute(ParameterName.FLIGHT_LIST, crews);
