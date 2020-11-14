@@ -65,10 +65,10 @@ public interface UserDao extends BaseDao<User> {
     /**
      * Update password.
      *
-     * @param login    the login
+     * @param email    the email
      * @param password the password
      * @return true if updating successful, otherwise false
      * @throws DaoException the dao exception
      */
-    boolean updatePassword(String login, String password) throws DaoException;
+    boolean updatePassword(String email, String password) throws DaoException;
 }

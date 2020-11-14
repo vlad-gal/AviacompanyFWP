@@ -96,7 +96,7 @@ public class CrewServiceImpl implements CrewService {
     }
 
     @Override
-    public Optional<CrewDto> findCrewByName(String crewName) throws ServiceException {
+    public Optional<CrewDto> findByCrewName(String crewName) throws ServiceException {
         DaoFactory factory = DaoFactory.getInstance();
         CrewDao dao = factory.getCrewDao();
         try {
@@ -112,7 +112,7 @@ public class CrewServiceImpl implements CrewService {
         CrewDao crewDao = factory.getCrewDao();
         List<Crew> allUserCrews = new ArrayList<>();
         try {
-            List<CrewDto> crewDtos = crewDao.findUsersCrewsByStatus(user.getId(), Status.valueOf(status.toUpperCase()));
+            List<CrewDto> crewDtos = crewDao.findUserCrewsByStatus(user.getId(), Status.valueOf(status.toUpperCase()));
             for (CrewDto crewDto : crewDtos) {
                 allUserCrews.add(createCrew(crewDto, factory, crewDao));
             }
@@ -168,7 +168,6 @@ public class CrewServiceImpl implements CrewService {
         UserDao userDao = factory.getUserDao();
         boolean isUpdated;
         try {
-            isUpdated = crewDao.update(crewDto);
             List<User> staff = crew.getStaff();
             if (parsedStatus == Status.ACTIVE || parsedStatus == Status.BUSY) {
                 for (User user : staff) {
@@ -186,6 +185,7 @@ public class CrewServiceImpl implements CrewService {
                     userDao.update(user);
                 }
             }
+            isUpdated = crewDao.update(crewDto);
         } catch (DaoException e) {
             throw new ServiceException("Error while updating crew", e);
         }

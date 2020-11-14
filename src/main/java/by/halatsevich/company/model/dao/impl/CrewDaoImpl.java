@@ -66,7 +66,7 @@ public class CrewDaoImpl implements CrewDao {
     }
 
     @Override
-    public List<CrewDto> findUsersCrewsByStatus(int userId, Status status) throws DaoException {
+    public List<CrewDto> findUserCrewsByStatus(int userId, Status status) throws DaoException {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.SELECT_USERS_CREWS_BY_STATUS)) {
             statement.setInt(1, status.ordinal());

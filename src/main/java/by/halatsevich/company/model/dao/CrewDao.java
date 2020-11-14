@@ -70,5 +70,5 @@ public interface CrewDao extends BaseDao<CrewDto> {
      * @return the list of user's crews
      * @throws DaoException the dao exception
      */
-    List<CrewDto> findUsersCrewsByStatus(int userId, Status status) throws DaoException;
+    List<CrewDto> findUserCrewsByStatus(int userId, Status status) throws DaoException;
 }

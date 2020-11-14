@@ -45,7 +45,7 @@ public class CrewValidatorTest {
 
     @Test
     public void testIsValidNumberOfRadiomanSuccess() {
-        boolean condition = CrewValidator.isValidNumberOfNavigators("1");
+        boolean condition = CrewValidator.isValidNumberOfRadioman("1");
         assertTrue(condition);
     }
 

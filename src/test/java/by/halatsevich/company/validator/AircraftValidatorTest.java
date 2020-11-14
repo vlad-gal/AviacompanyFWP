@@ -9,13 +9,13 @@ public class AircraftValidatorTest {
 
     @Test
     public void testIsValidTailNumberSuccess() {
-        boolean condition = AircraftValidator.isValidAircraftName("ABCQW11");
+        boolean condition = AircraftValidator.isValidTailNumber("ABCQW11");
         assertTrue(condition);
     }
 
     @Test
     public void testIsValidTailNumberFailure() {
-        boolean condition = AircraftValidator.isValidAircraftName("hello!1");
+        boolean condition = AircraftValidator.isValidTailNumber("hello!1");
         assertFalse(condition);
     }
 

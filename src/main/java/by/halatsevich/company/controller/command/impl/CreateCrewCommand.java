@@ -49,7 +49,7 @@ public class CreateCrewCommand implements Command {
 
                 if (isCrewCreate) {
                     request.setAttribute(ParameterName.CREATE_CREW_SUCCESSFUL_FLAG, true);
-                    Optional<CrewDto> optionalCrewDto = crewService.findCrewByName(crewName);
+                    Optional<CrewDto> optionalCrewDto = crewService.findByCrewName(crewName);
                     if (optionalCrewDto.isPresent()) {
                         CrewDto crewDto = optionalCrewDto.get();
                         request.setAttribute(ParameterName.CREW_DTO, crewDto);

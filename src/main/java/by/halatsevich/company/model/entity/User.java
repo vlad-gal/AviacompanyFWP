@@ -22,7 +22,7 @@ public class User extends Entity {
         /**
          * Admin role.
          */
-        ADMIN("Administrator"),
+        ADMIN("Admin"),
         /**
          * Operator role.
          */

@@ -230,11 +230,11 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public boolean updatePassword(String login, String password) throws DaoException {
+    public boolean updatePassword(String email, String password) throws DaoException {
         try (Connection connection = ConnectionPool.INSTANCE.getConnection();
              PreparedStatement statement = connection.prepareStatement(SqlQuery.UPDATE_PASSWORD)) {
             statement.setString(1, password);
-            statement.setString(2, login);
+            statement.setString(2, email);
             return statement.executeUpdate() > 0;
         } catch (SQLException e) {
             throw new DaoException("Error while updating user", e);

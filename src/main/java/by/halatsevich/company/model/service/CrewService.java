@@ -88,7 +88,7 @@ public interface CrewService {
      * @return the optional of crew
      * @throws ServiceException the service exception
      */
-    Optional<CrewDto> findCrewByName(String crewName) throws ServiceException;
+    Optional<CrewDto> findByCrewName(String crewName) throws ServiceException;
 
     /**
      * Update crew.
