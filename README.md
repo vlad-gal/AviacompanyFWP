@@ -106,7 +106,7 @@
    * View general information on pages
 ### Users
                     
-* **Guest**
+* **Guest**  
   Unauthorized user.
                     
   Functionality:
@@ -115,7 +115,7 @@
     * View airports where flights are operated
     * View the aviation fleet
                     
-* **Administrator**
+* **Administrator**  
   The main site administrator. Its responsibilities include adding, changing, and deleting new users, planes,
   airports, changing flights, and changing flight crews. Deletion is performed by changing the status to * inactive.*
                     
@@ -126,7 +126,7 @@
     * View, add, change planes
     * View, add, change airports
                     
-* **Flight operator**
+* **Flight operator**  
   The flight operator. It is responsible for adding, changing, and deleting flights.
                     
   Functionality:
@@ -135,14 +135,14 @@
     * View airports
     * View, add, change flights
                     
-* **Crew dispatcher**
+* **Crew dispatcher**  
   The crew dispatcher. Its responsibilities include adding, changing, and deleting flight crews.
                     
   Functionality:
     * View, add, change flight crews
     * The selection of available users by role
                     
-* **Pilot, Navigator, Radioman, Stewardess**
+* **Pilot, Navigator, Radioman, Stewardess**   
   The main part of the flight crew.
                     
   Functionality:
