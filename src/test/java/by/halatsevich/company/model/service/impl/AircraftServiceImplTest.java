@@ -3,8 +3,8 @@ package by.halatsevich.company.model.service.impl;
 import by.halatsevich.company.model.dao.AircraftDao;
 import by.halatsevich.company.model.dao.DaoFactory;
 import by.halatsevich.company.model.dao.impl.AircraftDaoImpl;
-import by.halatsevich.company.model.entity.Aircraft;
-import by.halatsevich.company.model.entity.Status;
+import by.halatsevich.company.entity.Aircraft;
+import by.halatsevich.company.entity.Status;
 import by.halatsevich.company.model.exception.DaoException;
 import by.halatsevich.company.model.exception.ServiceException;
 import by.halatsevich.company.model.service.AircraftService;
@@ -50,7 +50,7 @@ public class AircraftServiceImplTest {
         AircraftService service = ServiceFactory.getInstance().getAircraftService();
         try {
             Mockito.when(aircraftDao.addAircraft(Mockito.any(Aircraft.class))).thenReturn(true);
-            boolean condition = service.addAircraft("1", "2", "cargo", Status.ACTIVE);
+            boolean condition = service.addAircraft(new Aircraft());
             assertTrue(condition);
         } catch (ServiceException | DaoException e) {
             fail(e.getMessage());
@@ -61,7 +61,7 @@ public class AircraftServiceImplTest {
     public void testAddAircraftException() throws DaoException, ServiceException {
         AircraftService service = ServiceFactory.getInstance().getAircraftService();
         Mockito.when(aircraftDao.addAircraft(Mockito.any(Aircraft.class))).thenThrow(DaoException.class);
-        service.addAircraft("1", "2", "cargo", Status.ACTIVE);
+        service.addAircraft(new Aircraft());
     }
 
     @Test

@@ -3,7 +3,7 @@ package by.halatsevich.company.controller.command.impl;
 import by.halatsevich.company.controller.PagePath;
 import by.halatsevich.company.controller.ParameterName;
 import by.halatsevich.company.controller.command.Command;
-import by.halatsevich.company.model.entity.User;
+import by.halatsevich.company.entity.User;
 import by.halatsevich.company.model.exception.ServiceException;
 import by.halatsevich.company.model.service.ServiceFactory;
 import by.halatsevich.company.model.service.UserService;

@@ -1,6 +1,6 @@
 package by.halatsevich.company.model.factory;
 
-import by.halatsevich.company.model.entity.Entity;
+import by.halatsevich.company.entity.Entity;
 
 import java.util.Map;
 

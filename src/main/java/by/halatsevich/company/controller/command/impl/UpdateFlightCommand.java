@@ -3,10 +3,13 @@ package by.halatsevich.company.controller.command.impl;
 import by.halatsevich.company.controller.PagePath;
 import by.halatsevich.company.controller.ParameterName;
 import by.halatsevich.company.controller.command.Command;
-import by.halatsevich.company.model.entity.Flight;
+import by.halatsevich.company.entity.Flight;
+import by.halatsevich.company.entity.FlightDto;
+import by.halatsevich.company.entity.Status;
 import by.halatsevich.company.model.exception.ServiceException;
 import by.halatsevich.company.model.service.FlightService;
 import by.halatsevich.company.model.service.ServiceFactory;
+import by.halatsevich.company.util.DateParser;
 import by.halatsevich.company.validator.BaseValidator;
 import by.halatsevich.company.validator.FlightValidator;
 import org.apache.logging.log4j.Level;
@@ -49,8 +52,12 @@ public class UpdateFlightCommand implements Command {
             ServiceFactory factory = ServiceFactory.getInstance();
             FlightService flightService = factory.getFlightService();
             try {
-                boolean isFlightUpdate = flightService
-                        .updateFlight(updatingFlight.getId(), departureAirportId, destinationAirportId, departTime, arriveTime, crewId, aircraftId, operatorId, status);
+                long parsedDepartTime = DateParser.parseDate(departTime).getTime();
+                long parsedArriveTime = DateParser.parseDate(arriveTime).getTime();
+                FlightDto updatingFlightDto = new FlightDto(updatingFlight.getId(), Integer.parseInt(departureAirportId),
+                        Integer.parseInt(destinationAirportId), parsedDepartTime, parsedArriveTime, Integer.parseInt(aircraftId),
+                        Integer.parseInt(crewId), Integer.parseInt(operatorId), Status.valueOf(status.toUpperCase()));
+                boolean isFlightUpdate = flightService.updateFlight(updatingFlightDto);
                 if (isFlightUpdate) {
                     request.setAttribute(ParameterName.UPDATING_SUCCESSFUL_FLAG, true);
                     request.setAttribute(ParameterName.UPDATING_FLIGHT, flightService.findFlightById(updatingFlight.getId()));

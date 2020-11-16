@@ -1,7 +1,7 @@
 package by.halatsevich.company.model.factory.creator;
 
 import by.halatsevich.company.model.dao.ColumnName;
-import by.halatsevich.company.model.entity.Airport;
+import by.halatsevich.company.entity.Airport;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;

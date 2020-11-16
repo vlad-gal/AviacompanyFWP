@@ -1,9 +1,9 @@
 package by.halatsevich.company.model.service.impl;
 
+import by.halatsevich.company.entity.Aircraft;
+import by.halatsevich.company.entity.Status;
 import by.halatsevich.company.model.dao.AircraftDao;
 import by.halatsevich.company.model.dao.DaoFactory;
-import by.halatsevich.company.model.entity.Aircraft;
-import by.halatsevich.company.model.entity.Status;
 import by.halatsevich.company.model.exception.DaoException;
 import by.halatsevich.company.model.exception.ServiceException;
 import by.halatsevich.company.model.service.AircraftService;
@@ -20,14 +20,11 @@ import java.util.Optional;
 public class AircraftServiceImpl implements AircraftService {
 
     @Override
-    public boolean addAircraft(String tailNumber, String aircraftName, String aircraftType, Status status)
-            throws ServiceException {
+    public boolean addAircraft(Aircraft aircraft) throws ServiceException {
         DaoFactory factory = DaoFactory.getInstance();
         AircraftDao aircraftDao = factory.getAircraftDao();
         boolean isAdded;
         try {
-            Aircraft aircraft =
-                    new Aircraft(tailNumber, aircraftName, Aircraft.AircraftType.valueOf(aircraftType.toUpperCase()), status);
             isAdded = aircraftDao.addAircraft(aircraft);
         } catch (DaoException e) {
             throw new ServiceException("Error while adding aircraft", e);

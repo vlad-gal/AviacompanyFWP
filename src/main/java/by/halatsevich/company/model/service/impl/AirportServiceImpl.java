@@ -1,8 +1,8 @@
 package by.halatsevich.company.model.service.impl;
 
+import by.halatsevich.company.entity.Airport;
 import by.halatsevich.company.model.dao.AirportDao;
 import by.halatsevich.company.model.dao.DaoFactory;
-import by.halatsevich.company.model.entity.Airport;
 import by.halatsevich.company.model.exception.DaoException;
 import by.halatsevich.company.model.exception.ServiceException;
 import by.halatsevich.company.model.service.AirportService;
@@ -19,12 +19,12 @@ import java.util.Optional;
 public class AirportServiceImpl implements AirportService {
 
     @Override
-    public boolean addAirport(String airportName, String city, String country) throws ServiceException {
+    public boolean addAirport(Airport airport) throws ServiceException {
         DaoFactory factory = DaoFactory.getInstance();
         AirportDao airportDao = factory.getAirportDao();
         boolean isAdded;
         try {
-            isAdded = airportDao.addAirport(new Airport(airportName, city, country));
+            isAdded = airportDao.addAirport(airport);
         } catch (DaoException e) {
             throw new ServiceException("Error while adding airport", e);
         }

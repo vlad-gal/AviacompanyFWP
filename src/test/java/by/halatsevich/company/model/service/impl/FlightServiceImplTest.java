@@ -2,7 +2,7 @@ package by.halatsevich.company.model.service.impl;
 
 import by.halatsevich.company.model.dao.*;
 import by.halatsevich.company.model.dao.impl.*;
-import by.halatsevich.company.model.entity.*;
+import by.halatsevich.company.entity.*;
 import by.halatsevich.company.model.exception.DaoException;
 import by.halatsevich.company.model.exception.ServiceException;
 import by.halatsevich.company.model.service.FlightService;
@@ -61,8 +61,7 @@ public class FlightServiceImplTest {
         FlightService service = ServiceFactory.getInstance().getFlightService();
         try {
             Mockito.when(flightDao.addFlight(Mockito.any(FlightDto.class))).thenReturn(true);
-            boolean condition = service.addFlight("1", "2", "2020-11-05T20:48",
-                    "2020-11-09T20:48", "1", "2", 1);
+            boolean condition = service.addFlight(new FlightDto());
             assertTrue(condition);
         } catch (ServiceException | DaoException e) {
             fail(e.getMessage());
@@ -73,8 +72,7 @@ public class FlightServiceImplTest {
     public void testAddFlightException() throws DaoException, ServiceException {
         FlightService service = ServiceFactory.getInstance().getFlightService();
         Mockito.when(flightDao.addFlight(Mockito.any(FlightDto.class))).thenThrow(DaoException.class);
-        service.addFlight("1", "2", "2020-11-05T20:48",
-                "2020-11-09T20:48", "1", "2", 1);
+        service.addFlight(new FlightDto());
     }
 
     @Test
@@ -164,6 +162,8 @@ public class FlightServiceImplTest {
     @Test
     public void testUpdateFlightSuccess() {
         FlightService service = ServiceFactory.getInstance().getFlightService();
+        FlightDto flightDto = new FlightDto(1,2,3,4,5,
+                6,7,Status.ACTIVE);
         try {
             Mockito.when(flightDao.update(Mockito.any(FlightDto.class))).thenReturn(true);
             Mockito.when(userDao.findById(Mockito.anyInt())).thenReturn(Optional.of(new User()));
@@ -172,8 +172,7 @@ public class FlightServiceImplTest {
             Mockito.when(aircraftDao.update(Mockito.any(Aircraft.class))).thenReturn(true);
             Mockito.when(crewDao.findById(Mockito.anyInt())).thenReturn(Optional.of(new CrewDto()));
             Mockito.when(crewDao.update(Mockito.any(CrewDto.class))).thenReturn(true);
-            boolean condition = service.updateFlight(1, "1", "2", "2020-11-05T20:48",
-                    "2020-11-05T20:48", "5", "6", "7", "active");
+            boolean condition = service.updateFlight(flightDto);
             assertTrue(condition);
         } catch (ServiceException | DaoException e) {
             fail(e.getMessage());
@@ -184,7 +183,6 @@ public class FlightServiceImplTest {
     public void testUpdateFlightException() throws DaoException, ServiceException {
         FlightService service = ServiceFactory.getInstance().getFlightService();
         Mockito.when(flightDao.update(Mockito.any(FlightDto.class))).thenThrow(DaoException.class);
-        service.updateFlight(1, "1", "2", "2020-11-05T20:48",
-                "2020-11-05T20:48", "5", "6", "7", "active");
+        service.updateFlight(new FlightDto());
     }
 }

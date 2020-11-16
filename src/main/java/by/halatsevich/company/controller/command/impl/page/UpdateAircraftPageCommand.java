@@ -3,7 +3,7 @@ package by.halatsevich.company.controller.command.impl.page;
 import by.halatsevich.company.controller.PagePath;
 import by.halatsevich.company.controller.ParameterName;
 import by.halatsevich.company.controller.command.Command;
-import by.halatsevich.company.model.entity.Aircraft;
+import by.halatsevich.company.entity.Aircraft;
 import by.halatsevich.company.model.exception.ServiceException;
 import by.halatsevich.company.model.service.AircraftService;
 import by.halatsevich.company.model.service.ServiceFactory;
@@ -27,8 +27,8 @@ public class UpdateAircraftPageCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        String aircraftId = request.getParameter(ParameterName.AIRCRAFT_ID);
         HttpSession session = request.getSession();
+        String aircraftId = request.getParameter(ParameterName.AIRCRAFT_ID);
         String page;
         if (BaseValidator.isValidId(aircraftId)) {
             ServiceFactory factory = ServiceFactory.getInstance();

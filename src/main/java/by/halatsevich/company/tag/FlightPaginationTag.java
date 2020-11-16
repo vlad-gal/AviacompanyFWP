@@ -1,8 +1,8 @@
 package by.halatsevich.company.tag;
 
 import by.halatsevich.company.controller.ParameterName;
-import by.halatsevich.company.model.entity.Flight;
-import by.halatsevich.company.model.entity.User;
+import by.halatsevich.company.entity.Flight;
+import by.halatsevich.company.entity.User;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -24,7 +24,7 @@ import java.util.Locale;
  */
 public class FlightPaginationTag extends TagSupport {
     private static final Logger logger = LogManager.getLogger(FlightPaginationTag.class);
-    private static final String DATA_PATTERN = "d-MMMM-yyyy h:m";
+    private static final String DATA_PATTERN = "d-MMMM-yyyy HH:mm";
     private static final int COUNT_OF_ITEMS = 10;
     private int currentPageNumber;
 

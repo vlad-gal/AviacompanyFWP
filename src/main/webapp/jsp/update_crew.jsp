@@ -4,6 +4,7 @@
 
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="local"/>
+<c:remove var="showCrewsFlag" scope="session"/>
 
 <html>
 <head>
@@ -27,7 +28,7 @@
                         <c:if test="${errorUpdateCrewFlag eq true}">
                             <h6 class="errorLoginPass text-center"><fmt:message key="local.errorUpdating"/></h6>
                         </c:if>
-                        <c:if test="${updateCrewSuccessfulFlag eq true}">
+                        <c:if test="${updatingSuccessfulFlag eq true}">
                             <h6 class="alert-success text-center"><fmt:message key="local.updatingSuccessful"/></h6>
                         </c:if>
                         <c:if test="${errorValidationFlag eq true}">

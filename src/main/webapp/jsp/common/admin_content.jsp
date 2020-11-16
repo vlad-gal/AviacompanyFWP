@@ -133,7 +133,7 @@
         <c:if test="${showAircraftsFlag eq true}">
             <c:if test="${not empty aircraftList}">
                 <div class="card-header text-center">
-                    <h5><fmt:message key="local.airports"/></h5>
+                    <h5><fmt:message key="local.aircrafts"/></h5>
                 </div>
                 <div class=" card-body ">
                     <table class="table table-hover">

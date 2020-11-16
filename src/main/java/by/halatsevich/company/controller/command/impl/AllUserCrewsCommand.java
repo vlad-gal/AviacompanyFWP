@@ -3,8 +3,8 @@ package by.halatsevich.company.controller.command.impl;
 import by.halatsevich.company.controller.PagePath;
 import by.halatsevich.company.controller.ParameterName;
 import by.halatsevich.company.controller.command.Command;
-import by.halatsevich.company.model.entity.Crew;
-import by.halatsevich.company.model.entity.User;
+import by.halatsevich.company.entity.Crew;
+import by.halatsevich.company.entity.User;
 import by.halatsevich.company.model.exception.ServiceException;
 import by.halatsevich.company.model.service.CrewService;
 import by.halatsevich.company.model.service.ServiceFactory;
@@ -28,8 +28,8 @@ public class AllUserCrewsCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        String status = request.getParameter(ParameterName.STATUS);
         HttpSession session = request.getSession();
+        String status = request.getParameter(ParameterName.STATUS);
         User user = (User) session.getAttribute(ParameterName.USER);
         String page;
         if (BaseValidator.isValidStatus(status)) {

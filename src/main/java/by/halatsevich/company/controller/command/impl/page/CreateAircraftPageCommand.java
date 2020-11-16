@@ -3,7 +3,7 @@ package by.halatsevich.company.controller.command.impl.page;
 import by.halatsevich.company.controller.PagePath;
 import by.halatsevich.company.controller.ParameterName;
 import by.halatsevich.company.controller.command.Command;
-import by.halatsevich.company.model.entity.Aircraft;
+import by.halatsevich.company.entity.Aircraft;
 
 import javax.servlet.http.HttpServletRequest;
 

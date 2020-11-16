@@ -1,11 +1,10 @@
 package by.halatsevich.company.model.service.impl;
 
+import by.halatsevich.company.entity.*;
 import by.halatsevich.company.model.dao.*;
-import by.halatsevich.company.model.entity.*;
 import by.halatsevich.company.model.exception.DaoException;
 import by.halatsevich.company.model.exception.ServiceException;
 import by.halatsevich.company.model.service.FlightService;
-import by.halatsevich.company.util.DateParser;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,17 +21,8 @@ import java.util.stream.Collectors;
 public class FlightServiceImpl implements FlightService {
 
     @Override
-    public boolean addFlight(String departureAirportId, String destinationAirportId, String departTime,
-                             String arriveTime, String crewId, String aircraftId, int operatorId) throws ServiceException {
+    public boolean addFlight(FlightDto flightDto) throws ServiceException {
         boolean isAdded;
-        int departureAirport = Integer.parseInt(departureAirportId);
-        int destinationAirport = Integer.parseInt(destinationAirportId);
-        long depart = DateParser.parseDate(departTime).getTime();
-        long arrive = DateParser.parseDate(arriveTime).getTime();
-        int crew = Integer.parseInt(crewId);
-        int aircraft = Integer.parseInt(aircraftId);
-        FlightDto flightDto = new FlightDto(departureAirport, destinationAirport, depart, arrive, aircraft, crew,
-                operatorId, Status.ACTIVE);
         DaoFactory factory = DaoFactory.getInstance();
         FlightDao flightDao = factory.getFlightDao();
         try {
@@ -100,38 +90,27 @@ public class FlightServiceImpl implements FlightService {
     }
 
     @Override
-    public boolean updateFlight(int flightId, String departureAirportId, String destinationAirportId, String departTime,
-                                String arriveTime, String crewId, String aircraftId,
-                                String operatorId, String status) throws ServiceException {
+    public boolean updateFlight(FlightDto flightDto) throws ServiceException {
         boolean isUpdated;
-        int parsedDepartureAirportId = Integer.parseInt(departureAirportId);
-        int parsedDestinationAirportId = Integer.parseInt(destinationAirportId);
-        long parsedDepartTime = DateParser.parseDate(departTime).getTime();
-        long parsedArriveTime = DateParser.parseDate(arriveTime).getTime();
-        int parsedCrewId = Integer.parseInt(crewId);
-        int parsedAircraftId = Integer.parseInt(aircraftId);
-        int parsedOperatorId = Integer.parseInt(operatorId);
-        Status parsedStatus = Status.valueOf(status.toUpperCase());
-        FlightDto flightDto = new FlightDto(flightId, parsedDepartureAirportId, parsedDestinationAirportId, parsedDepartTime, parsedArriveTime, parsedAircraftId,
-                parsedCrewId, parsedOperatorId, parsedStatus);
         DaoFactory factory = DaoFactory.getInstance();
         FlightDao flightDao = factory.getFlightDao();
         CrewDao crewDao = factory.getCrewDao();
         UserDao userDao = factory.getUserDao();
         AircraftDao aircraftDao = factory.getAircraftDao();
         try {
-            Optional<CrewDto> optionalCrewDto = crewDao.findById(parsedCrewId);
-            Optional<Aircraft> optionalAircraft = aircraftDao.findById(parsedAircraftId);
+            Optional<CrewDto> optionalCrewDto = crewDao.findById(flightDto.getCrewId());
+            Optional<Aircraft> optionalAircraft = aircraftDao.findById(flightDto.getAircraftId());
             if (optionalCrewDto.isPresent() && optionalAircraft.isPresent()) {
                 CrewDto crewDto = optionalCrewDto.get();
                 Aircraft aircraft = optionalAircraft.get();
-                switch (parsedStatus) {
+                switch (flightDto.getStatus()) {
                     case FLY:
                         crewDto.setStatus(Status.FLY);
                         crewDao.update(crewDto);
                         aircraft.setStatus(Status.FLY);
                         aircraftDao.update(aircraft);
                         break;
+                    case ACTIVE:
                     case INACTIVE:
                         crewDto.setStatus(Status.ACTIVE);
                         crewDao.update(crewDto);
@@ -139,12 +118,12 @@ public class FlightServiceImpl implements FlightService {
                         aircraftDao.update(aircraft);
                         break;
                 }
-                List<Integer> usersId = crewDao.findUserIdsByCrewId(parsedCrewId);
+                List<Integer> usersId = crewDao.findUserIdsByCrewId(flightDto.getCrewId());
                 for (int id : usersId) {
                     Optional<User> optionalUser = userDao.findById(id);
                     if (optionalUser.isPresent()) {
                         User user = optionalUser.get();
-                        switch (parsedStatus) {
+                        switch (flightDto.getStatus()) {
                             case ACTIVE:
                                 user.setStatus(Status.BUSY);
                                 userDao.update(user);
@@ -200,7 +179,7 @@ public class FlightServiceImpl implements FlightService {
         int numberOfStewardesses = crewDto.getNumberOfStewardesses();
         Status crewStatus = crewDto.getStatus();
         String crewName = crewDto.getCrewName();
-        return new Crew(dispatcher, crewName, staff, numberOfPilots, numberOfNavigators, numberOfRadioman,
+        return new Crew(crewDto.getId(), dispatcher, crewName, staff, numberOfPilots, numberOfNavigators, numberOfRadioman,
                 numberOfStewardesses, crewStatus);
     }
 }

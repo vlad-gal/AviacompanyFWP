@@ -1,7 +1,7 @@
 package by.halatsevich.company.model.dao;
 
-import by.halatsevich.company.model.entity.Entity;
-import by.halatsevich.company.model.entity.Status;
+import by.halatsevich.company.entity.Entity;
+import by.halatsevich.company.entity.Status;
 import by.halatsevich.company.model.exception.DaoException;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;

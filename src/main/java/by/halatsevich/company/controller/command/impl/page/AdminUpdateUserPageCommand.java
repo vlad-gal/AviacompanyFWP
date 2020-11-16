@@ -3,7 +3,7 @@ package by.halatsevich.company.controller.command.impl.page;
 import by.halatsevich.company.controller.PagePath;
 import by.halatsevich.company.controller.ParameterName;
 import by.halatsevich.company.controller.command.Command;
-import by.halatsevich.company.model.entity.User;
+import by.halatsevich.company.entity.User;
 import by.halatsevich.company.model.exception.ServiceException;
 import by.halatsevich.company.model.service.ServiceFactory;
 import by.halatsevich.company.model.service.UserService;
@@ -27,8 +27,8 @@ public class AdminUpdateUserPageCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        String login = request.getParameter(ParameterName.LOGIN);
         HttpSession session = request.getSession();
+        String login = request.getParameter(ParameterName.LOGIN);
         String page;
         if (UserValidator.isValidLogin(login)) {
             ServiceFactory factory = ServiceFactory.getInstance();

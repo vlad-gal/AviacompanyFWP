@@ -7,7 +7,7 @@ package by.halatsevich.company.validator;
  * @version 1.0
  */
 public class AirportValidator {
-    private static final String REGEX_AIRPORT_NAME = "[A-Za-zА-Яа-я0-9]{2,15}";
+    private static final String REGEX_AIRPORT_NAME = "[A-Za-zА-Яа-я0-9\\s]{2,15}";
     private static final String REGEX_CITY_OR_COUNTRY = "[A-Za-zА-Яа-я\\-]{2,20}";
 
     private AirportValidator() {

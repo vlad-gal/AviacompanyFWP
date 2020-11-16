@@ -1,8 +1,8 @@
 package by.halatsevich.company.validator;
 
-import by.halatsevich.company.model.entity.AuthorizationData;
-import by.halatsevich.company.model.entity.RegistrationData;
-import by.halatsevich.company.model.entity.User;
+import by.halatsevich.company.entity.AuthorizationData;
+import by.halatsevich.company.entity.RegistrationData;
+import by.halatsevich.company.entity.User;
 
 /**
  * The class represents user validator.

@@ -1,9 +1,8 @@
 package by.halatsevich.company.model.factory.creator;
 
 import by.halatsevich.company.model.dao.ColumnName;
-import by.halatsevich.company.model.entity.Crew;
-import by.halatsevich.company.model.entity.CrewDto;
-import by.halatsevich.company.model.entity.Status;
+import by.halatsevich.company.entity.CrewDto;
+import by.halatsevich.company.entity.Status;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;

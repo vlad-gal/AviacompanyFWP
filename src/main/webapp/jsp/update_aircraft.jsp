@@ -4,6 +4,7 @@
 
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="local"/>
+<c:remove var="showAircraftsFlag" scope="session"/>
 
 <html>
 <head>

@@ -1,14 +1,17 @@
-package by.halatsevich.company.model.entity;
+package by.halatsevich.company.entity;
+
+import java.util.List;
 
 /**
- * The class represents crew data transfer object entity for more convenient use between the layers.
+ * The class represents crew entity.
  *
  * @author Vladislav Halatsevich
  * @version 1.0
  */
-public class CrewDto extends Entity {
+public class Crew extends Entity {
+    private User dispatcher;
     private String crewName;
-    private int dispatcherId;
+    private List<User> staff;
     private int numberOfPilots;
     private int numberOfNavigators;
     private int numberOfRadioman;
@@ -16,28 +19,54 @@ public class CrewDto extends Entity {
     private Status status;
 
     /**
-     * Instantiates a new Crew dto.
+     * Instantiates a new Crew.
      */
-    public CrewDto() {
+    public Crew() {
     }
 
     /**
-     * Instantiates a new Crew dto.
+     * Instantiates a new Crew.
+     *
+     * @param dispatcher           the dispatcher
+     * @param crewName             the crew name
+     * @param staff                the staff
+     * @param numberOfPilots       the number of pilots
+     * @param numberOfNavigators   the number of navigators
+     * @param numberOfRadioman     the number of radioman
+     * @param numberOfStewardesses the number of stewardesses
+     * @param status               the status
+     */
+    public Crew(User dispatcher, String crewName, List<User> staff, int numberOfPilots, int numberOfNavigators,
+                int numberOfRadioman, int numberOfStewardesses, Status status) {
+        this.dispatcher = dispatcher;
+        this.crewName = crewName;
+        this.staff = staff;
+        this.numberOfPilots = numberOfPilots;
+        this.numberOfNavigators = numberOfNavigators;
+        this.numberOfRadioman = numberOfRadioman;
+        this.numberOfStewardesses = numberOfStewardesses;
+        this.status = status;
+    }
+
+    /**
+     * Instantiates a new Crew.
      *
      * @param id                   the id
+     * @param dispatcher           the dispatcher
      * @param crewName             the crew name
-     * @param dispatcherId         the dispatcher id
+     * @param staff                the staff
      * @param numberOfPilots       the number of pilots
      * @param numberOfNavigators   the number of navigators
      * @param numberOfRadioman     the number of radioman
      * @param numberOfStewardesses the number of stewardesses
      * @param status               the status
      */
-    public CrewDto(int id, String crewName, int dispatcherId, int numberOfPilots, int numberOfNavigators,
-                   int numberOfRadioman, int numberOfStewardesses, Status status) {
+    public Crew(int id, User dispatcher, String crewName, List<User> staff, int numberOfPilots, int numberOfNavigators,
+                int numberOfRadioman, int numberOfStewardesses, Status status) {
         super(id);
+        this.dispatcher = dispatcher;
         this.crewName = crewName;
-        this.dispatcherId = dispatcherId;
+        this.staff = staff;
         this.numberOfPilots = numberOfPilots;
         this.numberOfNavigators = numberOfNavigators;
         this.numberOfRadioman = numberOfRadioman;
@@ -46,26 +75,21 @@ public class CrewDto extends Entity {
     }
 
     /**
-     * Instantiates a new Crew dto.
+     * Gets dispatcher.
      *
-     * @param crewName             the crew name
-     * @param dispatcherId         the dispatcher id
-     * @param numberOfPilots       the number of pilots
-     * @param numberOfNavigators   the number of navigators
-     * @param numberOfRadioman     the number of radioman
-     * @param numberOfStewardesses the number of stewardesses
-     * @param status               the status
+     * @return the dispatcher
      */
-    public CrewDto(String crewName, int dispatcherId, int numberOfPilots, int numberOfNavigators, int numberOfRadioman,
-                   int numberOfStewardesses, Status status) {
+    public User getDispatcher() {
+        return dispatcher;
+    }
 
-        this.crewName = crewName;
-        this.dispatcherId = dispatcherId;
-        this.numberOfPilots = numberOfPilots;
-        this.numberOfNavigators = numberOfNavigators;
-        this.numberOfRadioman = numberOfRadioman;
-        this.numberOfStewardesses = numberOfStewardesses;
-        this.status = status;
+    /**
+     * Sets dispatcher.
+     *
+     * @param dispatcher the dispatcher
+     */
+    public void setDispatcher(User dispatcher) {
+        this.dispatcher = dispatcher;
     }
 
     /**
@@ -87,21 +111,21 @@ public class CrewDto extends Entity {
     }
 
     /**
-     * Gets dispatcher id.
+     * Gets staff.
      *
-     * @return the dispatcher id
+     * @return the staff
      */
-    public int getDispatcherId() {
-        return dispatcherId;
+    public List<User> getStaff() {
+        return staff;
     }
 
     /**
-     * Sets dispatcher id.
+     * Sets staff.
      *
-     * @param dispatcherId the dispatcher id
+     * @param staff the staff
      */
-    public void setDispatcherId(int dispatcherId) {
-        this.dispatcherId = dispatcherId;
+    public void setStaff(List<User> staff) {
+        this.staff = staff;
     }
 
     /**
@@ -200,22 +224,24 @@ public class CrewDto extends Entity {
         if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
 
-        CrewDto crewDto = (CrewDto) o;
+        Crew crew = (Crew) o;
 
-        if (dispatcherId != crewDto.dispatcherId) return false;
-        if (numberOfPilots != crewDto.numberOfPilots) return false;
-        if (numberOfNavigators != crewDto.numberOfNavigators) return false;
-        if (numberOfRadioman != crewDto.numberOfRadioman) return false;
-        if (numberOfStewardesses != crewDto.numberOfStewardesses) return false;
-        if (crewName != null ? !crewName.equals(crewDto.crewName) : crewDto.crewName != null) return false;
-        return status == crewDto.status;
+        if (numberOfPilots != crew.numberOfPilots) return false;
+        if (numberOfNavigators != crew.numberOfNavigators) return false;
+        if (numberOfRadioman != crew.numberOfRadioman) return false;
+        if (numberOfStewardesses != crew.numberOfStewardesses) return false;
+        if (dispatcher != null ? !dispatcher.equals(crew.dispatcher) : crew.dispatcher != null) return false;
+        if (crewName != null ? !crewName.equals(crew.crewName) : crew.crewName != null) return false;
+        if (staff != null ? !staff.equals(crew.staff) : crew.staff != null) return false;
+        return status == crew.status;
     }
 
     @Override
     public int hashCode() {
         int result = super.hashCode();
+        result = 31 * result + (dispatcher != null ? dispatcher.hashCode() : 0);
         result = 31 * result + (crewName != null ? crewName.hashCode() : 0);
-        result = 31 * result + dispatcherId;
+        result = 31 * result + (staff != null ? staff.hashCode() : 0);
         result = 31 * result + numberOfPilots;
         result = 31 * result + numberOfNavigators;
         result = 31 * result + numberOfRadioman;
@@ -226,9 +252,10 @@ public class CrewDto extends Entity {
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("CrewDto{");
-        sb.append("crewName='").append(crewName).append('\'');
-        sb.append(", dispatcherId=").append(dispatcherId);
+        final StringBuilder sb = new StringBuilder("Crew{");
+        sb.append("dispatcher=").append(dispatcher);
+        sb.append(", crewName='").append(crewName).append('\'');
+        sb.append(", staff=").append(staff);
         sb.append(", numberOfPilots=").append(numberOfPilots);
         sb.append(", numberOfNavigators=").append(numberOfNavigators);
         sb.append(", numberOfRadioman=").append(numberOfRadioman);

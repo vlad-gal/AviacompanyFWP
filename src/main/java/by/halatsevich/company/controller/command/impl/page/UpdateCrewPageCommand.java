@@ -3,7 +3,7 @@ package by.halatsevich.company.controller.command.impl.page;
 import by.halatsevich.company.controller.PagePath;
 import by.halatsevich.company.controller.ParameterName;
 import by.halatsevich.company.controller.command.Command;
-import by.halatsevich.company.model.entity.Crew;
+import by.halatsevich.company.entity.Crew;
 import by.halatsevich.company.model.exception.ServiceException;
 import by.halatsevich.company.model.service.CrewService;
 import by.halatsevich.company.model.service.ServiceFactory;
@@ -26,8 +26,8 @@ public class UpdateCrewPageCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        String crewId = request.getParameter(ParameterName.CREW_ID);
         HttpSession session = request.getSession();
+        String crewId = request.getParameter(ParameterName.CREW_ID);
         String page;
         if (BaseValidator.isValidId(crewId)) {
             ServiceFactory factory = ServiceFactory.getInstance();

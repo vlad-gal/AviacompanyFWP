@@ -3,8 +3,8 @@ package by.halatsevich.company.controller.command.impl;
 import by.halatsevich.company.controller.PagePath;
 import by.halatsevich.company.controller.ParameterName;
 import by.halatsevich.company.controller.command.Command;
-import by.halatsevich.company.model.entity.Aircraft;
-import by.halatsevich.company.model.entity.Status;
+import by.halatsevich.company.entity.Aircraft;
+import by.halatsevich.company.entity.Status;
 import by.halatsevich.company.model.exception.ServiceException;
 import by.halatsevich.company.model.service.AircraftService;
 import by.halatsevich.company.model.service.ServiceFactory;
@@ -36,11 +36,10 @@ public class CreateAircraftCommand implements Command {
             ServiceFactory factory = ServiceFactory.getInstance();
             AircraftService aircraftService = factory.getAircraftService();
             try {
-                boolean isAdded = aircraftService.addAircraft(tailNumber, aircraftName, aircraftType, Status.ACTIVE);
+                Aircraft aircraft = new Aircraft(tailNumber,aircraftName,
+                        Aircraft.AircraftType.valueOf(aircraftType.toUpperCase()),Status.ACTIVE);
+                boolean isAdded = aircraftService.addAircraft(aircraft);
                 if (isAdded) {
-                    request.setAttribute(ParameterName.AIRCRAFT_TAIL_NUMBER, tailNumber);
-                    request.setAttribute(ParameterName.AIRCRAFT_NAME, aircraftName);
-                    request.setAttribute(ParameterName.AIRCRAFT_TYPE, Aircraft.AircraftType.valueOf(aircraftType.toUpperCase()));
                     request.setAttribute(ParameterName.CREATE_AIRCRAFT_SUCCESSFUL_FLAG, true);
                     page = PagePath.CREATE_AIRCRAFT;
                 } else {

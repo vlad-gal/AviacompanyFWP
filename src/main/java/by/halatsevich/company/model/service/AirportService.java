@@ -1,6 +1,6 @@
 package by.halatsevich.company.model.service;
 
-import by.halatsevich.company.model.entity.Airport;
+import by.halatsevich.company.entity.Airport;
 import by.halatsevich.company.model.exception.ServiceException;
 
 import java.util.List;
@@ -15,15 +15,13 @@ import java.util.Optional;
 public interface AirportService {
 
     /**
-     * Add airport.
+     * Add airport boolean.
      *
-     * @param airportName the airport name
-     * @param city        the city
-     * @param country     the country
+     * @param airport the airport
      * @return true if adding successful, otherwise false
      * @throws ServiceException the service exception
      */
-    boolean addAirport(String airportName, String city, String country) throws ServiceException;
+    boolean addAirport(Airport airport) throws ServiceException;
 
     /**
      * Find all airports.

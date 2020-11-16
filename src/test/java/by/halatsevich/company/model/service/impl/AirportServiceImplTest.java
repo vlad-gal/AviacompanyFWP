@@ -3,7 +3,7 @@ package by.halatsevich.company.model.service.impl;
 import by.halatsevich.company.model.dao.AirportDao;
 import by.halatsevich.company.model.dao.DaoFactory;
 import by.halatsevich.company.model.dao.impl.AirportDaoImpl;
-import by.halatsevich.company.model.entity.Airport;
+import by.halatsevich.company.entity.Airport;
 import by.halatsevich.company.model.exception.DaoException;
 import by.halatsevich.company.model.exception.ServiceException;
 import by.halatsevich.company.model.service.AirportService;
@@ -49,7 +49,7 @@ public class AirportServiceImplTest {
         AirportService service = ServiceFactory.getInstance().getAirportService();
         try {
             Mockito.when(airportDao.addAirport(Mockito.any(Airport.class))).thenReturn(true);
-            boolean condition = service.addAirport("1", "2", "3");
+            boolean condition = service.addAirport(new Airport());
             assertTrue(condition);
         } catch (ServiceException | DaoException e) {
             fail(e.getMessage());
@@ -60,7 +60,7 @@ public class AirportServiceImplTest {
     public void testAddAirportException() throws DaoException, ServiceException {
         AirportService service = ServiceFactory.getInstance().getAirportService();
         Mockito.when(airportDao.addAirport(Mockito.any(Airport.class))).thenThrow(DaoException.class);
-        service.addAirport("1", "2", "3");
+        service.addAirport(new Airport());
     }
 
     @Test

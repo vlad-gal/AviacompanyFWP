@@ -1,8 +1,8 @@
 package by.halatsevich.company.tag;
 
 import by.halatsevich.company.controller.ParameterName;
-import by.halatsevich.company.model.entity.Crew;
-import by.halatsevich.company.model.entity.User;
+import by.halatsevich.company.entity.Crew;
+import by.halatsevich.company.entity.User;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -58,7 +58,7 @@ public class CrewPaginationTag extends TagSupport {
                     out.write("<td><div class=\"d-flex flex-row\"><div class=\"ml-2\">");
                     out.write("<a href=\"controller?command=show_crew&crewId=" + crew.getId());
                     out.write("\" class=\"btn btn-info\">Show</a>");
-                    if (mainUser.getRole() == User.Role.ADMIN || mainUser.getRole() == User.Role.OPERATOR) {
+                    if (mainUser.getRole() == User.Role.ADMIN || mainUser.getRole() == User.Role.DISPATCHER) {
                         out.write("<a href=\"controller?command=update_crew_page&crewId=" + crew.getId());
                         out.write("\" class=\"btn btn-info\">Edit</a>");
                         out.write("</div></div></td>");

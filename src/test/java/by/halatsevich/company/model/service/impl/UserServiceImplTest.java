@@ -2,10 +2,10 @@ package by.halatsevich.company.model.service.impl;
 
 import by.halatsevich.company.model.dao.DaoFactory;
 import by.halatsevich.company.model.dao.impl.UserDaoImpl;
-import by.halatsevich.company.model.entity.AuthorizationData;
-import by.halatsevich.company.model.entity.RegistrationData;
-import by.halatsevich.company.model.entity.Status;
-import by.halatsevich.company.model.entity.User;
+import by.halatsevich.company.entity.AuthorizationData;
+import by.halatsevich.company.entity.RegistrationData;
+import by.halatsevich.company.entity.Status;
+import by.halatsevich.company.entity.User;
 import by.halatsevich.company.model.exception.DaoException;
 import by.halatsevich.company.model.exception.ServiceException;
 import by.halatsevich.company.model.service.ServiceFactory;

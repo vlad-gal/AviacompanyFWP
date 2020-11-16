@@ -3,7 +3,7 @@ package by.halatsevich.company.controller.command.impl;
 import by.halatsevich.company.controller.PagePath;
 import by.halatsevich.company.controller.ParameterName;
 import by.halatsevich.company.controller.command.Command;
-import by.halatsevich.company.model.entity.Flight;
+import by.halatsevich.company.entity.Flight;
 import by.halatsevich.company.model.exception.ServiceException;
 import by.halatsevich.company.model.service.FlightService;
 import by.halatsevich.company.model.service.ServiceFactory;
@@ -27,8 +27,8 @@ public class AllFlightsCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        String status = request.getParameter(ParameterName.STATUS);
         HttpSession session = request.getSession();
+        String status = request.getParameter(ParameterName.STATUS);
         String page;
         if (BaseValidator.isValidStatus(status)) {
             ServiceFactory factory = ServiceFactory.getInstance();

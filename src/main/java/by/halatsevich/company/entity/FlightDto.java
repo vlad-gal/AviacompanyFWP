@@ -1,4 +1,4 @@
-package by.halatsevich.company.model.entity;
+package by.halatsevich.company.entity;
 
 /**
  * The class represents flight data transfer object entity for more convenient use between the layers.

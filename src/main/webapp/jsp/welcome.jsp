@@ -61,8 +61,8 @@
                                     <tr>
                                         <td>${flight.departureAirport.airportName}, ${flight.departureAirport.city}, ${flight.departureAirport.country}</td>
                                         <td>${flight.destinationAirport.airportName}, ${flight.destinationAirport.city}, ${flight.destinationAirport.country}</td>
-                                        <td><fmt:formatDate value="${flight.departTime}" pattern="d-MMMM-yyyy hh:mm"/></td>
-                                        <td><fmt:formatDate value="${flight.arriveTime}" pattern="d-MMMM-yyyy hh:mm"/></td>
+                                        <td><fmt:formatDate value="${flight.departTime}" pattern="d-MMMM-yyyy HH:mm"/></td>
+                                        <td><fmt:formatDate value="${flight.arriveTime}" pattern="d-MMMM-yyyy HH:mm"/></td>
                                     </tr>
                                 </c:forEach>
                                 </tbody>

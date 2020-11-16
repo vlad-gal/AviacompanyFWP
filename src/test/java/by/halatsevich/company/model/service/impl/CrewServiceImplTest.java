@@ -5,10 +5,10 @@ import by.halatsevich.company.model.dao.DaoFactory;
 import by.halatsevich.company.model.dao.UserDao;
 import by.halatsevich.company.model.dao.impl.CrewDaoImpl;
 import by.halatsevich.company.model.dao.impl.UserDaoImpl;
-import by.halatsevich.company.model.entity.Crew;
-import by.halatsevich.company.model.entity.CrewDto;
-import by.halatsevich.company.model.entity.Status;
-import by.halatsevich.company.model.entity.User;
+import by.halatsevich.company.entity.Crew;
+import by.halatsevich.company.entity.CrewDto;
+import by.halatsevich.company.entity.Status;
+import by.halatsevich.company.entity.User;
 import by.halatsevich.company.model.exception.DaoException;
 import by.halatsevich.company.model.exception.ServiceException;
 import by.halatsevich.company.model.service.CrewService;
@@ -57,8 +57,7 @@ public class CrewServiceImplTest {
         CrewService service = ServiceFactory.getInstance().getCrewService();
         try {
             Mockito.when(crewDao.addCrew(Mockito.any(CrewDto.class))).thenReturn(true);
-            boolean condition = service.addCrew(new User(), "crewName", "2", "3",
-                    "4", "1", Status.ACTIVE);
+            boolean condition = service.addCrew(new CrewDto());
             assertTrue(condition);
         } catch (ServiceException | DaoException e) {
             fail(e.getMessage());
@@ -69,8 +68,7 @@ public class CrewServiceImplTest {
     public void testAddCrewException() throws DaoException, ServiceException {
         CrewService service = ServiceFactory.getInstance().getCrewService();
         Mockito.when(crewDao.addCrew(Mockito.any(CrewDto.class))).thenThrow(DaoException.class);
-        service.addCrew(new User(), "crewName", "2", "3",
-                "4", "1", Status.ACTIVE);
+        service.addCrew(new CrewDto());
     }
 
     @Test
@@ -93,6 +91,29 @@ public class CrewServiceImplTest {
         Mockito.when(crewDao.findById(Mockito.anyInt())).thenReturn(Optional.of(new CrewDto()));
         Mockito.when(crewDao.addUserIntoCrew(Mockito.anyInt(), Mockito.anyInt())).thenThrow(DaoException.class);
         service.addUserIntoCrew(new User(), "1");
+    }
+
+    @Test
+    public void testFindAllCrewsSuccess() throws Exception {
+        CrewService service = ServiceFactory.getInstance().getCrewService();
+        List<CrewDto> crewDtoList = new ArrayList<>();
+        crewDtoList.add(new CrewDto());
+        try {
+            Mockito.when(userDao.findById(Mockito.anyInt())).thenReturn(Optional.of(new User()));
+            Mockito.when(crewDao.findAll()).thenReturn(crewDtoList);
+            List<Crew> actual = service.findAllCrews();
+            assertEquals(actual.size(), crewDtoList.size());
+        } catch (ServiceException | DaoException e) {
+            fail(e.getMessage());
+        }
+    }
+
+    @Test(expectedExceptions = ServiceException.class)
+    public void testFindAllCrewsException() throws DaoException, ServiceException {
+        CrewService service = ServiceFactory.getInstance().getCrewService();
+        Mockito.when(userDao.findById(Mockito.anyInt())).thenReturn(Optional.of(new User()));
+        Mockito.when(crewDao.findAll()).thenThrow(DaoException.class);
+        service.findAllCrews();
     }
 
     @Test
@@ -220,8 +241,7 @@ public class CrewServiceImplTest {
         try {
             Mockito.when(userDao.update(Mockito.any(User.class))).thenReturn(true);
             Mockito.when(crewDao.update(Mockito.any(CrewDto.class))).thenReturn(true);
-            boolean condition = service.updateCrew(crew, "1", "2", "3",
-                    "2", "active");
+            boolean condition = service.updateCrew(crew);
             assertTrue(condition);
         } catch (ServiceException | DaoException e) {
             fail(e.getMessage());
@@ -236,7 +256,6 @@ public class CrewServiceImplTest {
                 3, 5, Status.ACTIVE);
         Mockito.when(userDao.update(Mockito.any(User.class))).thenReturn(true);
         Mockito.when(crewDao.update(Mockito.any(CrewDto.class))).thenThrow(DaoException.class);
-        service.updateCrew(crew, "1", "2", "3",
-                "2", "active");
+        service.updateCrew(crew);
     }
 }

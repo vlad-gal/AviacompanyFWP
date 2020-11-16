@@ -3,7 +3,7 @@ package by.halatsevich.company.controller.command.impl.page;
 import by.halatsevich.company.controller.PagePath;
 import by.halatsevich.company.controller.ParameterName;
 import by.halatsevich.company.controller.command.Command;
-import by.halatsevich.company.model.entity.Airport;
+import by.halatsevich.company.entity.Airport;
 import by.halatsevich.company.model.exception.ServiceException;
 import by.halatsevich.company.model.service.AirportService;
 import by.halatsevich.company.model.service.ServiceFactory;
@@ -27,8 +27,8 @@ public class UpdateAirportPageCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        String airportId = request.getParameter(ParameterName.AIRPORT_ID);
         HttpSession session = request.getSession();
+        String airportId = request.getParameter(ParameterName.AIRPORT_ID);
         String page;
         if (BaseValidator.isValidId(airportId)) {
             ServiceFactory factory = ServiceFactory.getInstance();

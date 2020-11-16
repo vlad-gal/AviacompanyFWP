@@ -1,7 +1,7 @@
 package by.halatsevich.company.validator;
 
-import by.halatsevich.company.model.entity.AuthorizationData;
-import by.halatsevich.company.model.entity.RegistrationData;
+import by.halatsevich.company.entity.AuthorizationData;
+import by.halatsevich.company.entity.RegistrationData;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 

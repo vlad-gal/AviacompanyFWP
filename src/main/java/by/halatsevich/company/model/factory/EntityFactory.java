@@ -1,6 +1,6 @@
 package by.halatsevich.company.model.factory;
 
-import by.halatsevich.company.model.entity.*;
+import by.halatsevich.company.entity.*;
 import by.halatsevich.company.model.factory.creator.*;
 
 /**

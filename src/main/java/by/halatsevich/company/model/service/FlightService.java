@@ -1,7 +1,8 @@
 package by.halatsevich.company.model.service;
 
-import by.halatsevich.company.model.entity.Flight;
-import by.halatsevich.company.model.entity.User;
+import by.halatsevich.company.entity.Flight;
+import by.halatsevich.company.entity.FlightDto;
+import by.halatsevich.company.entity.User;
 import by.halatsevich.company.model.exception.ServiceException;
 
 import java.util.List;
@@ -15,20 +16,13 @@ import java.util.List;
 public interface FlightService {
 
     /**
-     * Add flight.
+     * Add flight boolean.
      *
-     * @param departureAirportId   the departure airport id
-     * @param destinationAirportId the destination airport id
-     * @param departTime           the depart time
-     * @param arriveTime           the arrive time
-     * @param crewId               the crew id
-     * @param aircraftId           the aircraft id
-     * @param operatorId           the operator id
+     * @param flightDto the flight dto
      * @return true if adding successful, otherwise false
      * @throws ServiceException the service exception
      */
-    boolean addFlight(String departureAirportId, String destinationAirportId, String departTime,
-                      String arriveTime, String crewId, String aircraftId, int operatorId) throws ServiceException;
+    boolean addFlight(FlightDto flightDto) throws ServiceException;
 
     /**
      * Find flights by status.
@@ -58,22 +52,13 @@ public interface FlightService {
      */
     List<Flight> findUserFlightsByStatus(User user, String status) throws ServiceException;
 
+
     /**
-     * Update flight.
+     * Update flight boolean.
      *
-     * @param flightId             the flight id
-     * @param departureAirportId   the departure airport id
-     * @param destinationAirportId the destination airport id
-     * @param departTime           the depart time
-     * @param arriveTime           the arrive time
-     * @param crewId               the crew id
-     * @param aircraftId           the aircraft id
-     * @param operatorId           the operator id
-     * @param status               the status
+     * @param flightDto the flight dto
      * @return true if updating successful, otherwise false
      * @throws ServiceException the service exception
      */
-    boolean updateFlight(int flightId, String departureAirportId, String destinationAirportId, String departTime,
-                         String arriveTime, String crewId, String aircraftId, String operatorId, String status)
-            throws ServiceException;
+    boolean updateFlight(FlightDto flightDto) throws ServiceException;
 }

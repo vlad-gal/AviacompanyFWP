@@ -1,6 +1,6 @@
 package by.halatsevich.company.validator;
 
-import by.halatsevich.company.model.entity.Aircraft;
+import by.halatsevich.company.entity.Aircraft;
 
 /**
  * The class represents aircraft validator.

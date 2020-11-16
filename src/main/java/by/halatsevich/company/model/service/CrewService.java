@@ -1,9 +1,8 @@
 package by.halatsevich.company.model.service;
 
-import by.halatsevich.company.model.entity.Crew;
-import by.halatsevich.company.model.entity.CrewDto;
-import by.halatsevich.company.model.entity.Status;
-import by.halatsevich.company.model.entity.User;
+import by.halatsevich.company.entity.Crew;
+import by.halatsevich.company.entity.CrewDto;
+import by.halatsevich.company.entity.User;
 import by.halatsevich.company.model.exception.ServiceException;
 
 import java.util.List;
@@ -18,20 +17,13 @@ import java.util.Optional;
 public interface CrewService {
 
     /**
-     * Add crew.
+     * Add crew boolean.
      *
-     * @param dispatcher           the dispatcher
-     * @param crewName             the crew name
-     * @param numberOfPilots       the number of pilots
-     * @param numberOfNavigators   the number of navigators
-     * @param numberOfRadioman     the number of radioman
-     * @param numberOfStewardesses the number of stewardesses
-     * @param status               the status
+     * @param crewDto the crew dto
      * @return true if adding successful, otherwise false
      * @throws ServiceException the service exception
      */
-    boolean addCrew(User dispatcher, String crewName, String numberOfPilots, String numberOfNavigators,
-                    String numberOfRadioman, String numberOfStewardesses, Status status) throws ServiceException;
+    boolean addCrew(CrewDto crewDto) throws ServiceException;
 
     /**
      * Add user into crew.
@@ -52,6 +44,14 @@ public interface CrewService {
      * @throws ServiceException the service exception
      */
     int countAvailablePlacesInCrew(Crew crew, User user) throws ServiceException;
+
+    /**
+     * Find all crews.
+     *
+     * @return the list of crews
+     * @throws ServiceException the service exception
+     */
+    List<Crew> findAllCrews() throws ServiceException;
 
     /**
      * Find crews by status.
@@ -91,17 +91,11 @@ public interface CrewService {
     Optional<CrewDto> findByCrewName(String crewName) throws ServiceException;
 
     /**
-     * Update crew.
+     * Update crew boolean.
      *
-     * @param crew                 the crew
-     * @param numberOfPilots       the number of pilots
-     * @param numberOfNavigators   the number of navigators
-     * @param numberOfRadioman     the number of radioman
-     * @param numberOfStewardesses the number of stewardesses
-     * @param status               the status
+     * @param crew the crew
      * @return true if updating successful, otherwise false
      * @throws ServiceException the service exception
      */
-    boolean updateCrew(Crew crew, String numberOfPilots, String numberOfNavigators, String numberOfRadioman,
-                       String numberOfStewardesses, String status) throws ServiceException;
+    boolean updateCrew(Crew crew) throws ServiceException;
 }

@@ -51,7 +51,6 @@
                                 <select id="crew" name="crew" class="custom-select" required>
                                     <c:if test="${errorAddUserIntoCrewFlag eq true ||errorValidationFlag eq true}">
                                         <option value="${crew.id}" selected>${crew.crewName}</option>
-                                        >
                                     </c:if>
                                     <c:forEach var="crew" items="${crewList}">
                                         <option value="${crew.id}">

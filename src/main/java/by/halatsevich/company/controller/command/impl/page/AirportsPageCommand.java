@@ -3,7 +3,7 @@ package by.halatsevich.company.controller.command.impl.page;
 import by.halatsevich.company.controller.PagePath;
 import by.halatsevich.company.controller.ParameterName;
 import by.halatsevich.company.controller.command.Command;
-import by.halatsevich.company.model.entity.Airport;
+import by.halatsevich.company.entity.Airport;
 import by.halatsevich.company.model.exception.ServiceException;
 import by.halatsevich.company.model.service.AirportService;
 import by.halatsevich.company.model.service.ServiceFactory;
@@ -26,9 +26,9 @@ public class AirportsPageCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
+        HttpSession session = request.getSession();
         ServiceFactory factory = ServiceFactory.getInstance();
         AirportService airportService = factory.getAirportService();
-        HttpSession session = request.getSession();
         String page;
         List<Airport> airportList;
         try {

@@ -3,7 +3,8 @@ package by.halatsevich.company.controller.command.impl;
 import by.halatsevich.company.controller.PagePath;
 import by.halatsevich.company.controller.ParameterName;
 import by.halatsevich.company.controller.command.Command;
-import by.halatsevich.company.model.entity.Crew;
+import by.halatsevich.company.entity.Crew;
+import by.halatsevich.company.entity.Status;
 import by.halatsevich.company.model.exception.ServiceException;
 import by.halatsevich.company.model.service.CrewService;
 import by.halatsevich.company.model.service.ServiceFactory;
@@ -34,7 +35,6 @@ public class UpdateCrewCommand implements Command {
         String numberOfRadioman = request.getParameter(ParameterName.NUMBER_OF_RADIOMAN);
         String numberOfStewardesses = request.getParameter(ParameterName.NUMBER_OF_STEWARDESSES);
         String status = request.getParameter(ParameterName.STATUS);
-
         String page;
         if (CrewValidator.isValidNumberOfPilots(numberOfPilots)
                 && CrewValidator.isValidNumberOfNavigators(numberOfNavigators)
@@ -44,8 +44,12 @@ public class UpdateCrewCommand implements Command {
             ServiceFactory factory = ServiceFactory.getInstance();
             CrewService crewService = factory.getCrewService();
             try {
-                boolean isCrewUpdate = crewService.updateCrew(updatingCrew, numberOfPilots,
-                        numberOfNavigators, numberOfRadioman, numberOfStewardesses, status);
+                updatingCrew.setNumberOfPilots(Integer.parseInt(numberOfPilots));
+                updatingCrew.setNumberOfNavigators(Integer.parseInt(numberOfNavigators));
+                updatingCrew.setNumberOfRadioman(Integer.parseInt(numberOfRadioman));
+                updatingCrew.setNumberOfStewardesses(Integer.parseInt(numberOfStewardesses));
+                updatingCrew.setStatus(Status.valueOf(status.toUpperCase()));
+                boolean isCrewUpdate = crewService.updateCrew(updatingCrew);
                 if (isCrewUpdate) {
                     request.setAttribute(ParameterName.UPDATING_SUCCESSFUL_FLAG, true);
                     request.setAttribute(ParameterName.UPDATING_CREW, crewService.findCrewById(updatingCrew.getId()));

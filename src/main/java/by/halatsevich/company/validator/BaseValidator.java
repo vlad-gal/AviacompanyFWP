@@ -1,6 +1,6 @@
 package by.halatsevich.company.validator;
 
-import by.halatsevich.company.model.entity.Status;
+import by.halatsevich.company.entity.Status;
 
 /**
  * The class represents base validator.

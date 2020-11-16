@@ -1,8 +1,8 @@
 package by.halatsevich.company.model.dao;
 
-import by.halatsevich.company.model.entity.RegistrationData;
-import by.halatsevich.company.model.entity.Status;
-import by.halatsevich.company.model.entity.User;
+import by.halatsevich.company.entity.RegistrationData;
+import by.halatsevich.company.entity.Status;
+import by.halatsevich.company.entity.User;
 import by.halatsevich.company.model.exception.DaoException;
 
 import java.util.List;

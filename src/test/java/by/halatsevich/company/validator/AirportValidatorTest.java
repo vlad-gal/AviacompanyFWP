@@ -15,7 +15,7 @@ public class AirportValidatorTest {
 
     @Test
     public void testIsValidAirportNameFailure() {
-        boolean condition = AirportValidator.isValidAirportName("City 17");
+        boolean condition = AirportValidator.isValidAirportName("City 17123!!");
         assertFalse(condition);
     }
 

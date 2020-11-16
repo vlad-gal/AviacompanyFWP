@@ -1,6 +1,6 @@
 package by.halatsevich.company.model.dao;
 
-import by.halatsevich.company.model.entity.Aircraft;
+import by.halatsevich.company.entity.Aircraft;
 import by.halatsevich.company.model.exception.DaoException;
 
 /**

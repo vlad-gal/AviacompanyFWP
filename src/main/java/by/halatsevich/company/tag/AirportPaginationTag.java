@@ -1,8 +1,8 @@
 package by.halatsevich.company.tag;
 
 import by.halatsevich.company.controller.ParameterName;
-import by.halatsevich.company.model.entity.Airport;
-import by.halatsevich.company.model.entity.User;
+import by.halatsevich.company.entity.Airport;
+import by.halatsevich.company.entity.User;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

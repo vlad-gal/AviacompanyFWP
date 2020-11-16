@@ -4,6 +4,7 @@
 
 <fmt:setLocale value="${sessionScope.lang}"/>
 <fmt:setBundle basename="local"/>
+<c:remove var="showAirportsFlag" scope="session"/>
 
 <html>
 <head>
@@ -38,7 +39,7 @@
                             <div class="form-group">
                                 <label for="airportName"><fmt:message key="local.airportName"/>*</label>
                                 <input id="airportName" type="text" class="form-control" name="airportName"
-                                       placeholder="<fmt:message key="local.airportName"/>" pattern="[A-Za-zА-Яа-я0-9]{2,15}"
+                                       placeholder="<fmt:message key="local.airportName"/>" pattern="[A-Za-zА-Яа-я0-9\s]{2,15}"
                                        title="<fmt:message key="local.incorrectAirportNameMessage"/>"
                                        value="${updatingAirport.airportName}" autofocus required>
                             </div>

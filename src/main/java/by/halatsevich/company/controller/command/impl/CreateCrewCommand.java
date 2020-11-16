@@ -3,9 +3,9 @@ package by.halatsevich.company.controller.command.impl;
 import by.halatsevich.company.controller.PagePath;
 import by.halatsevich.company.controller.ParameterName;
 import by.halatsevich.company.controller.command.Command;
-import by.halatsevich.company.model.entity.CrewDto;
-import by.halatsevich.company.model.entity.Status;
-import by.halatsevich.company.model.entity.User;
+import by.halatsevich.company.entity.CrewDto;
+import by.halatsevich.company.entity.Status;
+import by.halatsevich.company.entity.User;
 import by.halatsevich.company.model.exception.ServiceException;
 import by.halatsevich.company.model.service.CrewService;
 import by.halatsevich.company.model.service.ServiceFactory;
@@ -16,7 +16,6 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.util.Optional;
 
 /**
  * The class represents creating crew command.
@@ -45,20 +44,13 @@ public class CreateCrewCommand implements Command {
             ServiceFactory factory = ServiceFactory.getInstance();
             CrewService crewService = factory.getCrewService();
             try {
-                boolean isCrewCreate = crewService.addCrew(dispatcher, crewName, numberOfPilots, numberOfNavigators, numberOfRadioman, numberOfStewardesses, Status.ACTIVE);
-
+                CrewDto crewDto = new CrewDto(crewName,dispatcher.getId(),Integer.parseInt(numberOfPilots),
+                        Integer.parseInt(numberOfNavigators),Integer.parseInt(numberOfRadioman),
+                        Integer.parseInt(numberOfStewardesses),Status.ACTIVE);
+                boolean isCrewCreate = crewService.addCrew(crewDto);
                 if (isCrewCreate) {
                     request.setAttribute(ParameterName.CREATE_CREW_SUCCESSFUL_FLAG, true);
-                    Optional<CrewDto> optionalCrewDto = crewService.findByCrewName(crewName);
-                    if (optionalCrewDto.isPresent()) {
-                        CrewDto crewDto = optionalCrewDto.get();
-                        request.setAttribute(ParameterName.CREW_DTO, crewDto);
                         page = PagePath.CREATE_CREW;
-                    } else {
-                        logger.log(Level.ERROR, "Crew with that name not found");
-                        request.setAttribute(ParameterName.ERROR_VALIDATION_FLAG, true);
-                        page = PagePath.CREATE_CREW;
-                    }
                 } else {
                     logger.log(Level.ERROR, "Error while creating crew");
                     request.setAttribute(ParameterName.ERROR_CREATE_CREW_FLAG, true);

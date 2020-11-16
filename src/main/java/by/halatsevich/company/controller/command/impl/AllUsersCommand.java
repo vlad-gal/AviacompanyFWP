@@ -3,7 +3,7 @@ package by.halatsevich.company.controller.command.impl;
 import by.halatsevich.company.controller.PagePath;
 import by.halatsevich.company.controller.ParameterName;
 import by.halatsevich.company.controller.command.Command;
-import by.halatsevich.company.model.entity.User;
+import by.halatsevich.company.entity.User;
 import by.halatsevich.company.model.exception.ServiceException;
 import by.halatsevich.company.model.service.ServiceFactory;
 import by.halatsevich.company.model.service.UserService;
@@ -28,9 +28,9 @@ public class AllUsersCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
+        HttpSession session = request.getSession();
         String status = request.getParameter(ParameterName.STATUS);
         String role = request.getParameter(ParameterName.ROLE);
-        HttpSession session = request.getSession();
         String page;
         if (BaseValidator.isValidStatus(status)) {
             ServiceFactory factory = ServiceFactory.getInstance();

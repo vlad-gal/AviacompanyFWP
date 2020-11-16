@@ -6,8 +6,8 @@ import by.halatsevich.company.controller.command.AllowedCommand;
 import by.halatsevich.company.controller.command.Command;
 import by.halatsevich.company.controller.command.CommandType;
 import by.halatsevich.company.controller.command.impl.WrongActionCommand;
-import by.halatsevich.company.model.entity.Status;
-import by.halatsevich.company.model.entity.User;
+import by.halatsevich.company.entity.Status;
+import by.halatsevich.company.entity.User;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;

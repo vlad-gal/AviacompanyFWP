@@ -3,7 +3,7 @@ package by.halatsevich.company.controller.command.impl.page;
 import by.halatsevich.company.controller.PagePath;
 import by.halatsevich.company.controller.ParameterName;
 import by.halatsevich.company.controller.command.Command;
-import by.halatsevich.company.model.entity.*;
+import by.halatsevich.company.entity.*;
 import by.halatsevich.company.model.exception.ServiceException;
 import by.halatsevich.company.model.service.*;
 import by.halatsevich.company.validator.BaseValidator;
@@ -26,8 +26,8 @@ public class UpdateFlightPageCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
-        String flightId = request.getParameter(ParameterName.FLIGHT_ID);
         HttpSession session = request.getSession();
+        String flightId = request.getParameter(ParameterName.FLIGHT_ID);
         String page;
         if (BaseValidator.isValidId(flightId)) {
             ServiceFactory factory = ServiceFactory.getInstance();
@@ -42,9 +42,9 @@ public class UpdateFlightPageCommand implements Command {
             List<User> operators;
             try {
                 Flight flight = flightService.findFlightById(Integer.parseInt(flightId));
-                crews = crewService.findCrewsByStatus(Status.ACTIVE.getStatusName());
+                crews = crewService.findAllCrews();
                 airports = airportService.findAllAirports();
-                aircrafts = aircraftService.findAircraftsByStatus(Status.ACTIVE.getStatusName());
+                aircrafts = aircraftService.findAllAircrafts();
                 operators = userService
                         .findUsersByRoleAndStatus(User.Role.OPERATOR.getRoleName(), Status.ACTIVE.getStatusName());
                 session.setAttribute(ParameterName.UPDATING_FLIGHT, flight);

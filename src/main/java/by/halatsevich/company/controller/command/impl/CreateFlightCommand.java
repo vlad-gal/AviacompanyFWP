@@ -3,9 +3,12 @@ package by.halatsevich.company.controller.command.impl;
 import by.halatsevich.company.controller.PagePath;
 import by.halatsevich.company.controller.ParameterName;
 import by.halatsevich.company.controller.command.Command;
-import by.halatsevich.company.model.entity.User;
+import by.halatsevich.company.entity.FlightDto;
+import by.halatsevich.company.entity.Status;
+import by.halatsevich.company.entity.User;
 import by.halatsevich.company.model.exception.ServiceException;
 import by.halatsevich.company.model.service.*;
+import by.halatsevich.company.util.DateParser;
 import by.halatsevich.company.validator.BaseValidator;
 import by.halatsevich.company.validator.FlightValidator;
 import org.apache.logging.log4j.Level;
@@ -47,8 +50,12 @@ public class CreateFlightCommand implements Command {
             AirportService airportService = factory.getAirportService();
             CrewService crewService = factory.getCrewService();
             try {
-                boolean isFlightCreate = flightService
-                        .addFlight(departureAirportId, destinationAirportId, departTime, arriveTime, crewId, aircraftId, operator.getId());
+                long parsedDepartTime = DateParser.parseDate(departTime).getTime();
+                long parsedArriveTime = DateParser.parseDate(arriveTime).getTime();
+                FlightDto flightDto = new FlightDto(Integer.parseInt(departureAirportId),
+                        Integer.parseInt(destinationAirportId), parsedDepartTime,parsedArriveTime,
+                        Integer.parseInt(aircraftId), Integer.parseInt(crewId),operator.getId(), Status.ACTIVE);
+                boolean isFlightCreate = flightService.addFlight(flightDto);
                 if (isFlightCreate) {
                     request.setAttribute(ParameterName.CREATE_FLIGHT_SUCCESSFUL_FLAG, true);
                     page = PagePath.CREATE_FLIGHT;

@@ -3,9 +3,9 @@ package by.halatsevich.company.controller.command.impl;
 import by.halatsevich.company.controller.PagePath;
 import by.halatsevich.company.controller.ParameterName;
 import by.halatsevich.company.controller.command.Command;
-import by.halatsevich.company.model.entity.RegistrationData;
-import by.halatsevich.company.model.entity.Status;
-import by.halatsevich.company.model.entity.User;
+import by.halatsevich.company.entity.RegistrationData;
+import by.halatsevich.company.entity.Status;
+import by.halatsevich.company.entity.User;
 import by.halatsevich.company.model.exception.ServiceException;
 import by.halatsevich.company.model.service.ServiceFactory;
 import by.halatsevich.company.model.service.UserService;
@@ -36,7 +36,8 @@ public class CreateUserCommand implements Command {
         String telephoneNumber = request.getParameter(ParameterName.TELEPHONE_NUMBER);
         String role = request.getParameter(ParameterName.ROLE);
         String page;
-        RegistrationData registrationData = new RegistrationData(login, email, password, firstName, lastName, telephoneNumber, role, Status.ACTIVE.getStatusName());
+        RegistrationData registrationData = new RegistrationData(login, email, password, firstName, lastName,
+                telephoneNumber, role, Status.ACTIVE.getStatusName());
         if (UserValidator.isValidRegistrationData(registrationData)) {
             ServiceFactory factory = ServiceFactory.getInstance();
             UserService service = factory.getUserService();

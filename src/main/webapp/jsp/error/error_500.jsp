@@ -21,10 +21,11 @@
         <div class="mt-5">
             <h1><fmt:message key="local.error500"/></h1>
             <p class="lead"><fmt:message key="local.internalServerError"/></p>
-            <p class="text-left">${error}</p>
+            <p class="text-left">${error}
             <c:forEach var="cause" items="${error.stackTrace}">
-                <p class="text-left">${cause}</p>
+                ${cause}
             </c:forEach>
+            </p>
             <a href="${pageContext.request.contextPath}/controller?command=welcome_page"><fmt:message key="local.goToWelcome"/></a>
         </div>
     </div>

@@ -3,6 +3,7 @@ package by.halatsevich.company.controller.command.impl;
 import by.halatsevich.company.controller.PagePath;
 import by.halatsevich.company.controller.ParameterName;
 import by.halatsevich.company.controller.command.Command;
+import by.halatsevich.company.entity.Airport;
 import by.halatsevich.company.model.exception.ServiceException;
 import by.halatsevich.company.model.service.AirportService;
 import by.halatsevich.company.model.service.ServiceFactory;
@@ -34,11 +35,9 @@ public class CreateAirportCommand implements Command {
             ServiceFactory factory = ServiceFactory.getInstance();
             AirportService airportService = factory.getAirportService();
             try {
-                boolean isAdded = airportService.addAirport(airportName, city, country);
+                Airport airport = new Airport(country,city,airportName);
+                boolean isAdded = airportService.addAirport(airport);
                 if (isAdded) {
-                    request.setAttribute(ParameterName.AIRPORT_NAME, airportName);
-                    request.setAttribute(ParameterName.AIRPORT_CITY, city);
-                    request.setAttribute(ParameterName.AIRPORT_COUNTRY, country);
                     request.setAttribute(ParameterName.CREATE_AIRPORT_SUCCESSFUL_FLAG, true);
                     page = PagePath.CREATE_AIRPORT;
                 } else {

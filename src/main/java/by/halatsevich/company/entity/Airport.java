@@ -1,4 +1,4 @@
-package by.halatsevich.company.model.entity;
+package by.halatsevich.company.entity;
 
 /**
  * The class represents airport entity.
