@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
- * The class represents localization command.
+ * The class represents command to change language on pages.
  *
  * @author Vladislav Halatsevich
  * @version 1.0

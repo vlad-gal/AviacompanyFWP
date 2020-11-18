@@ -17,7 +17,7 @@ import java.util.Optional;
 public interface CrewService {
 
     /**
-     * Add crew boolean.
+     * Add crew.
      *
      * @param crewDto the crew dto
      * @return true if adding successful, otherwise false
@@ -91,7 +91,7 @@ public interface CrewService {
     Optional<CrewDto> findByCrewName(String crewName) throws ServiceException;
 
     /**
-     * Update crew boolean.
+     * Update crew.
      *
      * @param crew the crew
      * @return true if updating successful, otherwise false

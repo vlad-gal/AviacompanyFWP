@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
- * The class represents update user's personal data command.
+ * The class represents command to update user's personal data.
  *
  * @author Vladislav Halatsevich
  * @version 1.0

@@ -21,7 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * The class represents preparation for adding a user to a crew.
+ * The class represents preparation for forwarding to the add user into crew page.
  *
  * @author Vladislav Halatsevich
  * @version 1.0

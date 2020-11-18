@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.Properties;
 
 /**
- * The class represents connection config. Loads properties, define pool size and driver name.
+ * The class represents connection config. Loads properties, defines pool size and driver name.
  *
  * @author Vladislav Halatsevich
  * @version 1.0

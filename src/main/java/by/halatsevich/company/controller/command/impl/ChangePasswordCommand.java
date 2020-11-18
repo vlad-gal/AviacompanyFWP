@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
- * The class represents changing user's password.
+ * The class represents command to change user's password.
  *
  * @author Vladislav Halatsevich
  * @version 1.0

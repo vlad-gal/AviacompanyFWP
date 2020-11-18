@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
- * The class represents preparation for showing welcome page.
+ * The class represents preparation for forwarding to the welcome page.
  *
  * @author Vladislav Halatsevich
  * @version 1.0

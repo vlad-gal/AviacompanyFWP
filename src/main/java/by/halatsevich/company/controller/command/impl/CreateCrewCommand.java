@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
- * The class represents creating crew command.
+ * The class represents command to create crew.
  *
  * @author Vladislav Halatsevich
  * @version 1.0
@@ -44,13 +44,13 @@ public class CreateCrewCommand implements Command {
             ServiceFactory factory = ServiceFactory.getInstance();
             CrewService crewService = factory.getCrewService();
             try {
-                CrewDto crewDto = new CrewDto(crewName,dispatcher.getId(),Integer.parseInt(numberOfPilots),
-                        Integer.parseInt(numberOfNavigators),Integer.parseInt(numberOfRadioman),
-                        Integer.parseInt(numberOfStewardesses),Status.ACTIVE);
+                CrewDto crewDto = new CrewDto(crewName, dispatcher.getId(), Integer.parseInt(numberOfPilots),
+                        Integer.parseInt(numberOfNavigators), Integer.parseInt(numberOfRadioman),
+                        Integer.parseInt(numberOfStewardesses), Status.ACTIVE);
                 boolean isCrewCreate = crewService.addCrew(crewDto);
                 if (isCrewCreate) {
                     request.setAttribute(ParameterName.CREATE_CREW_SUCCESSFUL_FLAG, true);
-                        page = PagePath.CREATE_CREW;
+                    page = PagePath.CREATE_CREW;
                 } else {
                     logger.log(Level.ERROR, "Error while creating crew");
                     request.setAttribute(ParameterName.ERROR_CREATE_CREW_FLAG, true);

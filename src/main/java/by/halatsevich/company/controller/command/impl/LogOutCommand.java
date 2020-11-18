@@ -6,7 +6,7 @@ import by.halatsevich.company.controller.command.Command;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * The class represents log out command.
+ * The class represents command to log out from user account.
  *
  * @author Vladislav Halatsevich
  * @version 1.0

@@ -7,7 +7,7 @@ import by.halatsevich.company.controller.command.Command;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * The class represents preparation for reset password.
+ * The class represents preparation for forwarding to the reset password page.
  *
  * @author Vladislav Halatsevich
  * @version 1.0

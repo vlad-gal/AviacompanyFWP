@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
- * The class represents update crew command.
+ * The class represents command to update crew.
  *
  * @author Vladislav Halatsevich
  * @version 1.0

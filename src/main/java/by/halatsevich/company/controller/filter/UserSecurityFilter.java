@@ -10,6 +10,7 @@ import by.halatsevich.company.entity.Status;
 import by.halatsevich.company.entity.User;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -23,6 +24,7 @@ import java.util.Set;
  * @author Vladislav Halatsevich
  * @version 1.0
  */
+@WebFilter(urlPatterns = "/controller")
 public class UserSecurityFilter implements Filter {
 
     @Override

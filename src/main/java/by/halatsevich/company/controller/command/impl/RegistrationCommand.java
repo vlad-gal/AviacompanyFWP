@@ -20,7 +20,9 @@ import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 /**
- * The class represents registration command.
+ * The class represents command to registration user in system.
+ * If user is not present in system registration will be successful,
+ * but before user make authorization, he should activate his account.
  *
  * @author Vladislav Halatsevich
  * @version 1.0

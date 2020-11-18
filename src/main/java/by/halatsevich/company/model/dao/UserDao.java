@@ -9,7 +9,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * The interface represents user dao.
+ * The interface represents user dao. Extends the interface BaseDao, defines specific methods
+ * which interactions with User entities in database.
  *
  * @author Vladislav Halatsevich
  * @version 1.0
@@ -54,7 +55,7 @@ public interface UserDao extends BaseDao<User> {
     String findPasswordByLogin(String login) throws DaoException;
 
     /**
-     * Registration.
+     * Registration user.
      *
      * @param registrationData the registration data
      * @return true if registration successful, otherwise false

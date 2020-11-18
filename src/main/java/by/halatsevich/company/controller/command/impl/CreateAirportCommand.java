@@ -15,7 +15,7 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * The class represents creating airport command.
+ * The class represents command to create airport.
  *
  * @author Vladislav Halatsevich
  * @version 1.0
@@ -35,7 +35,7 @@ public class CreateAirportCommand implements Command {
             ServiceFactory factory = ServiceFactory.getInstance();
             AirportService airportService = factory.getAirportService();
             try {
-                Airport airport = new Airport(country,city,airportName);
+                Airport airport = new Airport(country, city, airportName);
                 boolean isAdded = airportService.addAirport(airport);
                 if (isAdded) {
                     request.setAttribute(ParameterName.CREATE_AIRPORT_SUCCESSFUL_FLAG, true);

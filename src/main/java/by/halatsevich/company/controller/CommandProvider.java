@@ -13,7 +13,7 @@ import org.apache.logging.log4j.Logger;
  * @version 1.0
  */
 public class CommandProvider {
-    private static final Logger logger = LogManager.getLogger();
+    private static final Logger logger = LogManager.getLogger(CommandProvider.class);
     private static final CommandProvider instance = new CommandProvider();
 
     private CommandProvider() {

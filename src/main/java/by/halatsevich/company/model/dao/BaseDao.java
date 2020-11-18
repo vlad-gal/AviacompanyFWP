@@ -14,7 +14,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * The interface represents base dao.
+ * The interface represents base dao. Defines the main CRUD methods, has default
+ * implementations of closing connection, statement, rollback connection, return autocommit.
  *
  * @param <E> the type parameter
  * @author Vladislav Halatsevich

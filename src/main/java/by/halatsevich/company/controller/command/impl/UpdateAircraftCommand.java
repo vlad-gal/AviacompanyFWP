@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
- * The class represents update aircraft command.
+ * The class represents command to update aircraft.
  *
  * @author Vladislav Halatsevich
  * @version 1.0

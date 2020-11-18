@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
- * The class represents showing all airports command.
+ * The class represents command to show all airports on user account.
  *
  * @author Vladislav Halatsevich
  * @version 1.0

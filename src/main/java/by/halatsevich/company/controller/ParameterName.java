@@ -85,7 +85,6 @@ public class ParameterName {
     public static final String NUMBER_OF_STEWARDESSES = "numberOfStewardesses";
     public static final String CREATE_CREW_SUCCESSFUL_FLAG = "createCrewSuccessfulFlag";
     public static final String ERROR_CREATE_CREW_FLAG = "errorCreateCrewFlag";
-    public static final String CREW_DTO = "crewDto";
     public static final String ADDING_USER = "addingUser";
     public static final String CREW_ID = "crewId";
     public static final String ADD_USER_INTO_CREW_SUCCESSFUL_FLAG = "addUserIntoCrewSuccessfulFlag";

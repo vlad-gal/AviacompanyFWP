@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 /**
- * The class represents preparation for updating airport.
+ * The class represents preparation for forwarding to the update airport page.
  *
  * @author Vladislav Halatsevich
  * @version 1.0

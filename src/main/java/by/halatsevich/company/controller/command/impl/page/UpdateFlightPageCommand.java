@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
- * The class represents preparation for updating flight.
+ * The class represents preparation for forwarding to the update flight page.
  *
  * @author Vladislav Halatsevich
  * @version 1.0

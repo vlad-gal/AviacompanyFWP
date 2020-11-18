@@ -16,7 +16,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
- * The class represents preparation for showing airports on page.
+ * The class represents preparation for forwarding to the airports page.
  *
  * @author Vladislav Halatsevich
  * @version 1.0

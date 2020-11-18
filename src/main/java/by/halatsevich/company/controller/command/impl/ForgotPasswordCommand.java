@@ -18,7 +18,7 @@ import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 /**
- * The class represents reset password by sending email.
+ * The class represents command to reset password by sending reset password link to email.
  *
  * @author Vladislav Halatsevich
  * @version 1.0

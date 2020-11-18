@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * The class represents preparation for showing crew on page.
+ * The class represents preparation for forwarding to the crew detail page.
  *
  * @author Vladislav Halatsevich
  * @version 1.0

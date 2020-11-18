@@ -1,10 +1,10 @@
 package by.halatsevich.company.model.dao.impl;
 
+import by.halatsevich.company.entity.Airport;
+import by.halatsevich.company.entity.Status;
 import by.halatsevich.company.model.dao.AirportDao;
 import by.halatsevich.company.model.dao.ColumnName;
 import by.halatsevich.company.model.dao.SqlQuery;
-import by.halatsevich.company.entity.Airport;
-import by.halatsevich.company.entity.Status;
 import by.halatsevich.company.model.exception.DaoException;
 import by.halatsevich.company.model.factory.EntityFactory;
 import by.halatsevich.company.model.pool.ConnectionPool;

@@ -21,7 +21,7 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
- * The class represents preparation for creating flight.
+ * The class represents preparation for forwarding to the create flight page.
  *
  * @author Vladislav Halatsevich
  * @version 1.0

@@ -17,7 +17,8 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
- * The class represents showing all flights command.
+ * The class represents command to show all flights on user account.
+ * This command find all flights based on their status.
  *
  * @author Vladislav Halatsevich
  * @version 1.0

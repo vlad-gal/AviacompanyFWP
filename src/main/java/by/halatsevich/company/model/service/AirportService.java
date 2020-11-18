@@ -15,7 +15,7 @@ import java.util.Optional;
 public interface AirportService {
 
     /**
-     * Add airport boolean.
+     * Add airport.
      *
      * @param airport the airport
      * @return true if adding successful, otherwise false

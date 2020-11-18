@@ -9,7 +9,8 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * The interface represents crew dao.
+ * The interface represents crew dao. Extends the interface BaseDao, defines specific methods
+ * which interactions with Crew and CrewDto entities in database.
  *
  * @author Vladislav Halatsevich
  * @version 1.0

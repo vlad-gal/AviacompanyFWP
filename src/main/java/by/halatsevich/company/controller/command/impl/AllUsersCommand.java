@@ -18,7 +18,8 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
- * The class represents showing all users command.
+ * The class represents command to show all users on user account.
+ * This command find all users based on their status and role.
  *
  * @author Vladislav Halatsevich
  * @version 1.0

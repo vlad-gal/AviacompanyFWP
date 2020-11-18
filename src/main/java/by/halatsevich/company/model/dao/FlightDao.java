@@ -7,7 +7,8 @@ import by.halatsevich.company.model.exception.DaoException;
 import java.util.List;
 
 /**
- * The interface represents flight dao.
+ * The interface represents flight dao. Extends the interface BaseDao, defines specific methods
+ * which interactions with Flight and FlightDto entities in database.
  *
  * @author Vladislav Halatsevich
  * @version 1.0
@@ -24,7 +25,7 @@ public interface FlightDao extends BaseDao<FlightDto> {
     boolean addFlight(FlightDto flightDto) throws DaoException;
 
     /**
-     * Find user flights by status.
+     * Find user's flights by status.
      *
      * @param userId the user id
      * @param status the status

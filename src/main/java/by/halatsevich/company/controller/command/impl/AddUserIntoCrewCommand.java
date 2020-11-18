@@ -17,7 +17,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
- * The class represents add user into crew command.
+ * The class represents command to add user into crew. If there are available places, user will be added.
+ * Otherwise warning will be issued.
  *
  * @author Vladislav Halatsevich
  * @version 1.0

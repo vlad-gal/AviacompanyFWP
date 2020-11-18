@@ -17,7 +17,8 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
- * The class represents showing all crews command.
+ * The class represents command to show all crews on user account.
+ * This command find all crews based on their status.
  *
  * @author Vladislav Halatsevich
  * @version 1.0

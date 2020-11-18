@@ -4,7 +4,8 @@ import by.halatsevich.company.entity.Airport;
 import by.halatsevich.company.model.exception.DaoException;
 
 /**
- * The interface represents airport dao.
+ * The interface represents airport dao. Extends the interface BaseDao, defines specific methods
+ * which interactions with Airport entities in database.
  *
  * @author Vladislav Halatsevich
  * @version 1.0

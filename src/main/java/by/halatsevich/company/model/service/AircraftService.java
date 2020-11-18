@@ -15,7 +15,7 @@ import java.util.Optional;
 public interface AircraftService {
 
     /**
-     * Add aircraft boolean.
+     * Add aircraft.
      *
      * @param aircraft the aircraft
      * @return true if adding successful, otherwise false

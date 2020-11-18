@@ -7,42 +7,6 @@
     <welcome-file-list>
         <welcome-file>index.jsp</welcome-file>
     </welcome-file-list>
-    <servlet>
-        <servlet-name>Controller</servlet-name>
-        <servlet-class>by.halatsevich.company.controller.Controller</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Controller</servlet-name>
-        <url-pattern>/controller</url-pattern>
-    </servlet-mapping>
-    <filter>
-        <filter-name>EncodingFilter</filter-name>
-        <filter-class>by.halatsevich.company.controller.filter.EncodingFilter</filter-class>
-        <init-param>
-            <param-name>encoding</param-name>
-            <param-value>UTF-8</param-value>
-        </init-param>
-    </filter>
-    <filter-mapping>
-        <filter-name>EncodingFilter</filter-name>
-        <url-pattern>/*</url-pattern>
-    </filter-mapping>
-    <filter>
-        <filter-name>PageRedirectSecurityFilter</filter-name>
-        <filter-class>by.halatsevich.company.controller.filter.PageRedirectSecurityFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>PageRedirectSecurityFilter</filter-name>
-        <url-pattern>/jsp/*</url-pattern>
-    </filter-mapping>
-    <filter>
-        <filter-name>UserSecurityFilter</filter-name>
-        <filter-class>by.halatsevich.company.controller.filter.UserSecurityFilter</filter-class>
-    </filter>
-    <filter-mapping>
-        <filter-name>UserSecurityFilter</filter-name>
-        <url-pattern>/controller</url-pattern>
-    </filter-mapping>
     <error-page>
         <error-code>403</error-code>
         <location>/jsp/error/error_403.jsp</location>

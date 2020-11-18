@@ -4,7 +4,8 @@ import by.halatsevich.company.entity.Aircraft;
 import by.halatsevich.company.model.exception.DaoException;
 
 /**
- * The interface represents aircraft dao.
+ * The interface represents aircraft dao. Extends the interface BaseDao, defines specific methods
+ * which interactions with Aircraft entities in database.
  *
  * @author Vladislav Halatsevich
  * @version 1.0

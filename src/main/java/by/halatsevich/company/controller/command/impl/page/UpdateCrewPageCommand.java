@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
- * The class represents preparation for updating crew.
+ * The class represents preparation for forwarding to the update crew page.
  *
  * @author Vladislav Halatsevich
  * @version 1.0

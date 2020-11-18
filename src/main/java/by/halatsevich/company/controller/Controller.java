@@ -7,6 +7,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +20,7 @@ import java.io.IOException;
  * @author Vladislav Halatsevich
  * @version 1.0
  */
+@WebServlet(urlPatterns = "/controller")
 public class Controller extends HttpServlet {
     private static final Logger logger = LogManager.getLogger(Controller.class);
 
@@ -32,14 +34,6 @@ public class Controller extends HttpServlet {
         processRequest(req, resp);
     }
 
-    /**
-     * Process request. Define actions which application can do.
-     *
-     * @param req  the request
-     * @param resp the response
-     * @throws ServletException the servlet exception
-     * @throws IOException      the io exception
-     */
     private void processRequest(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         String commandName = req.getParameter(ParameterName.COMMAND);
         Command command = CommandProvider.getInstance().defineCommand(commandName);

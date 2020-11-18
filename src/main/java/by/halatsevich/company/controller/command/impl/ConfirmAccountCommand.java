@@ -17,7 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 /**
- * The class represents confirming user's account by email.
+ * The class represents command to confirm user's account by sending activation link to email.
  *
  * @author Vladislav Halatsevich
  * @version 1.0

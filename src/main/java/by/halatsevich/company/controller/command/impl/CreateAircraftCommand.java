@@ -16,7 +16,7 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * The class represents creating aircraft command.
+ * The class represents command to create aircraft.
  *
  * @author Vladislav Halatsevich
  * @version 1.0
@@ -36,8 +36,8 @@ public class CreateAircraftCommand implements Command {
             ServiceFactory factory = ServiceFactory.getInstance();
             AircraftService aircraftService = factory.getAircraftService();
             try {
-                Aircraft aircraft = new Aircraft(tailNumber,aircraftName,
-                        Aircraft.AircraftType.valueOf(aircraftType.toUpperCase()),Status.ACTIVE);
+                Aircraft aircraft = new Aircraft(tailNumber, aircraftName,
+                        Aircraft.AircraftType.valueOf(aircraftType.toUpperCase()), Status.ACTIVE);
                 boolean isAdded = aircraftService.addAircraft(aircraft);
                 if (isAdded) {
                     request.setAttribute(ParameterName.CREATE_AIRCRAFT_SUCCESSFUL_FLAG, true);
@@ -45,7 +45,8 @@ public class CreateAircraftCommand implements Command {
                 } else {
                     request.setAttribute(ParameterName.AIRCRAFT_TAIL_NUMBER, tailNumber);
                     request.setAttribute(ParameterName.AIRCRAFT_NAME, aircraftName);
-                    request.setAttribute(ParameterName.AIRCRAFT_TYPE, Aircraft.AircraftType.valueOf(aircraftType.toUpperCase()));
+                    request.setAttribute(ParameterName.AIRCRAFT_TYPE,
+                            Aircraft.AircraftType.valueOf(aircraftType.toUpperCase()));
                     request.setAttribute(ParameterName.ERROR_CREATE_AIRCRAFT_FLAG, true);
                     page = PagePath.CREATE_AIRCRAFT;
                 }

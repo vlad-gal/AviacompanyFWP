@@ -17,7 +17,7 @@ import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 /**
- * The class represents preparation for updating a user by admin.
+ * The class represents preparation for forwarding to the update user page by admin.
  *
  * @author Vladislav Halatsevich
  * @version 1.0

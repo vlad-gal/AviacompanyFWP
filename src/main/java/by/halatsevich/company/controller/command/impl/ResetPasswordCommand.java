@@ -16,7 +16,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 /**
- * The class represents reset password command.
+ * The class represents command to reset password.
  *
  * @author Vladislav Halatsevich
  * @version 1.0

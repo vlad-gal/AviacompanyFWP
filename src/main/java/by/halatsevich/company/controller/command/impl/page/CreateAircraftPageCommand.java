@@ -8,7 +8,7 @@ import by.halatsevich.company.entity.Aircraft;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * The class represents preparation for creating aircraft.
+ * The class represents preparation for forwarding to the create aircraft page.
  *
  * @author Vladislav Halatsevich
  * @version 1.0

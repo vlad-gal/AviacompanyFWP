@@ -16,7 +16,7 @@ import java.util.List;
 public interface FlightService {
 
     /**
-     * Add flight boolean.
+     * Add flight.
      *
      * @param flightDto the flight dto
      * @return true if adding successful, otherwise false
@@ -43,7 +43,7 @@ public interface FlightService {
     Flight findFlightById(int flightId) throws ServiceException;
 
     /**
-     * Find user flights by status list.
+     * Find user flights by status.
      *
      * @param user   the user
      * @param status the status
@@ -54,7 +54,7 @@ public interface FlightService {
 
 
     /**
-     * Update flight boolean.
+     * Update flight.
      *
      * @param flightDto the flight dto
      * @return true if updating successful, otherwise false

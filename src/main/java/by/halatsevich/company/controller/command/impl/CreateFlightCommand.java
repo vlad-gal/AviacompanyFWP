@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
- * The class represents creating flight command.
+ * The class represents command to create flight.
  *
  * @author Vladislav Halatsevich
  * @version 1.0
@@ -53,8 +53,8 @@ public class CreateFlightCommand implements Command {
                 long parsedDepartTime = DateParser.parseDate(departTime).getTime();
                 long parsedArriveTime = DateParser.parseDate(arriveTime).getTime();
                 FlightDto flightDto = new FlightDto(Integer.parseInt(departureAirportId),
-                        Integer.parseInt(destinationAirportId), parsedDepartTime,parsedArriveTime,
-                        Integer.parseInt(aircraftId), Integer.parseInt(crewId),operator.getId(), Status.ACTIVE);
+                        Integer.parseInt(destinationAirportId), parsedDepartTime, parsedArriveTime,
+                        Integer.parseInt(aircraftId), Integer.parseInt(crewId), operator.getId(), Status.ACTIVE);
                 boolean isFlightCreate = flightService.addFlight(flightDto);
                 if (isFlightCreate) {
                     request.setAttribute(ParameterName.CREATE_FLIGHT_SUCCESSFUL_FLAG, true);
@@ -62,9 +62,12 @@ public class CreateFlightCommand implements Command {
                 } else {
                     logger.log(Level.ERROR, "Error while creating flight");
                     request.setAttribute(ParameterName.ERROR_CREATE_FLIGHT_FLAG, true);
-                    request.setAttribute(ParameterName.DEPARTURE_AIRPORT, airportService.findAirportById(departureAirportId).orElse(null));
-                    request.setAttribute(ParameterName.DESTINATION_AIRPORT, airportService.findAirportById(destinationAirportId).orElse(null));
-                    request.setAttribute(ParameterName.AIRCRAFT, aircraftService.findAircraftById(aircraftId).orElse(null));
+                    request.setAttribute(ParameterName.DEPARTURE_AIRPORT,
+                            airportService.findAirportById(departureAirportId).orElse(null));
+                    request.setAttribute(ParameterName.DESTINATION_AIRPORT,
+                            airportService.findAirportById(destinationAirportId).orElse(null));
+                    request.setAttribute(ParameterName.AIRCRAFT,
+                            aircraftService.findAircraftById(aircraftId).orElse(null));
                     request.setAttribute(ParameterName.CREW, crewService.findCrewById(Integer.parseInt(crewId)));
                     request.setAttribute(ParameterName.DEPART_TIME, departTime);
                     request.setAttribute(ParameterName.ARRIVE_TIME, arriveTime);

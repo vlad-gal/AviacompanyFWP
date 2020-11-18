@@ -5,6 +5,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.*;
+import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -15,6 +16,7 @@ import java.io.IOException;
  * @author Vladislav Halatsevich
  * @version 1.0
  */
+@WebFilter(urlPatterns = "/jsp/*")
 public class PageRedirectSecurityFilter implements Filter {
     private static final Logger logger = LogManager.getLogger(PageRedirectSecurityFilter.class);
 

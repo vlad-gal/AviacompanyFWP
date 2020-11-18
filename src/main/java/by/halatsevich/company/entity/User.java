@@ -16,7 +16,7 @@ public class User extends Entity {
     private Status status;
 
     /**
-     * The enum Role.
+     * The enum Role. Define user's role in project.
      */
     public enum Role {
         /**

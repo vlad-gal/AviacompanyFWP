@@ -19,7 +19,8 @@ import javax.servlet.http.HttpSession;
 import java.util.Optional;
 
 /**
- * The class represents user's authorization command.
+ * The class represents command to authorization user in system.
+ * If user is present in system and hasn't status INACTIVE, authorization will be successful.
  *
  * @author Vladislav Halatsevich
  * @version 1.0

@@ -18,7 +18,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 /**
- * The class represents update user by admin command.
+ * The class represents command to update user by admin. If user has valid data and update was successful,
+ * we will get a successful message.
  *
  * @author Vladislav Halatsevich
  * @version 1.0

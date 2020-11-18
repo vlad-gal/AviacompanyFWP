@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 /**
- * The class represents creating user by admin.
+ * The class represents command to create user by admin.
  *
  * @author Vladislav Halatsevich
  * @version 1.0
