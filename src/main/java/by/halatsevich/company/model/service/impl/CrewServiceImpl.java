@@ -14,7 +14,6 @@ import by.halatsevich.company.model.service.CrewService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * The class represents crew service implementation.
@@ -151,11 +150,9 @@ public class CrewServiceImpl implements CrewService {
                 maxPlaces = crew.getNumberOfStewardesses();
                 break;
         }
-        List<User.Role> roles;
         try {
-            roles = crewDao.findUserRolesByCrewId(crew.getId())
-                    .stream().filter(role -> user.getRole() == role).collect(Collectors.toList());
-            occupiedPlaces = roles.size();
+            occupiedPlaces = (int) crewDao.findUserRolesByCrewId(crew.getId())
+                    .stream().filter(role -> user.getRole() == role).count();
         } catch (DaoException e) {
             throw new ServiceException("Error while count available places in crew", e);
         }
