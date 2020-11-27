@@ -16,12 +16,12 @@ public class PaginationCommand implements Command {
     @Override
     public String execute(HttpServletRequest request) {
         String direction = request.getParameter(ParameterName.DIRECTION);
-        int currentPage = (int) request.getSession().getAttribute(ParameterName.CURRENT_PAGE_NUMBER);
-        if (direction.equals(ParameterName.PREVIOUS)) {
-            request.getSession().setAttribute(ParameterName.CURRENT_PAGE_NUMBER, --currentPage);
+        int currentPageNumber = (int) request.getSession().getAttribute(ParameterName.CURRENT_PAGE_NUMBER);
+        if (direction.equals(ParameterName.PREVIOUS) && currentPageNumber >= 2) {
+            request.getSession().setAttribute(ParameterName.CURRENT_PAGE_NUMBER, --currentPageNumber);
         }
         if (direction.equals(ParameterName.NEXT)) {
-            request.getSession().setAttribute(ParameterName.CURRENT_PAGE_NUMBER, ++currentPage);
+            request.getSession().setAttribute(ParameterName.CURRENT_PAGE_NUMBER, ++currentPageNumber);
         }
         return (String) request.getSession().getAttribute(ParameterName.CURRENT_PAGE);
     }
