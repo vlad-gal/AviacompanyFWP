@@ -60,7 +60,7 @@ public enum ConnectionPool {
             try {
                 Connection connection = DriverManager.getConnection(url, properties);
                 ProxyConnection proxyConnection = new ProxyConnection(connection);
-                freeConnections.add(proxyConnection);
+                freeConnections.offer(proxyConnection);
             } catch (SQLException e) {
                 logger.log(Level.ERROR, "Cannot add connection to pool", e);
             }
