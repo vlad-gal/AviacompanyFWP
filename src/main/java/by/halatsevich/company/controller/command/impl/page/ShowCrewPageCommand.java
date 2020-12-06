@@ -14,6 +14,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -28,6 +29,7 @@ public class ShowCrewPageCommand implements Command {
 
     @Override
     public String execute(HttpServletRequest request) {
+        HttpSession session = request.getSession();
         String crewId = request.getParameter(ParameterName.CREW_ID);
         String page;
         if (BaseValidator.isValidId(crewId)) {
@@ -43,11 +45,11 @@ public class ShowCrewPageCommand implements Command {
                         .stream().filter(user -> user.getRole() == User.Role.RADIOMAN).collect(Collectors.toList());
                 List<User> stewardesses = crew.getStaff()
                         .stream().filter(user -> user.getRole() == User.Role.STEWARDESS).collect(Collectors.toList());
-                request.setAttribute(ParameterName.DISPATCHER, crew.getDispatcher());
-                request.setAttribute(ParameterName.PILOTS, pilots);
-                request.setAttribute(ParameterName.NAVIGATORS, navigators);
-                request.setAttribute(ParameterName.RADIOMANS, radioman);
-                request.setAttribute(ParameterName.STEWARDESSES, stewardesses);
+                session.setAttribute(ParameterName.DISPATCHER, crew.getDispatcher());
+                session.setAttribute(ParameterName.PILOTS, pilots);
+                session.setAttribute(ParameterName.NAVIGATORS, navigators);
+                session.setAttribute(ParameterName.RADIOMANS, radioman);
+                session.setAttribute(ParameterName.STEWARDESSES, stewardesses);
                 page = PagePath.SHOW_CREW;
             } catch (ServiceException e) {
                 logger.log(Level.ERROR, "Error while finding crew by id", e);
